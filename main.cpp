@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
     Graphics graphics;
     graphics.initSDL(SCREEN_W, SCREEN_H);
 
-    //Nạp ảnh mở màn
+    /*//Nạp ảnh mở màn
     SDL_Texture* start_screen = graphics.loadTexture("images/batdau.png");
     graphics.prepareScene(start_screen);
 
@@ -235,7 +235,7 @@ int main(int argc, char* argv[]) {
         character.choose_time(character, graphics, Choose[chose - 1]);
 
         character.destroy();
-    }
+    }*/
 
     //Chào mừng đến với ván cờ tỷ phú mà THUWNG tạo ra
     decide welcome;
