@@ -1,0 +1,29 @@
+# depslib dependency file v1.0
+1712827677 source:c:\users\dell\documents\tt\cotyphu\main.cpp
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	"graphics.h"
+	"defs.h"
+	"logic.h"
+	"choose.h"
+
+1711795373 c:\users\dell\documents\tt\cotyphu\graphics.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	"defs.h"
+
+1712825877 c:\users\dell\documents\tt\cotyphu\defs.h
+
+1711712446 c:\users\dell\documents\tt\cotyphu\logic.h
+
+1712827747 c:\users\dell\documents\tt\cotyphu\choose.h
+	<SDL.h>
+	<SDL_image.h>
+	"graphics.h"
+	"defs.h"
+
