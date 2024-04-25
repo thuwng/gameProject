@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
     Graphics graphics;
     graphics.initSDL(SCREEN_W, SCREEN_H);
 
-    /*//Nạp ảnh mở màn
+    //Nạp ảnh mở màn
     SDL_Texture* start_screen = graphics.loadTexture("images/batdau.png");
     graphics.prepareScene(start_screen);
 
@@ -223,51 +223,73 @@ int main(int argc, char* argv[]) {
     while (chose < num_of_players) {
         chose++;
 
-        decide character;
-        character.init(graphics, Choose[chose - 1]);
+        decide Character;
+        Character.init(graphics, "images/choose.png");
 
-        character.loadNobita(graphics, 0);
-        character.loadShizuka(graphics, 0);
-        character.loadSuneo(graphics, 0);
-        character.loadChaien(graphics, 0);
+        Character.loadNobita(graphics);
+        Character.loadShizuka(graphics);
+        Character.loadSuneo(graphics);
+        Character.loadChaien(graphics);
 
-        character.present(graphics);
-        character.choose_time(character, graphics, Choose[chose - 1]);
+        Character.present(graphics);
+        Character.choose_time(Character, graphics, "images/choose.png");
 
-        character.destroy();
-    }*/
+        Character.destroy();
+    }
 
     //Chào mừng đến với ván cờ tỷ phú mà THUWNG tạo ra
     decide welcome;
     welcome.init(graphics, "images/welcome.png");
 
-    welcome.loadNobita(graphics, 0);
-    welcome.loadShizuka(graphics, 0);
-    welcome.loadSuneo(graphics, 0);
-    welcome.loadChaien(graphics, 0);
+    welcome.loadNobita(graphics);
+    welcome.loadShizuka(graphics);
+    welcome.loadSuneo(graphics);
+    welcome.loadChaien(graphics);
 
     welcome.present(graphics);
     welcome.destroy();
 
-    SDL_Delay(1000);
+    SDL_Delay(3000);
+
+    //Ô khởi đầu
+    SDL_Texture* Cell = graphics.loadTexture("images/cells/cell1.png");
+    graphics.prepareScene(Cell);
+
+    graphics.presentScene();
+    waitUntilKeyPressed();
 
     //Nạp ảnh bàn cờ
     SDL_Texture* board = graphics.loadTexture("images/board.png");
     graphics.prepareScene(board);
 
+    //Nạp font
+    TTF_Font* font = graphics.loadFont("fonts/TNR/times.ttf", 50);
+    SDL_Color color = {0, 0, 0, 0};
+    SDL_Texture* in4_Nobita = graphics.renderText2(to_string(Nobita.money), font, color);
+    SDL_Texture* in4_Shizuka = graphics.renderText2(to_string(Shizuka.money), font, color);
+    SDL_Texture* in4_Suneo = graphics.renderText2(to_string(Suneo.money), font, color);
+    SDL_Texture* in4_Chaien = graphics.renderText2(to_string(Chaien.money), font, color);
+
+    //Nạp in4 các nhân vật
+    graphics.renderTexture(in4_Nobita, 50, 200);
+    graphics.renderTexture(in4_Shizuka, 50, 450);
+    graphics.renderTexture(in4_Suneo, 600, 200);
+    graphics.renderTexture(in4_Chaien, 600, 450);
+
     //Nạp nhân vật
+    Nobita.p = Shizuka.p = Suneo.p = Chaien.p = 1;
     SDL_Texture* nobita = graphics.loadTexture("images/characters_removed_background/Nobita.png");
-    graphics.renderTexture_new_size(nobita, Nobita.x, Nobita.y, Nobita.w, Nobita.h);
+    graphics.renderTexture_new_size(nobita, N_X[Nobita.p], N_Y[Nobita.p], N_W, N_H);
     SDL_Texture* shizuka = graphics.loadTexture("images/characters_removed_background/Shizuka.png");
-    graphics.renderTexture_new_size(shizuka, Shizuka.x, Shizuka.y, Shizuka.w, Shizuka.h);
+    graphics.renderTexture_new_size(shizuka, S_X + N_X[Shizuka.p], S_Y + N_Y[Shizuka.p], S_W, S_H);
     SDL_Texture* suneo = graphics.loadTexture("images/characters_removed_background/Suneo.png");
-    graphics.renderTexture_new_size(suneo, Suneo.x, Suneo.y, Suneo.w, Suneo.h);
+    graphics.renderTexture_new_size(suneo, X_X + N_X[Suneo.p], X_Y + N_Y[Suneo.p], X_W, X_H);
     SDL_Texture* chaien = graphics.loadTexture("images/characters_removed_background/Chaien.png");
-    graphics.renderTexture_new_size(chaien, Chaien.x, Chaien.y, Chaien.w, Chaien.h);
+    graphics.renderTexture_new_size(chaien, C_X + N_X[Chaien.p], C_Y + N_Y[Chaien.p], C_W, C_H);
 
     //Hiện bàn cờ
     graphics.presentScene();
-    SDL_Delay(1000);
+    waitUntilKeyPressed();
 
     //Vòng lặp
     int stt = 0;
@@ -322,7 +344,7 @@ int main(int argc, char* argv[]) {
                 if (quit) break;
             }
 
-            SDL_Delay(2000);
+            SDL_Delay(1000);
 
             SDL_Texture* dice1 = graphics.loadTexture(Dice[a]);
             graphics.renderTexture_new_size(dice1, 650, 200, 200, 200);
@@ -332,7 +354,11 @@ int main(int argc, char* argv[]) {
             graphics.presentScene();
             SDL_Delay(2000);
 
+            //Thay đổi vị trí
+            Nobita.p += (a + b + 2);
+            Nobita.p %= 36;
 
+            //Xóa
             SDL_DestroyTexture(button);
             button = NULL;
             SDL_DestroyTexture(dice2);
@@ -343,22 +369,37 @@ int main(int argc, char* argv[]) {
             SDL_DestroyTexture(blank);
             blank = NULL;
 
-            //Hiện lại bàn cờ
+            //Chuẩn bị bàn cờ
             graphics.prepareScene(board);
-            graphics.renderTexture_new_size(nobita, Nobita.x, Nobita.y, Nobita.w, Nobita.h);
-            graphics.renderTexture_new_size(shizuka, Shizuka.x, Shizuka.y, Shizuka.w, Shizuka.h);
-            graphics.renderTexture_new_size(suneo, Suneo.x, Suneo.y, Suneo.w, Suneo.h);
-            graphics.renderTexture_new_size(chaien, Chaien.x, Chaien.y, Chaien.w, Chaien.h);
 
+            graphics.renderTexture_new_size(nobita, N_X[Nobita.p], N_Y[Nobita.p], N_W, N_H);
+            graphics.renderTexture_new_size(shizuka, S_X + N_X[Shizuka.p], S_Y + N_Y[Shizuka.p], S_W, S_H);
+            graphics.renderTexture_new_size(suneo, X_X + N_X[Suneo.p], X_Y + N_Y[Suneo.p], X_W, X_H);
+            graphics.renderTexture_new_size(chaien, C_X + N_X[Chaien.p], C_Y + N_Y[Chaien.p], C_W, C_H);
+
+            graphics.renderTexture(in4_Nobita, 50, 100);
+            graphics.renderTexture(in4_Shizuka, 250, 100);
+            graphics.renderTexture(in4_Suneo, 50, 300);
+            graphics.renderTexture(in4_Chaien, 250, 300);
+
+            //Hiện lại bàn cờ
             graphics.presentScene();
             waitUntilKeyPressed();
-
-            //Nhân vật di chuyên
         }
         break;
     }
 
     //Xóa
+    SDL_DestroyTexture(in4_Nobita);
+    in4_Nobita = NULL;
+    SDL_DestroyTexture(in4_Shizuka);
+    in4_Shizuka = NULL;
+    SDL_DestroyTexture(in4_Suneo);
+    in4_Suneo = NULL;
+    SDL_DestroyTexture(in4_Chaien);
+    in4_Chaien = NULL;
+    TTF_CloseFont(font);
+
     SDL_DestroyTexture(nobita);
     nobita = NULL;
     SDL_DestroyTexture(shizuka);
@@ -367,6 +408,7 @@ int main(int argc, char* argv[]) {
     suneo = NULL;
     SDL_DestroyTexture(chaien);
     chaien = NULL;
+
     SDL_DestroyTexture(board);
     board = NULL;
 
