@@ -32,7 +32,10 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="benxe.h" />
 		<Unit filename="choose.h" />
+		<Unit filename="congty.h" />
+		<Unit filename="dat.h" />
 		<Unit filename="defs.h" />
 		<Unit filename="graphics.h" />
 		<Unit filename="logic.h" />
