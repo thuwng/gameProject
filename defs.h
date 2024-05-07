@@ -59,17 +59,9 @@ struct character{
 
 //Thứ tự ảnh xí ngầu
 const char* Dice[] = {"images/dice/xx1.png", "images/dice/xx2.png", "images/dice/xx3.png", "images/dice/xx4.png", "images/dice/xx5.png", "images/dice/xx6.png"};
+const char* Turn[] = {"images/blue1.png", "images/blue2.png", "images/blue3.png", "images/blue4.png"};
 
-//Thông tin người chơi
-const int nobita_x = 100;
-const int nobita_y = 50;
-const int shizuka_x = 100;
-const int shizuka_y = 500;
-const int suneo_x = 500;
-const int suneo_y = 50;
-const int chaien_x = 500;
-const int chaien_y = 500;
-
+//Thứ tự thẻ theo ô
 const char* cells[] = {"images/cells/cell36.png", "images/cells/cell1.png", "images/cells/cell2.png", "images/cells/cell3.png",
 "images/cells/cell4.png", "images/cells/cell5.png", "images/cells/cell6.png", "images/cells/cell7.png", "images/cells/cell8.png",
 "images/cells/cell9.png", "images/cells/cell10.png", "images/cells/cell11.png", "images/cells/cell12.png", "images/cells/cell13.png",
@@ -78,5 +70,11 @@ const char* cells[] = {"images/cells/cell36.png", "images/cells/cell1.png", "ima
 "images/cells/cell24.png", "images/cells/cell25.png", "images/cells/cell26.png", "images/cells/cell27.png", "images/cells/cell28.png",
 "images/cells/cell29.png", "images/cells/cell30.png", "images/cells/cell31.png", "images/cells/cell32.png", "images/cells/cell33.png",
 "images/cells/cell34.png", "images/cells/cell35.png"};
+
+//Vị trí in số tiền
+const int M_X = 50;
+const int M_Y = 200;
+const int M_W = 950;
+const int M_H = 300;
 
 #endif // _DEFS__H
