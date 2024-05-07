@@ -71,11 +71,11 @@ struct decide{
     //Chọn nhân vật
     void choose_time(decide character, Graphics graphics, const char* name) {
         screen = graphics.loadTexture(name);
-        SDL_Event dc;
         character.loadNobita(graphics);
         character.loadShizuka(graphics);
         character.loadSuneo(graphics);
         character.loadChaien(graphics);
+        SDL_Event dc;
         while (true) {
             int x, y;
             bool quit = false;

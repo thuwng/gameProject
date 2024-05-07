@@ -53,7 +53,7 @@ const int C_H = 35;
 
 //Thiết lập nhân vật
 struct character{
-    int p, turn = 0, money = 200;
+    int p, turn = 0, money = 200, bxe = 0, cty = 0;
     bool is_real_player = false, bankrupt = false;
 } Nobita, Shizuka, Suneo, Chaien;
 
@@ -62,7 +62,7 @@ const char* Dice[] = {"images/dice/xx1.png", "images/dice/xx2.png", "images/dice
 const char* Turn[] = {"images/blue1.png", "images/blue2.png", "images/blue3.png", "images/blue4.png"};
 
 //Thứ tự thẻ theo ô
-const char* cells[] = {"images/cells/cell36.png", "images/cells/cell1.png", "images/cells/cell2.png", "images/cells/cell3.png",
+const char* cell[] = {"images/cells/cell36.png", "images/cells/cell1.png", "images/cells/cell2.png", "images/cells/cell3.png",
 "images/cells/cell4.png", "images/cells/cell5.png", "images/cells/cell6.png", "images/cells/cell7.png", "images/cells/cell8.png",
 "images/cells/cell9.png", "images/cells/cell10.png", "images/cells/cell11.png", "images/cells/cell12.png", "images/cells/cell13.png",
 "images/cells/cell14.png", "images/cells/cell15.png", "images/cells/cell16.png", "images/cells/cell17.png", "images/cells/cell18.png",
@@ -76,5 +76,12 @@ const int M_X = 50;
 const int M_Y = 200;
 const int M_W = 950;
 const int M_H = 300;
+
+//Các ô chữ
+const int O_X = 750;
+const int O_Y = 450;
+const int O_W = 200;
+const int O_H = 50;
+const int O_D = 60;
 
 #endif // _DEFS__H

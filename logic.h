@@ -7,8 +7,60 @@
 #include <SDL_ttf.h>
 #include "graphics.h"
 #include "defs.h"
+#include "dat.h"
+#include "benxe.h"
+#include "congty.h"
 
 using namespace std;
+
+//1
+vector<int> dat = {2, 4, 8, 9, 11, 13, 15, 17, 18, 20, 22, 23, 25, 27, 29, 31, 34};
+//2
+vector<int> honhop = {1, 5, 35};
+//3
+//vector<int> benxe = {6, 14, 24, 32};
+//4
+//vector<int> congty = {12, 26};
+//5
+vector<int> vaotu = {28};
+//6
+vector<int> nhatu = {10};
+//7
+vector<int> sanbay = {19};
+//8
+vector<int> khivan = {3, 16, 33};
+//9
+vector<int> cohoi = {7, 21, 30};
+
+bool check(int pos, vector<int> a, int &loai) {
+    int l = 0, r = (int) a.size() - 1;
+    while (l <= r) {
+        int m = (l + r) / 2;
+        if (pos == a[m]) {
+            loai = m;
+            return true;
+        }
+        else if (pos < a[m]) r = m - 1;
+        else l = m + 1;
+    }
+    return false;
+}
+
+int findpos(int pos, int &loai) {
+    if (pos == 0) {
+        loai = 17;
+        return 1;
+    }
+    else if (check(pos, dat, loai)) return 1;
+    else if (check(pos, honhop, loai)) return 2;
+    else if (check(pos, benxe, loai)) return 3;
+    else if (check(pos, congty, loai)) return 4;
+    else if (check(pos, vaotu, loai)) return 5;
+    else if (check(pos, nhatu, loai)) return 6;
+    else if (check(pos, sanbay, loai)) return 7;
+    else if (check(pos, khivan, loai)) return 8;
+    else return 9;
+}
 
 struct Monopoly {
     Graphics graphics;
@@ -25,12 +77,12 @@ struct Monopoly {
         }
     }
 
+    int x1, x2;
     void gieoxingau(int stt) {
         SDL_Texture* blank = graphics.loadTexture(Turn[stt]);
         graphics.prepareScene(blank);
         graphics.presentScene();
 
-        int a, b;
         SDL_Event get_dice;
         SDL_Texture* button = graphics.loadTexture("images/button.png");
         while (true) {
@@ -61,29 +113,29 @@ struct Monopoly {
                     break;
                 case SDL_MOUSEBUTTONDOWN:
                     if (x >= dices.x && x <= dices.x + dices.w && y >= dices.y && y <= dices.y + dices.h) {
-                        a = rand() % 6;
-                        b = rand() % 6;
+                        x1 = rand() % 6;
+                        x2 = rand() % 6;
                         quit = true;
                     }
             }
             if (quit) break;
         }
 
-        SDL_Delay(200);
+        SDL_Delay(500);
 
-        SDL_Texture* dice1 = graphics.loadTexture(Dice[a]);
+        SDL_Texture* dice1 = graphics.loadTexture(Dice[x1]);
         graphics.renderTexture_new_size(dice1, 650, 200, 200, 200);
-        SDL_Texture* dice2 = graphics.loadTexture(Dice[b]);
+        SDL_Texture* dice2 = graphics.loadTexture(Dice[x2]);
         graphics.renderTexture_new_size(dice2, 880, 200, 200, 200);
 
         graphics.presentScene();
-        SDL_Delay(500);
+        SDL_Delay(800);
 
         //Thay đổi vị trí
-        if (stt == 0) Nobita.p += (a + b + 2) % 36;
-        else if (stt == 1) Shizuka.p += (a + b + 2) % 36;
-        else if (stt == 2) Suneo.p += (a + b + 2) % 36;
-        else Chaien.p += (a + b + 2) % 36;
+        if (stt == 0) Nobita.p += (x1 + x2 + 2) % 36;
+        else if (stt == 1) Shizuka.p += (x1 + x2 + 2) % 36;
+        else if (stt == 2) Suneo.p += (x1 + x2 + 2) % 36;
+        else Chaien.p += (x1 + x2 + 2) % 36;
 
         //Xóa
         SDL_DestroyTexture(button);
@@ -129,7 +181,53 @@ struct Monopoly {
 
         //Hiện lại bàn cờ
         graphics.presentScene();
-        waitUntilKeyPressed();
+        SDL_Delay(3000);
+
+        //Xóa
+        SDL_DestroyTexture(board);
+        board = NULL;
+
+        SDL_DestroyTexture(in4_Nobita);
+        in4_Nobita = NULL;
+        SDL_DestroyTexture(in4_Shizuka);
+        in4_Shizuka = NULL;
+        SDL_DestroyTexture(in4_Suneo);
+        in4_Suneo = NULL;
+        SDL_DestroyTexture(in4_Chaien);
+        in4_Chaien = NULL;
+
+        TTF_CloseFont(font);
+
+        SDL_DestroyTexture(nobita);
+        nobita = NULL;
+        SDL_DestroyTexture(shizuka);
+        shizuka = NULL;
+        SDL_DestroyTexture(suneo);
+        suneo = NULL;
+        SDL_DestroyTexture(chaien);
+        chaien = NULL;
+    }
+    void thuchien(int stt) {
+        int loai;
+        if (stt == 0) {
+            if (findpos(Nobita.p, loai) == 1) {
+                Loai1 a(graphics);
+                a.hienthe(stt, loai);
+            }
+            else if (findpos(Nobita.p, loai) == 2) {
+                if (loai == 1) Nobita.money += 200;
+                else if (loai == 5) Nobita.money -= min(200, Nobita.money * 10 / 100);
+                else if (loai == 35) Nobita.money -= 100;
+            }
+            else if (findpos(Nobita.p, loai) == 3) {
+                Loai3 a(graphics);
+                a.hienthe(stt, loai);
+            }
+            else if (findpos(Nobita.p, loai) == 4) {
+                Loai4 a(graphics);
+                a.hienthe(stt, loai, x1 + x2 + 2);
+            }
+        }
     }
 };
 

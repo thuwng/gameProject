@@ -7,6 +7,9 @@
 #include "defs.h"
 #include "logic.h"
 #include "choose.h"
+#include "dat.h"
+#include "benxe.h"
+#include "congty.h"
 
 using namespace std;
 
@@ -24,7 +27,7 @@ int main(int argc, char* argv[]) {
     Graphics graphics;
     graphics.initSDL(SCREEN_W, SCREEN_H);
 
-    /*/Nạp ảnh mở màn
+    /*//Nạp ảnh mở màn
     SDL_Texture* start_screen = graphics.loadTexture("images/batdau.png");
     graphics.prepareScene(start_screen);
 
@@ -288,7 +291,11 @@ int main(int argc, char* argv[]) {
 
     //Hiện bàn cờ
     graphics.presentScene();
-    waitUntilKeyPressed();
+    SDL_Delay(3000);
+
+    //Khởi tạo các loại ô
+    Loai1 loai1(graphics);
+    loai1.khoitao();
 
     //Vào game
     int stt = -1;
@@ -300,6 +307,8 @@ int main(int argc, char* argv[]) {
         if (stt == 0) {
             Nobita.turn++;
             thu.gieoxingau(stt);
+            thu.hienbanco();
+            thu.thuchien(stt);
             thu.hienbanco();
         }
 
