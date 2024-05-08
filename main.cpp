@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
     Graphics graphics;
     graphics.initSDL(SCREEN_W, SCREEN_H);
 
-    /*//Nạp ảnh mở màn
+    //Nạp ảnh mở màn
     SDL_Texture* start_screen = graphics.loadTexture("images/batdau.png");
     graphics.prepareScene(start_screen);
 
@@ -251,7 +251,7 @@ int main(int argc, char* argv[]) {
     welcome.present(graphics);
     welcome.destroy();
 
-    SDL_Delay(3000);*/
+    SDL_Delay(3000);
 
     //Ô khởi đầu
     SDL_Texture* Cell = graphics.loadTexture("images/cells/cell1.png");
@@ -300,16 +300,48 @@ int main(int argc, char* argv[]) {
     //Vào game
     int stt = -1;
     Monopoly thu(graphics);
+    //Monopoly_AI thuw(graphics);
 
     while ((Nobita.turn < 30 || Shizuka.turn < 30 || Suneo.turn < 30 || Chaien.turn < 30) && !(Nobita.bankrupt && Shizuka.bankrupt && Suneo.bankrupt && Chaien.bankrupt)) {
         stt = (stt + 1) % 4;
 
         if (stt == 0) {
-            Nobita.turn++;
-            thu.gieoxingau(stt);
-            thu.hienbanco();
-            thu.thuchien(stt);
-            thu.hienbanco();
+            if (Nobita.free) {
+                bool cont = false;
+                Nobita.turn++;
+                thu.gieoxingau(stt, cont);
+                thu.hienbanco();
+                thu.thuchien(stt);
+                thu.hienbanco();
+
+                if (cont) {
+                    cont = false;
+                    thu.gieoxingau(stt, cont);
+                    thu.hienbanco();
+                    thu.thuchien(stt);
+                    thu.hienbanco();
+                }
+
+                if (cont) {
+                    cont = false;
+                    thu.gieoxingau(stt, cont);
+                    thu.hienbanco();
+                    thu.thuchien(stt);
+                    thu.hienbanco();
+                }
+
+                if (cont) {
+                    Nobita.free = false;
+                    Nobita.p = 10;
+                    thu.hienbanco();
+                }
+
+            }
+            else {
+                bool ratu = false;
+                thu.cohoiratu(stt, ratu);
+                Nobita.free = ratu;
+            }
         }
 
         break;

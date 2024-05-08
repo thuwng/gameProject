@@ -55,6 +55,7 @@ const int C_H = 35;
 struct character{
     int p, turn = 0, money = 200, bxe = 0, cty = 0;
     bool is_real_player = false, bankrupt = false;
+    bool free = true;
 } Nobita, Shizuka, Suneo, Chaien;
 
 //Thứ tự ảnh xí ngầu
@@ -78,10 +79,10 @@ const int M_W = 950;
 const int M_H = 300;
 
 //Các ô chữ
-const int O_X = 750;
-const int O_Y = 450;
-const int O_W = 200;
-const int O_H = 50;
-const int O_D = 60;
+const int O_X = 800;
+const int O_Y = 500;
+const int O_W = 100;
+const int O_H = 20;
+const int O_D = 40;
 
 #endif // _DEFS__H

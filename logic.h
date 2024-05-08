@@ -78,7 +78,7 @@ struct Monopoly {
     }
 
     int x1, x2;
-    void gieoxingau(int stt) {
+    void gieoxingau(int stt, bool &cont) {
         SDL_Texture* blank = graphics.loadTexture(Turn[stt]);
         graphics.prepareScene(blank);
         graphics.presentScene();
@@ -136,6 +136,75 @@ struct Monopoly {
         else if (stt == 1) Shizuka.p += (x1 + x2 + 2) % 36;
         else if (stt == 2) Suneo.p += (x1 + x2 + 2) % 36;
         else Chaien.p += (x1 + x2 + 2) % 36;
+
+        if (x1 == x2) cont = true;
+
+        //Xóa
+        SDL_DestroyTexture(button);
+        button = NULL;
+        SDL_DestroyTexture(dice2);
+        dice2 = NULL;
+        SDL_DestroyTexture(dice1);
+        dice1 = NULL;
+
+        SDL_DestroyTexture(blank);
+        blank = NULL;
+    }
+
+    void cohoiratu(int stt, bool &ratu) {
+        SDL_Texture* blank = graphics.loadTexture(Turn[stt]);
+        graphics.prepareScene(blank);
+        graphics.presentScene();
+
+        SDL_Event get_dice;
+        SDL_Texture* button = graphics.loadTexture("images/button.png");
+        while (true) {
+            int x, y;
+            bool quit = false;
+            SDL_GetMouseState(&x, &y);
+
+            SDL_Rect dices;
+            dices.x = 920;
+            dices.y = 580;
+            dices.w = 200;
+            dices.h = 210;
+
+            if (x >= dices.x && x <= dices.x + dices.w && y >= dices.y && y <= dices.y + dices.h) {
+                graphics.prepareScene(blank);
+                graphics.renderTexture_new_size(button, 920, 580, 200, 210);
+            }
+            else {
+                graphics.prepareScene(blank);
+                graphics.renderTexture_new_size(button, 930, 590, 180, 190);
+            }
+            graphics.presentScene();
+
+            SDL_PollEvent(&get_dice);
+            switch (get_dice.type) {
+                case SDL_QUIT:
+                    exit(0);
+                    break;
+                case SDL_MOUSEBUTTONDOWN:
+                    if (x >= dices.x && x <= dices.x + dices.w && y >= dices.y && y <= dices.y + dices.h) {
+                        x1 = rand() % 6;
+                        x2 = rand() % 6;
+                        quit = true;
+                    }
+            }
+            if (quit) break;
+        }
+
+        SDL_Delay(500);
+
+        SDL_Texture* dice1 = graphics.loadTexture(Dice[x1]);
+        graphics.renderTexture_new_size(dice1, 650, 200, 200, 200);
+        SDL_Texture* dice2 = graphics.loadTexture(Dice[x2]);
+        graphics.renderTexture_new_size(dice2, 880, 200, 200, 200);
+
+        graphics.presentScene();
+        SDL_Delay(800);
+
+        if (x1 == x2) ratu = true;
 
         //Xóa
         SDL_DestroyTexture(button);
@@ -215,9 +284,18 @@ struct Monopoly {
                 a.hienthe(stt, loai);
             }
             else if (findpos(Nobita.p, loai) == 2) {
-                if (loai == 1) Nobita.money += 200;
-                else if (loai == 5) Nobita.money -= min(200, Nobita.money * 10 / 100);
-                else if (loai == 35) Nobita.money -= 100;
+                SDL_Texture* visit = graphics.loadTexture(cell[Nobita.p]);
+                graphics.prepareScene(visit);
+
+                if (honhop[loai] == 1) Nobita.money += 200;
+                else if (honhop[loai] == 5) Nobita.money -= min(200, Nobita.money * 10 / 100);
+                else if (honhop[loai] == 35) Nobita.money -= 100;
+
+                graphics.presentScene();
+                waitUntilKeyPressed();
+
+                SDL_DestroyTexture(visit);
+                visit = NULL;
             }
             else if (findpos(Nobita.p, loai) == 3) {
                 Loai3 a(graphics);
@@ -226,6 +304,39 @@ struct Monopoly {
             else if (findpos(Nobita.p, loai) == 4) {
                 Loai4 a(graphics);
                 a.hienthe(stt, loai, x1 + x2 + 2);
+            }
+            else if (findpos(Nobita.p, loai) == 5) {
+                SDL_Texture* visit = graphics.loadTexture(cell[Nobita.p]);
+                graphics.prepareScene(visit);
+
+                Nobita.free = false;
+                Nobita.p = 10;
+
+                graphics.presentScene();
+                SDL_Delay(500);
+
+                SDL_DestroyTexture(visit);
+                visit = NULL;
+            }
+            else if (findpos(Nobita.p, loai) == 6) {
+                SDL_Texture* visit = graphics.loadTexture(cell[Nobita.p]);
+                graphics.prepareScene(visit);
+
+                graphics.presentScene();
+                SDL_Delay(500);
+
+                SDL_DestroyTexture(visit);
+                visit = NULL;
+            }
+            else if (findpos(Nobita.p, loai) == 7) {
+                SDL_Texture* visit = graphics.loadTexture(cell[Nobita.p]);
+                graphics.prepareScene(visit);
+
+                graphics.presentScene();
+                SDL_Delay(500);
+
+                SDL_DestroyTexture(visit);
+                visit = NULL;
             }
         }
     }
