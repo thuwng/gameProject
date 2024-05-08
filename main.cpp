@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
     Graphics graphics;
     graphics.initSDL(SCREEN_W, SCREEN_H);
 
-    //Nạp ảnh mở màn
+    /*//Nạp ảnh mở màn
     SDL_Texture* start_screen = graphics.loadTexture("images/batdau.png");
     graphics.prepareScene(start_screen);
 
@@ -251,14 +251,38 @@ int main(int argc, char* argv[]) {
     welcome.present(graphics);
     welcome.destroy();
 
-    SDL_Delay(3000);
+    SDL_Delay(3000);*/
 
     //Ô khởi đầu
     SDL_Texture* Cell = graphics.loadTexture("images/cells/cell1.png");
     graphics.prepareScene(Cell);
 
+    SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
+    graphics.renderTexture_new_size(b, O_X, O_Y, O_W, O_H);
     graphics.presentScene();
-    waitUntilKeyPressed();
+
+    SDL_Event dc;
+    int x, y;
+    bool quit = false, buy = false;
+    while (true) {
+        SDL_GetMouseState(&x, &y);
+        SDL_PollEvent(&dc);
+        switch (dc.type) {
+            case SDL_QUIT:
+                exit(0);
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+                if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
+                    quit = true;
+                }
+        }
+        if (quit) break;
+    }
+
+    SDL_DestroyTexture(Cell);
+    Cell = NULL;
+    SDL_DestroyTexture(b);
+    b = NULL;
 
     //Nạp ảnh bàn cờ
     SDL_Texture* board = graphics.loadTexture("images/board.png");

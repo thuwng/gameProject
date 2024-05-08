@@ -80,9 +80,9 @@ const int M_H = 300;
 
 //Các ô chữ
 const int O_X = 800;
-const int O_Y = 500;
-const int O_W = 100;
-const int O_H = 20;
-const int O_D = 40;
+const int O_Y = 50;
+const int O_W = 200;
+const int O_H = 70;
+const int O_D = 210;
 
 #endif // _DEFS__H

@@ -37,8 +37,8 @@ struct Loai4{
 
                 SDL_Texture* a = graphics.loadTexture("images/muadat.png");
                 graphics.renderTexture_new_size(a, O_X, O_Y, O_W, O_H);
-                SDL_Texture* b = graphics.loadTexture("images/boqua.png");
-                graphics.renderTexture_new_size(b, O_X, O_Y + O_D, O_W, O_H);
+                SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
+                graphics.renderTexture_new_size(b, O_X + O_D, O_Y, O_W, O_H);
                 graphics.presentScene();
 
                 SDL_Event dc;
@@ -56,7 +56,7 @@ struct Loai4{
                                 buy = true;
                                 quit = true;
                             }
-                            else if (O_X <= x && x <= O_X + O_W && O_Y + O_D <= y && y <= O_Y + O_D + O_H) {
+                            else if (O_X + O_D <= x && x <= O_X + O_D + O_W && O_Y <= y && y <= O_Y + O_H) {
                                 quit = true;
                             }
                     }
@@ -118,8 +118,8 @@ struct Loai4{
 
                 SDL_Texture* a = graphics.loadTexture("images/muadat.png");
                 graphics.renderTexture_new_size(a, O_X, O_Y, O_W, O_H);
-                SDL_Texture* b = graphics.loadTexture("images/boqua.png");
-                graphics.renderTexture_new_size(b, O_X, O_Y + O_D, O_W, O_H);
+                SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
+                graphics.renderTexture_new_size(b, O_X + O_D, O_Y, O_W, O_H);
                 graphics.presentScene();
 
                 SDL_Event dc;
@@ -137,7 +137,7 @@ struct Loai4{
                                 buy = true;
                                 quit = true;
                             }
-                            else if (O_X <= x && x <= O_X + O_W && O_Y + O_D <= y && y <= O_Y + O_D + O_H) {
+                            else if (O_X + O_D <= x && x <= O_X + O_D + O_W && O_Y <= y && y <= O_Y + O_H) {
                                 quit = true;
                             }
                     }
@@ -199,8 +199,8 @@ struct Loai4{
 
                 SDL_Texture* a = graphics.loadTexture("images/muadat.png");
                 graphics.renderTexture_new_size(a, O_X, O_Y, O_W, O_H);
-                SDL_Texture* b = graphics.loadTexture("images/boqua.png");
-                graphics.renderTexture_new_size(b, O_X, O_Y + O_D, O_W, O_H);
+                SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
+                graphics.renderTexture_new_size(b, O_X + O_D, O_Y, O_W, O_H);
                 graphics.presentScene();
 
                 SDL_Event dc;
@@ -218,7 +218,7 @@ struct Loai4{
                                 buy = true;
                                 quit = true;
                             }
-                            else if (O_X <= x && x <= O_X + O_W && O_Y + O_D <= y && y <= O_Y + O_D + O_H) {
+                            else if (O_X + O_D <= x && x <= O_X + O_D + O_W && O_Y <= y && y <= O_Y + O_H) {
                                 quit = true;
                             }
                     }
@@ -280,8 +280,8 @@ struct Loai4{
 
                 SDL_Texture* a = graphics.loadTexture("images/muadat.png");
                 graphics.renderTexture_new_size(a, O_X, O_Y, O_W, O_H);
-                SDL_Texture* b = graphics.loadTexture("images/boqua.png");
-                graphics.renderTexture_new_size(b, O_X, O_Y + O_D, O_W, O_H);
+                SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
+                graphics.renderTexture_new_size(b, O_X + O_D, O_Y, O_W, O_H);
                 graphics.presentScene();
 
                 SDL_Event dc;
@@ -299,7 +299,7 @@ struct Loai4{
                                 buy = true;
                                 quit = true;
                             }
-                            else if (O_X <= x && x <= O_X + O_W && O_Y + O_D <= y && y <= O_Y + O_D + O_H) {
+                            else if (O_X + O_D <= x && x <= O_X + O_D + O_W && O_Y <= y && y <= O_Y + O_H) {
                                 quit = true;
                             }
                     }

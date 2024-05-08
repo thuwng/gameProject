@@ -32,6 +32,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../SPRITE/defs.h" />
 		<Unit filename="benxe.h" />
 		<Unit filename="choose.h" />
 		<Unit filename="congty.h" />
