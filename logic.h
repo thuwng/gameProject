@@ -10,6 +10,8 @@
 #include "dat.h"
 #include "benxe.h"
 #include "congty.h"
+#include "khivan.h"
+#include "cohoi.h"
 
 using namespace std;
 
@@ -330,8 +332,10 @@ struct Monopoly {
                 SDL_Texture* visit = graphics.loadTexture(cell[Nobita.p]);
                 graphics.prepareScene(visit);
 
-                Nobita.free = false;
-                Nobita.p = 10;
+                if (!Nobita.free_next_turn) {
+                    Nobita.free = false;
+                    Nobita.p = 10;
+                }
 
                 SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
                 graphics.renderTexture_new_size(b, O_X, O_Y, O_W, O_H);
@@ -469,6 +473,10 @@ struct Monopoly {
                 b = NULL;
 
                 Nobita.p = 2;
+            }
+            else if (findpos(Nobita.p, loai) == 8) {
+                Loai8 a(graphics);
+                a.hienthe(stt);
             }
         }
     }

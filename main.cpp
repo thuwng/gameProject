@@ -10,6 +10,8 @@
 #include "dat.h"
 #include "benxe.h"
 #include "congty.h"
+#include "khivan.h"
+#include "cohoi.h"
 
 using namespace std;
 
@@ -251,7 +253,7 @@ int main(int argc, char* argv[]) {
     welcome.present(graphics);
     welcome.destroy();
 
-    SDL_Delay(3000);*/
+    SDL_Delay(3000);
 
     //Ô khởi đầu
     SDL_Texture* Cell = graphics.loadTexture("images/cells/cell1.png");
@@ -282,7 +284,7 @@ int main(int argc, char* argv[]) {
     SDL_DestroyTexture(Cell);
     Cell = NULL;
     SDL_DestroyTexture(b);
-    b = NULL;
+    b = NULL;*/
 
     //Nạp ảnh bàn cờ
     SDL_Texture* board = graphics.loadTexture("images/board.png");
@@ -334,7 +336,7 @@ int main(int argc, char* argv[]) {
                 bool cont = false;
                 Nobita.turn++;
                 thu.gieoxingau(stt, cont);
-                Nobita.p = 19;
+                Nobita.p = 3;
                 thu.hienbanco();
                 thu.thuchien(stt);
                 thu.hienbanco();
@@ -348,17 +350,31 @@ int main(int argc, char* argv[]) {
                 }
 
                 if (cont) {
-                    cont = false;
-                    thu.gieoxingau(stt, cont);
-                    thu.hienbanco();
-                    thu.thuchien(stt);
-                    thu.hienbanco();
-                }
+                    if (!Nobita.free_next_turn) {
+                        SDL_Texture* vao_tu = graphics.loadTexture("images/vaotu.png");
+                        graphics.prepareScene(vao_tu);
 
-                if (cont) {
-                    Nobita.free = false;
-                    Nobita.p = 10;
-                    thu.hienbanco();
+                        graphics.presentScene();
+
+                        Nobita.free = false;
+                        Nobita.p = 10;
+                        thu.hienbanco();
+
+                        SDL_DestroyTexture(vao_tu);
+                        vao_tu = NULL;
+                    }
+                    else {
+                        SDL_Texture* mien_tu = graphics.loadTexture("images/mientu.png");
+                        graphics.prepareScene(mien_tu);
+
+                        graphics.presentScene();
+
+                        Nobita.free_next_turn = false;
+                        thu.hienbanco();
+
+                        SDL_DestroyTexture(mien_tu);
+                        mien_tu = NULL;
+                    }
                 }
 
             }

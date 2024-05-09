@@ -55,7 +55,7 @@ const int C_H = 35;
 struct character{
     int p, turn = 0, money = 200, bxe = 0, cty = 0;
     bool is_real_player = false, bankrupt = false;
-    bool free = true;
+    bool free = true, free_next_turn = false;
 } Nobita, Shizuka, Suneo, Chaien;
 
 //Thứ tự ảnh xí ngầu
@@ -97,5 +97,11 @@ const int DORA_CLIPS[][4] = {
     {245, 322, 245, 322}
 };
 const int DORA_FRAMES = sizeof(DORA_CLIPS)/sizeof(int)/4;
+
+//Ô khí vận và ô cơ hội
+const int T_X = 430;
+const int T_Y = 250;
+const int T_W = 600;
+const int T_H = 300;
 
 #endif // _DEFS__H
