@@ -278,7 +278,7 @@ struct Monopoly {
         SDL_DestroyTexture(chaien);
         chaien = NULL;
     }
-    void thuchien(int stt) {
+    void thuchien(int stt, bool &cont) {
         int loai;
         if (stt == 0) {
             if (findpos(Nobita.p, loai) == 1) {
@@ -473,10 +473,15 @@ struct Monopoly {
                 b = NULL;
 
                 Nobita.p = 2;
+                cont = true;
             }
             else if (findpos(Nobita.p, loai) == 8) {
                 Loai8 a(graphics);
                 a.hienthe(stt);
+            }
+            else if (findpos(Nobita.p, loai) == 9) {
+                Loai9 a(graphics);
+                a.hienthe(stt, cont);
             }
         }
     }

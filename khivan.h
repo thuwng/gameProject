@@ -29,104 +29,406 @@ struct Loai8{
     }
 
     void hienthe(int stt) {
-        SDL_Texture* visit = graphics.loadTexture(cell[Nobita.p]);
-        graphics.prepareScene(visit);
+        if (stt == 0) {
+            SDL_Texture* visit = graphics.loadTexture(cell[Nobita.p]);
+            graphics.prepareScene(visit);
 
-        SDL_Texture* b = graphics.loadTexture("images/xemthe.png");
-        graphics.renderTexture_new_size(b, 200, 600, O_W, O_H);
-        graphics.presentScene();
+            SDL_Texture* b = graphics.loadTexture("images/xemthe.png");
+            graphics.renderTexture_new_size(b, 200, 600, O_W, O_H);
+            graphics.presentScene();
 
-        SDL_Event dc;
-        int x, y;
-        bool quit = false;
-        while (true) {
-            SDL_GetMouseState(&x, &y);
-            SDL_PollEvent(&dc);
-            switch (dc.type) {
-                case SDL_QUIT:
-                    exit(0);
-                    break;
-                case SDL_MOUSEBUTTONDOWN:
-                    if (200 <= x && x <= 200 + O_W && 600 <= y && y <= 600 + O_H) {
-                        quit = true;
-                    }
+            SDL_Event dc;
+            int x, y;
+            bool quit = false;
+            while (true) {
+                SDL_GetMouseState(&x, &y);
+                SDL_PollEvent(&dc);
+                switch (dc.type) {
+                    case SDL_QUIT:
+                        exit(0);
+                        break;
+                    case SDL_MOUSEBUTTONDOWN:
+                        if (200 <= x && x <= 200 + O_W && 600 <= y && y <= 600 + O_H) {
+                            quit = true;
+                        }
+                }
+                if (quit) break;
             }
-            if (quit) break;
-        }
 
-        int r = rand() % 10;
-        SDL_Texture* o_kv = graphics.loadTexture(kv[r]);
-        graphics.renderTexture_new_size(o_kv, T_X, T_Y, T_W, T_H);
+            int r = rand() % 10;
+            SDL_Texture* o_kv = graphics.loadTexture(kv[r]);
+            graphics.renderTexture_new_size(o_kv, T_X, T_Y, T_W, T_H);
 
-        graphics.presentScene();
-        SDL_Delay(2000);
+            graphics.presentScene();
+            SDL_Delay(2000);
 
-        if (r == 0) {
-            Nobita.money += 150;
-            Shizuka.money -= 50;
-            Suneo.money -= 50;
-            Chaien.money -= 50;
-        }
-        else if (r == 1) {
-            Nobita.money += 10;
-        }
-        else if (r == 2) {
-            Nobita.money += 100;
-        }
-        else if (r == 3) {
-            Nobita.money += 200;
-        }
-        else if (r == 4) {
-            Nobita.money += 200;
-        }
-        else if (r == 5) {
-            Nobita.free_next_turn = true;
-        }
-        else if (r == 6) {
-            Nobita.money += 400;
-        }
-        else if (r == 7) {
-            Nobita.money += 200;
-        }
-        else if (r == 8) {
-            Nobita.money += 50;
-        }
-        else if (r == 9) {
-            Nobita.p = 1;
-            Nobita.money += 200;
-        }
-
-        SDL_Texture* B = graphics.loadTexture("images/tieptheo.png");
-        graphics.renderTexture_new_size(B, O_X, O_Y, O_W, O_H);
-
-        graphics.presentScene();
-
-        SDL_Event d;
-        int x1, y1;
-        bool quit1 = false;
-        while (true) {
-            SDL_GetMouseState(&x1, &y1);
-            SDL_PollEvent(&d);
-            switch (d.type) {
-                case SDL_QUIT:
-                    exit(0);
-                    break;
-                case SDL_MOUSEBUTTONDOWN:
-                    if (O_X <= x1 && x1 <= O_X + O_W && O_Y <= y1 && y1 <= O_Y + O_H) {
-                        quit1 = true;
-                    }
+            if (r == 0) {
+                Nobita.money += 150;
+                Shizuka.money -= 50;
+                Suneo.money -= 50;
+                Chaien.money -= 50;
             }
-            if (quit1) break;
-        }
+            else if (r == 1) {
+                Nobita.money += 10;
+            }
+            else if (r == 2) {
+                Nobita.money += 100;
+            }
+            else if (r == 3) {
+                Nobita.money += 200;
+            }
+            else if (r == 4) {
+                Nobita.money += 200;
+            }
+            else if (r == 5) {
+                Nobita.free_next_turn = true;
+            }
+            else if (r == 6) {
+                Nobita.money += 400;
+            }
+            else if (r == 7) {
+                Nobita.money += 200;
+            }
+            else if (r == 8) {
+                Nobita.money += 50;
+            }
+            else if (r == 9) {
+                Nobita.p = 1;
+                Nobita.money += 200;
+            }
 
-        SDL_DestroyTexture(visit);
-        visit = NULL;
-        SDL_DestroyTexture(b);
-        b = NULL;
-        SDL_DestroyTexture(o_kv);
-        o_kv = NULL;
-        SDL_DestroyTexture(B);
-        B = NULL;
+            SDL_Texture* B = graphics.loadTexture("images/tieptheo.png");
+            graphics.renderTexture_new_size(B, O_X, O_Y, O_W, O_H);
+
+            graphics.presentScene();
+
+            SDL_Event d;
+            int x1, y1;
+            bool quit1 = false;
+            while (true) {
+                SDL_GetMouseState(&x1, &y1);
+                SDL_PollEvent(&d);
+                switch (d.type) {
+                    case SDL_QUIT:
+                        exit(0);
+                        break;
+                    case SDL_MOUSEBUTTONDOWN:
+                        if (O_X <= x1 && x1 <= O_X + O_W && O_Y <= y1 && y1 <= O_Y + O_H) {
+                            quit1 = true;
+                        }
+                }
+                if (quit1) break;
+            }
+
+            SDL_DestroyTexture(visit);
+            visit = NULL;
+            SDL_DestroyTexture(b);
+            b = NULL;
+            SDL_DestroyTexture(o_kv);
+            o_kv = NULL;
+            SDL_DestroyTexture(B);
+            B = NULL;
+        }
+        else if (stt == 1) {
+            SDL_Texture* visit = graphics.loadTexture(cell[Shizuka.p]);
+            graphics.prepareScene(visit);
+
+            SDL_Texture* b = graphics.loadTexture("images/xemthe.png");
+            graphics.renderTexture_new_size(b, 200, 600, O_W, O_H);
+            graphics.presentScene();
+
+            SDL_Event dc;
+            int x, y;
+            bool quit = false;
+            while (true) {
+                SDL_GetMouseState(&x, &y);
+                SDL_PollEvent(&dc);
+                switch (dc.type) {
+                    case SDL_QUIT:
+                        exit(0);
+                        break;
+                    case SDL_MOUSEBUTTONDOWN:
+                        if (200 <= x && x <= 200 + O_W && 600 <= y && y <= 600 + O_H) {
+                            quit = true;
+                        }
+                }
+                if (quit) break;
+            }
+
+            int r = rand() % 10;
+            SDL_Texture* o_kv = graphics.loadTexture(kv[r]);
+            graphics.renderTexture_new_size(o_kv, T_X, T_Y, T_W, T_H);
+
+            graphics.presentScene();
+            SDL_Delay(2000);
+
+            if (r == 0) {
+                Shizuka.money += 150;
+                Nobita.money -= 50;
+                Suneo.money -= 50;
+                Chaien.money -= 50;
+            }
+            else if (r == 1) {
+                Shizuka.money += 10;
+            }
+            else if (r == 2) {
+                Shizuka.money += 100;
+            }
+            else if (r == 3) {
+                Shizuka.money += 200;
+            }
+            else if (r == 4) {
+                Shizuka.money += 200;
+            }
+            else if (r == 5) {
+                Shizuka.free_next_turn = true;
+            }
+            else if (r == 6) {
+                Shizuka.money += 400;
+            }
+            else if (r == 7) {
+                Shizuka.money += 200;
+            }
+            else if (r == 8) {
+                Shizuka.money += 50;
+            }
+            else if (r == 9) {
+                Shizuka.p = 1;
+                Shizuka.money += 200;
+            }
+
+            SDL_Texture* B = graphics.loadTexture("images/tieptheo.png");
+            graphics.renderTexture_new_size(B, O_X, O_Y, O_W, O_H);
+
+            graphics.presentScene();
+
+            SDL_Event d;
+            int x1, y1;
+            bool quit1 = false;
+            while (true) {
+                SDL_GetMouseState(&x1, &y1);
+                SDL_PollEvent(&d);
+                switch (d.type) {
+                    case SDL_QUIT:
+                        exit(0);
+                        break;
+                    case SDL_MOUSEBUTTONDOWN:
+                        if (O_X <= x1 && x1 <= O_X + O_W && O_Y <= y1 && y1 <= O_Y + O_H) {
+                            quit1 = true;
+                        }
+                }
+                if (quit1) break;
+            }
+
+            SDL_DestroyTexture(visit);
+            visit = NULL;
+            SDL_DestroyTexture(b);
+            b = NULL;
+            SDL_DestroyTexture(o_kv);
+            o_kv = NULL;
+            SDL_DestroyTexture(B);
+            B = NULL;
+        }
+        else if (stt == 2) {
+            SDL_Texture* visit = graphics.loadTexture(cell[Suneo.p]);
+            graphics.prepareScene(visit);
+
+            SDL_Texture* b = graphics.loadTexture("images/xemthe.png");
+            graphics.renderTexture_new_size(b, 200, 600, O_W, O_H);
+            graphics.presentScene();
+
+            SDL_Event dc;
+            int x, y;
+            bool quit = false;
+            while (true) {
+                SDL_GetMouseState(&x, &y);
+                SDL_PollEvent(&dc);
+                switch (dc.type) {
+                    case SDL_QUIT:
+                        exit(0);
+                        break;
+                    case SDL_MOUSEBUTTONDOWN:
+                        if (200 <= x && x <= 200 + O_W && 600 <= y && y <= 600 + O_H) {
+                            quit = true;
+                        }
+                }
+                if (quit) break;
+            }
+
+            int r = rand() % 10;
+            SDL_Texture* o_kv = graphics.loadTexture(kv[r]);
+            graphics.renderTexture_new_size(o_kv, T_X, T_Y, T_W, T_H);
+
+            graphics.presentScene();
+            SDL_Delay(2000);
+
+            if (r == 0) {
+                Suneo.money += 150;
+                Nobita.money -= 50;
+                Shizuka.money -= 50;
+                Chaien.money -= 50;
+            }
+            else if (r == 1) {
+                Suneo.money += 10;
+            }
+            else if (r == 2) {
+                Suneo.money += 100;
+            }
+            else if (r == 3) {
+                Suneo.money += 200;
+            }
+            else if (r == 4) {
+                Suneo.money += 200;
+            }
+            else if (r == 5) {
+                Suneo.free_next_turn = true;
+            }
+            else if (r == 6) {
+                Suneo.money += 400;
+            }
+            else if (r == 7) {
+                Suneo.money += 200;
+            }
+            else if (r == 8) {
+                Suneo.money += 50;
+            }
+            else if (r == 9) {
+                Suneo.p = 1;
+                Suneo.money += 200;
+            }
+
+            SDL_Texture* B = graphics.loadTexture("images/tieptheo.png");
+            graphics.renderTexture_new_size(B, O_X, O_Y, O_W, O_H);
+
+            graphics.presentScene();
+
+            SDL_Event d;
+            int x1, y1;
+            bool quit1 = false;
+            while (true) {
+                SDL_GetMouseState(&x1, &y1);
+                SDL_PollEvent(&d);
+                switch (d.type) {
+                    case SDL_QUIT:
+                        exit(0);
+                        break;
+                    case SDL_MOUSEBUTTONDOWN:
+                        if (O_X <= x1 && x1 <= O_X + O_W && O_Y <= y1 && y1 <= O_Y + O_H) {
+                            quit1 = true;
+                        }
+                }
+                if (quit1) break;
+            }
+
+            SDL_DestroyTexture(visit);
+            visit = NULL;
+            SDL_DestroyTexture(b);
+            b = NULL;
+            SDL_DestroyTexture(o_kv);
+            o_kv = NULL;
+            SDL_DestroyTexture(B);
+            B = NULL;
+        }
+        else if (stt == 3) {
+            SDL_Texture* visit = graphics.loadTexture(cell[Chaien.p]);
+            graphics.prepareScene(visit);
+
+            SDL_Texture* b = graphics.loadTexture("images/xemthe.png");
+            graphics.renderTexture_new_size(b, 200, 600, O_W, O_H);
+            graphics.presentScene();
+
+            SDL_Event dc;
+            int x, y;
+            bool quit = false;
+            while (true) {
+                SDL_GetMouseState(&x, &y);
+                SDL_PollEvent(&dc);
+                switch (dc.type) {
+                    case SDL_QUIT:
+                        exit(0);
+                        break;
+                    case SDL_MOUSEBUTTONDOWN:
+                        if (200 <= x && x <= 200 + O_W && 600 <= y && y <= 600 + O_H) {
+                            quit = true;
+                        }
+                }
+                if (quit) break;
+            }
+
+            int r = rand() % 10;
+            SDL_Texture* o_kv = graphics.loadTexture(kv[r]);
+            graphics.renderTexture_new_size(o_kv, T_X, T_Y, T_W, T_H);
+
+            graphics.presentScene();
+            SDL_Delay(2000);
+
+            if (r == 0) {
+                Chaien.money += 150;
+                Nobita.money -= 50;
+                Shizuka.money -= 50;
+                Suneo.money -= 50;
+            }
+            else if (r == 1) {
+                Chaien.money += 10;
+            }
+            else if (r == 2) {
+                Chaien.money += 100;
+            }
+            else if (r == 3) {
+                Chaien.money += 200;
+            }
+            else if (r == 4) {
+                Chaien.money += 200;
+            }
+            else if (r == 5) {
+                Chaien.free_next_turn = true;
+            }
+            else if (r == 6) {
+                Chaien.money += 400;
+            }
+            else if (r == 7) {
+                Chaien.money += 200;
+            }
+            else if (r == 8) {
+                Chaien.money += 50;
+            }
+            else if (r == 9) {
+                Chaien.p = 1;
+                Chaien.money += 200;
+            }
+
+            SDL_Texture* B = graphics.loadTexture("images/tieptheo.png");
+            graphics.renderTexture_new_size(B, O_X, O_Y, O_W, O_H);
+
+            graphics.presentScene();
+
+            SDL_Event d;
+            int x1, y1;
+            bool quit1 = false;
+            while (true) {
+                SDL_GetMouseState(&x1, &y1);
+                SDL_PollEvent(&d);
+                switch (d.type) {
+                    case SDL_QUIT:
+                        exit(0);
+                        break;
+                    case SDL_MOUSEBUTTONDOWN:
+                        if (O_X <= x1 && x1 <= O_X + O_W && O_Y <= y1 && y1 <= O_Y + O_H) {
+                            quit1 = true;
+                        }
+                }
+                if (quit1) break;
+            }
+
+            SDL_DestroyTexture(visit);
+            visit = NULL;
+            SDL_DestroyTexture(b);
+            b = NULL;
+            SDL_DestroyTexture(o_kv);
+            o_kv = NULL;
+            SDL_DestroyTexture(B);
+            B = NULL;
+        }
     }
 };
 

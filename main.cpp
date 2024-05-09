@@ -336,16 +336,16 @@ int main(int argc, char* argv[]) {
                 bool cont = false;
                 Nobita.turn++;
                 thu.gieoxingau(stt, cont);
-                Nobita.p = 3;
+                Nobita.p = 7;
                 thu.hienbanco();
-                thu.thuchien(stt);
+                thu.thuchien(stt, cont);
                 thu.hienbanco();
 
                 if (cont) {
                     cont = false;
                     thu.gieoxingau(stt, cont);
                     thu.hienbanco();
-                    thu.thuchien(stt);
+                    thu.thuchien(stt, cont);
                     thu.hienbanco();
                 }
 
@@ -376,7 +376,6 @@ int main(int argc, char* argv[]) {
                         mien_tu = NULL;
                     }
                 }
-
             }
             else {
                 bool ratu = false;
