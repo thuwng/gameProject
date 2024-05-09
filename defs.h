@@ -105,11 +105,11 @@ const int T_W = 600;
 const int T_H = 300;
 
 //Bốc thăm
-const int TH_X = 100;
-const int TH_Y = 100;
-const int TH_W = 100;
-const int TH_H = 250;
-const int TH_DH = 270;
-const int TH_DW = 120;
+const int TH_X = 130;
+const int TH_Y = 200;
+const int TH_W = 220;
+const int TH_DW = 280;
+const int TH_H = 270;
+const int TH_DH = 290;
 
 #endif // _DEFS__H

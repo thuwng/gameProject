@@ -29,7 +29,7 @@ struct Loai9{
         }
     }
 
-    void hienthe(int stt, bool &cont) {
+    void hienthe(int stt, bool &cont, int &mode) {
         if (stt == 0) {
             SDL_Texture* visit = graphics.loadTexture(cell[Nobita.p]);
             graphics.prepareScene(visit);
@@ -56,7 +56,7 @@ struct Loai9{
                 if (quit) break;
             }
 
-            int r = rand() % 10; r = 1;
+            int r = rand() % 10; r = 3;
             SDL_Texture* o_ch = graphics.loadTexture(ch[r]);
             graphics.renderTexture_new_size(o_ch, T_X, T_Y, T_W, T_H);
 
@@ -118,6 +118,7 @@ struct Loai9{
                     graphics.prepareScene(vao_tu);
 
                     graphics.presentScene();
+                    SDL_Delay(1000);
                     Nobita.free = false;
                     Nobita.p = 10;
 
@@ -129,6 +130,7 @@ struct Loai9{
                     graphics.prepareScene(mien_tu);
 
                     graphics.presentScene();
+                    SDL_Delay(1000);
                     Nobita.free_next_turn = false;
 
                     SDL_DestroyTexture(mien_tu);
@@ -138,17 +140,88 @@ struct Loai9{
             else if (r == 2) {
                 Nobita.p -= 3;
                 cont = true;
+                mode = 1;
             }
             else if (r == 3) {
                 SDL_Texture* boctham = graphics.loadTexture("images/boctham.png");
-                graphics.prepareScene(boctham);
                 SDL_Texture* tham = graphics.loadTexture("images/tham.png");
+                SDL_Texture* thamtrungthuong = graphics.loadTexture("images/thamtrungthuong.png");
+
+                graphics.prepareScene(boctham);
                 graphics.renderTexture_new_size(tham, TH_X, TH_Y, TH_W, TH_H);
+                graphics.renderTexture_new_size(tham, TH_X + TH_DW, TH_Y, TH_W, TH_H);
+                graphics.renderTexture_new_size(tham, TH_X, TH_Y + TH_DH, TH_W, TH_H);
+                graphics.renderTexture_new_size(tham, TH_X + TH_DW, TH_Y + TH_DH, TH_W, TH_H);
 
                 graphics.presentScene();
 
+                SDL_Event d;
+                int x, y, k = 0;
+                bool quit = false;
+                while (true) {
+                    SDL_GetMouseState(&x, &y);
+                    SDL_PollEvent(&d);
+                    switch (d.type) {
+                        case SDL_QUIT:
+                            exit(0);
+                            break;
+                        case SDL_MOUSEBUTTONDOWN:
+                            if (TH_X <= x && x <= TH_X + TH_W && TH_Y <= y && y <= TH_Y + TH_H) {
+                                quit = true;
+                                k = 1;
+                            }
+                            else if (TH_X + TH_DW <= x && x <= TH_X + TH_W + TH_DW && TH_Y <= y && y <= TH_Y + TH_H) {
+                                quit = true;
+                                k = 2;
+                            }
+                            else if (TH_X <= x && x <= TH_X + TH_W && TH_Y + TH_DH <= y && y <= TH_Y + TH_H + TH_DH) {
+                                quit = true;
+                                k = 3;
+                            }
+                            else if (TH_X + TH_DW <= x && x <= TH_X + TH_W + TH_DW && TH_Y + TH_DH <= y && y <= TH_Y + TH_H + TH_DH) {
+                                quit = true;
+                                k = 4;
+                            }
+                    }
+                    if (quit) break;
+                }
+                TTF_Font* font = graphics.loadFont("fonts/TNR/times.ttf", 50);
+                SDL_Color color = {0, 0, 0, 0};
+                int tienthuong = (rand() % 5) * 100;
+                SDL_Texture* thuong = graphics.renderText2(to_string(tienthuong), font, color);
+                graphics.prepareScene(boctham);
+
+                if (k == 1) {
+                    graphics.renderTexture_new_size(thamtrungthuong, TH_X, TH_Y, TH_W, TH_H);
+                    graphics.renderTexture(thuong, TH_X + TH_W / 2 - 35, TH_Y + TH_H * 3 / 4 - 45);
+                }
+                else graphics.renderTexture_new_size(tham, TH_X, TH_Y, TH_W, TH_H);
+
+                if (k == 2) {
+                    graphics.renderTexture_new_size(thamtrungthuong, TH_X + TH_DW, TH_Y, TH_W, TH_H);
+                }
+                else graphics.renderTexture_new_size(tham, TH_X + TH_DW, TH_Y, TH_W, TH_H);
+
+                if (k == 3) {
+                    graphics.renderTexture_new_size(thamtrungthuong, TH_X, TH_Y + TH_DH, TH_W, TH_H);
+                }
+                else graphics.renderTexture_new_size(tham, TH_X, TH_Y + TH_DH, TH_W, TH_H);
+
+                if (k == 4) {
+                    graphics.renderTexture_new_size(thamtrungthuong, TH_X + TH_DW, TH_Y + TH_DH, TH_W, TH_H);
+                }
+                else graphics.renderTexture_new_size(tham, TH_X + TH_DW, TH_Y + TH_DH, TH_W, TH_H);
+
+                SDL_Delay(500);
+                graphics.presentScene();
+                waitUntilKeyPressed();
+
                 SDL_DestroyTexture(boctham);
                 boctham = NULL;
+                SDL_DestroyTexture(tham);
+                tham = NULL;
+                SDL_DestroyTexture(thamtrungthuong);
+                thamtrungthuong = NULL;
             }
 
             SDL_DestroyTexture(visit);

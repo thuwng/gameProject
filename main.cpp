@@ -334,22 +334,30 @@ int main(int argc, char* argv[]) {
         if (stt == 0) {
             if (Nobita.free) {
                 bool cont = false;
+                int mode, tu = 1;
                 Nobita.turn++;
-                thu.gieoxingau(stt, cont);
+                thu.gieoxingau(stt, cont, mode);
                 Nobita.p = 7;
                 thu.hienbanco();
-                thu.thuchien(stt, cont);
+                thu.thuchien(stt, cont, mode);
                 thu.hienbanco();
 
-                if (cont) {
-                    cont = false;
-                    thu.gieoxingau(stt, cont);
-                    thu.hienbanco();
-                    thu.thuchien(stt, cont);
-                    thu.hienbanco();
+                while (cont && tu < 2) {
+                    if (mode == 0) {
+                        tu++;
+                        thu.gieoxingau(stt, cont, mode);
+                        thu.hienbanco();
+                        thu.thuchien(stt, cont, mode);
+                        thu.hienbanco();
+                    }
+                    else {
+                        thu.thuchien(stt, cont, mode);
+                        thu.hienbanco();
+                        cont = false;
+                    }
                 }
 
-                if (cont) {
+                if (tu == 2 && cont) {
                     if (!Nobita.free_next_turn) {
                         SDL_Texture* vao_tu = graphics.loadTexture("images/vaotu.png");
                         graphics.prepareScene(vao_tu);

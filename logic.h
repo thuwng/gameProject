@@ -80,7 +80,7 @@ struct Monopoly {
     }
 
     int x1, x2;
-    void gieoxingau(int stt, bool &cont) {
+    void gieoxingau(int stt, bool &cont, int &mode) {
         SDL_Texture* blank = graphics.loadTexture(Turn[stt]);
         graphics.prepareScene(blank);
         graphics.presentScene();
@@ -139,7 +139,10 @@ struct Monopoly {
         else if (stt == 2) Suneo.p += (x1 + x2 + 2) % 36;
         else Chaien.p += (x1 + x2 + 2) % 36;
 
-        if (x1 == x2) cont = true;
+        if (x1 == x2) {
+            cont = true;
+            mode = 0;
+        }
 
         //Xóa
         SDL_DestroyTexture(button);
@@ -278,7 +281,7 @@ struct Monopoly {
         SDL_DestroyTexture(chaien);
         chaien = NULL;
     }
-    void thuchien(int stt, bool &cont) {
+    void thuchien(int stt, bool &cont, int &mode) {
         int loai;
         if (stt == 0) {
             if (findpos(Nobita.p, loai) == 1) {
@@ -474,6 +477,7 @@ struct Monopoly {
 
                 Nobita.p = 2;
                 cont = true;
+                mode = 1;
             }
             else if (findpos(Nobita.p, loai) == 8) {
                 Loai8 a(graphics);
@@ -481,7 +485,7 @@ struct Monopoly {
             }
             else if (findpos(Nobita.p, loai) == 9) {
                 Loai9 a(graphics);
-                a.hienthe(stt, cont);
+                a.hienthe(stt, cont, mode);
             }
         }
     }
