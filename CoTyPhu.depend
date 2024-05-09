@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1715192623 source:c:\users\dell\documents\tt\cotyphu\main.cpp
+1715239890 source:c:\users\dell\documents\tt\cotyphu\main.cpp
 	<bits/stdc++.h>
 	<SDL.h>
 	<SDL_image.h>
@@ -13,16 +13,16 @@
 	"benxe.h"
 	"congty.h"
 
-1715149898 c:\users\dell\documents\tt\cotyphu\graphics.h
+1715219947 c:\users\dell\documents\tt\cotyphu\graphics.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
 	<SDL_ttf.h>
 	"defs.h"
 
-1715193398 c:\users\dell\documents\tt\cotyphu\defs.h
+1715221444 c:\users\dell\documents\tt\cotyphu\defs.h
 
-1715192488 c:\users\dell\documents\tt\cotyphu\logic.h
+1715241351 c:\users\dell\documents\tt\cotyphu\logic.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>

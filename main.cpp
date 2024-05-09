@@ -315,7 +315,7 @@ int main(int argc, char* argv[]) {
 
     //Hiện bàn cờ
     graphics.presentScene();
-    SDL_Delay(3000);
+    SDL_Delay(2000);
 
     //Khởi tạo các loại ô
     Loai1 loai1(graphics);
@@ -334,6 +334,7 @@ int main(int argc, char* argv[]) {
                 bool cont = false;
                 Nobita.turn++;
                 thu.gieoxingau(stt, cont);
+                Nobita.p = 19;
                 thu.hienbanco();
                 thu.thuchien(stt);
                 thu.hienbanco();

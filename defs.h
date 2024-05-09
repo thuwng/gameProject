@@ -79,10 +79,23 @@ const int M_W = 950;
 const int M_H = 300;
 
 //Các ô chữ
-const int O_X = 800;
-const int O_Y = 50;
+const int O_X = 750;
+const int O_Y = 30;
 const int O_W = 200;
 const int O_H = 70;
 const int O_D = 210;
+
+//Doraemon chạy
+const char*  DORA_SPRITE = "images/dora.png";
+const int DORA_CLIPS[][4] = {
+    {0, 0, 245, 322},
+    {245, 0, 245, 322},
+    {490, 0, 245, 322},
+    {735, 0, 245, 322},
+
+    {0, 322, 245, 322},
+    {245, 322, 245, 322}
+};
+const int DORA_FRAMES = sizeof(DORA_CLIPS)/sizeof(int)/4;
 
 #endif // _DEFS__H

@@ -250,7 +250,7 @@ struct Monopoly {
 
         //Hiện lại bàn cờ
         graphics.presentScene();
-        SDL_Delay(3000);
+        SDL_Delay(2000);
 
         //Xóa
         SDL_DestroyTexture(board);
@@ -417,10 +417,58 @@ struct Monopoly {
                     if (quit) break;
                 }
 
+                SDL_Texture* road = graphics.loadTexture("images/road.jpg");
+                Sprite dora;
+                SDL_Texture* doraTexture = graphics.loadTexture(DORA_SPRITE);
+                dora.init(doraTexture, DORA_FRAMES, DORA_CLIPS);
+
+                quit = false;
+                int dx = -20, dy = 420, nb = 0;
+                while(!quit) {
+                    if(nb == 28) quit = true;
+                    nb++;
+
+                    dora.tick();
+
+                    graphics.prepareScene(road);
+                    graphics.render(dx, dy, dora);
+                    graphics.presentScene();
+                    SDL_Delay(100);
+
+                    dx = (dx + 50) % (SCREEN_W - 50);
+                }
+
+                SDL_Texture* plane = graphics.loadTexture("images/airplane.png");
+                quit = false;
+                int Dx = -20, Dy = 150, c = 0;
+                while(!quit) {
+                    if(c == 29) quit = true;
+                    c++;
+
+                    dora.tick();
+
+                    graphics.prepareScene(road);
+                    graphics.render(dx, dy, dora);
+                    graphics.renderTexture_new_size(plane, Dx, Dy, 300, 200);
+
+                    graphics.presentScene();
+                    SDL_Delay(100);
+
+                    Dx = (Dx + 40) % SCREEN_W;
+                }
+
+                SDL_DestroyTexture(plane);
+                plane = NULL;
+                SDL_DestroyTexture(doraTexture);
+                doraTexture = NULL;
+                SDL_DestroyTexture(road);
+                road = NULL;
                 SDL_DestroyTexture(visit);
                 visit = NULL;
                 SDL_DestroyTexture(b);
                 b = NULL;
+
+                Nobita.p = 2;
             }
         }
     }

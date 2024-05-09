@@ -151,6 +151,12 @@ struct Graphics {
         SDL_FreeSurface( textSurface );
         return texture;
     }
+
+    void render(int x, int y, const Sprite& sprite) {
+        const SDL_Rect* clip = sprite.getCurrentClip();
+        SDL_Rect renderQuad = {x, y, clip->w, clip->h};
+        SDL_RenderCopy(renderer, sprite.texture, clip, &renderQuad);
+    }
 };
 
 #endif // _GRAPHICS__H
