@@ -108,653 +108,163 @@ struct Loai1{
     }
 
     void hienthe(int stt, int loai) {
-        if (stt == 0) {
-            if (o_dat[loai].chu == -1) {
-                SDL_Texture* visit = graphics.loadTexture(cell[Nobita.p]);
-                graphics.prepareScene(visit);
+        if (o_dat[loai].chu == -1) {
+            SDL_Texture* visit = graphics.loadTexture(cell[nvat[stt].p]);
+            graphics.prepareScene(visit);
 
-                SDL_Texture* a = graphics.loadTexture("images/muadat.png");
-                graphics.renderTexture_new_size(a, O_X, O_Y, O_W, O_H);
-                SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
-                graphics.renderTexture_new_size(b, O_X + O_D, O_Y, O_W, O_H);
-                graphics.presentScene();
+            SDL_Texture* a = graphics.loadTexture("images/muadat.png");
+            graphics.renderTexture_new_size(a, O_X, O_Y, O_W, O_H);
+            SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
+            graphics.renderTexture_new_size(b, O_X + O_D, O_Y, O_W, O_H);
+            graphics.presentScene();
 
-                SDL_Event dc;
-                int x, y;
-                bool quit = false, buy = false;
-                while (true) {
-                    SDL_GetMouseState(&x, &y);
-                    SDL_PollEvent(&dc);
-                    switch (dc.type) {
-                        case SDL_QUIT:
-                            exit(0);
-                            break;
-                        case SDL_MOUSEBUTTONDOWN:
-                            if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                buy = true;
-                                quit = true;
-                            }
-                            else if (O_X + O_D <= x && x <= O_X + O_D + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                quit = true;
-                            }
-                    }
-                    if (quit) break;
+            SDL_Event dc;
+            int x, y;
+            bool quit = false, buy = false;
+            while (true) {
+                SDL_GetMouseState(&x, &y);
+                SDL_PollEvent(&dc);
+                switch (dc.type) {
+                    case SDL_QUIT:
+                        exit(0);
+                        break;
+                    case SDL_MOUSEBUTTONDOWN:
+                        if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
+                            buy = true;
+                            quit = true;
+                        }
+                        else if (O_X + O_D <= x && x <= O_X + O_D + O_W && O_Y <= y && y <= O_Y + O_H) {
+                            quit = true;
+                        }
                 }
-
-                if (buy) {
-                    o_dat[loai].chu = stt;
-                    Nobita.money -= o_dat[loai].giadat;
-                }
-
-                SDL_DestroyTexture(visit);
-                visit = NULL;
-                SDL_DestroyTexture(a);
-                a = NULL;
-                SDL_DestroyTexture(b);
-                b = NULL;
-
-                SDL_Delay(500);
+                if (quit) break;
             }
-            else if (o_dat[loai].chu == stt && o_dat[loai].nha < 2) {
-                SDL_Texture* visit = graphics.loadTexture(cell[Nobita.p]);
-                graphics.prepareScene(visit);
 
-                SDL_Texture* a = graphics.loadTexture("images/muanha.png");
-                graphics.renderTexture_new_size(a, O_X, O_Y, O_W, O_H);
-                SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
-                graphics.renderTexture_new_size(b, O_X + O_D, O_Y, O_W, O_H);
-                graphics.presentScene();
-
-                SDL_Event dc;
-                int x, y;
-                bool quit = false, buy = false;
-                while (true) {
-                    SDL_GetMouseState(&x, &y);
-                    SDL_PollEvent(&dc);
-                    switch (dc.type) {
-                        case SDL_QUIT:
-                            exit(0);
-                            break;
-                        case SDL_MOUSEBUTTONDOWN:
-                            if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                buy = true;
-                                quit = true;
-                            }
-                            else if (O_X + O_D <= x && x <= O_X + O_D + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                quit = true;
-                            }
-                    }
-                    if (quit) break;
-                }
-
-                if (buy) {
-                    o_dat[loai].nha++;
-                    Nobita.money -= o_dat[loai].gianha;
-                }
-
-                SDL_DestroyTexture(visit);
-                visit = NULL;
-                SDL_DestroyTexture(a);
-                a = NULL;
-                SDL_DestroyTexture(b);
-                b = NULL;
-
-                SDL_Delay(500);
+            if (buy) {
+                o_dat[loai].chu = stt;
+                nvat[stt].money -= o_dat[loai].giadat;
             }
-            else if (o_dat[loai].chu == stt && o_dat[loai].nha == 2) {
-                SDL_Texture* visit = graphics.loadTexture(cell[Nobita.p]);
-                graphics.prepareScene(visit);
 
-                SDL_Texture* a = graphics.loadTexture("images/muaks.png");
-                graphics.renderTexture_new_size(a, O_X, O_Y, O_W, O_H);
-                SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
-                graphics.renderTexture_new_size(b, O_X + O_D, O_Y, O_W, O_H);
-                graphics.presentScene();
+            SDL_DestroyTexture(visit);
+            visit = NULL;
+            SDL_DestroyTexture(a);
+            a = NULL;
+            SDL_DestroyTexture(b);
+            b = NULL;
 
-                SDL_Event dc;
-                int x, y;
-                bool quit = false, buy = false;
-                while (true) {
-                    SDL_GetMouseState(&x, &y);
-                    SDL_PollEvent(&dc);
-                    switch (dc.type) {
-                        case SDL_QUIT:
-                            exit(0);
-                            break;
-                        case SDL_MOUSEBUTTONDOWN:
-                            if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                buy = true;
-                                quit = true;
-                            }
-                            else if (O_X + O_D <= x && x <= O_X + O_D + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                quit = true;
-                            }
-                    }
-                    if (quit) break;
-                }
-
-                if (buy) {
-                    o_dat[loai].ks = true;
-                    Nobita.money -= o_dat[loai].giaks;
-                }
-
-                SDL_DestroyTexture(visit);
-                visit = NULL;
-                SDL_DestroyTexture(a);
-                a = NULL;
-                SDL_DestroyTexture(b);
-                b = NULL;
-
-                SDL_Delay(500);
-            }
-            else if (o_dat[loai].chu != stt) {
-                int thue = 0;
-                if (o_dat[loai].nha == 0) {
-                    Nobita.money -= o_dat[loai].thuedat;
-                    thue = o_dat[loai].thuedat;
-                }
-                else if (o_dat[loai].nha == 1) {
-                    Nobita.money -= o_dat[loai].thuenha1;
-                    thue = o_dat[loai].thuenha1;
-                }
-                else if (o_dat[loai].nha == 2 && !o_dat[loai].ks) {
-                    Nobita.money -= o_dat[loai].thuenha2;
-                    thue = o_dat[loai].thuenha2;
-                }
-                else {
-                    Nobita.money -= o_dat[loai].thueks;
-                    thue = o_dat[loai].thueks;
-                }
-                if (o_dat[loai].chu == 1) Shizuka.money += thue;
-                else if (o_dat[loai].chu == 2) Suneo.money += thue;
-                else if (o_dat[loai].chu == 3) Chaien.money += thue;
-            }
+            SDL_Delay(500);
         }
-        else if (stt == 1) {
-            if (o_dat[loai].chu == -1) {
-                SDL_Texture* visit = graphics.loadTexture(cell[Shizuka.p]);
-                graphics.prepareScene(visit);
+        else if (o_dat[loai].chu == stt && o_dat[loai].nha < 2) {
+            SDL_Texture* visit = graphics.loadTexture(cell[nvat[stt].p]);
+            graphics.prepareScene(visit);
 
-                SDL_Texture* a = graphics.loadTexture("images/muadat.png");
-                graphics.renderTexture_new_size(a, O_X, O_Y, O_W, O_H);
-                SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
-                graphics.renderTexture_new_size(b, O_X + O_D, O_Y, O_W, O_H);
-                graphics.presentScene();
+            SDL_Texture* a = graphics.loadTexture("images/muanha.png");
+            graphics.renderTexture_new_size(a, O_X, O_Y, O_W, O_H);
+            SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
+            graphics.renderTexture_new_size(b, O_X + O_D, O_Y, O_W, O_H);
+            graphics.presentScene();
 
-                SDL_Event dc;
-                int x, y;
-                bool quit = false, buy = false;
-                while (true) {
-                    SDL_GetMouseState(&x, &y);
-                    SDL_PollEvent(&dc);
-                    switch (dc.type) {
-                        case SDL_QUIT:
-                            exit(0);
-                            break;
-                        case SDL_MOUSEBUTTONDOWN:
-                            if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                buy = true;
-                                quit = true;
-                            }
-                            else if (O_X + O_D <= x && x <= O_X + O_D + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                quit = true;
-                            }
-                    }
-                    if (quit) break;
+            SDL_Event dc;
+            int x, y;
+            bool quit = false, buy = false;
+            while (true) {
+                SDL_GetMouseState(&x, &y);
+                SDL_PollEvent(&dc);
+                switch (dc.type) {
+                    case SDL_QUIT:
+                        exit(0);
+                        break;
+                    case SDL_MOUSEBUTTONDOWN:
+                        if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
+                            buy = true;
+                            quit = true;
+                        }
+                        else if (O_X + O_D <= x && x <= O_X + O_D + O_W && O_Y <= y && y <= O_Y + O_H) {
+                            quit = true;
+                        }
                 }
-
-                if (buy) {
-                    o_dat[loai].chu = stt;
-                    Shizuka.money -= o_dat[loai].giadat;
-                }
-
-                SDL_DestroyTexture(visit);
-                visit = NULL;
-                SDL_DestroyTexture(a);
-                a = NULL;
-                SDL_DestroyTexture(b);
-                b = NULL;
-
-                SDL_Delay(500);
+                if (quit) break;
             }
-            else if (o_dat[loai].chu == stt && o_dat[loai].nha < 2) {
-                SDL_Texture* visit = graphics.loadTexture(cell[Shizuka.p]);
-                graphics.prepareScene(visit);
 
-                SDL_Texture* a = graphics.loadTexture("images/muanha.png");
-                graphics.renderTexture_new_size(a, O_X, O_Y, O_W, O_H);
-                SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
-                graphics.renderTexture_new_size(b, O_X + O_D, O_Y, O_W, O_H);
-                graphics.presentScene();
-
-                SDL_Event dc;
-                int x, y;
-                bool quit = false, buy = false;
-                while (true) {
-                    SDL_GetMouseState(&x, &y);
-                    SDL_PollEvent(&dc);
-                    switch (dc.type) {
-                        case SDL_QUIT:
-                            exit(0);
-                            break;
-                        case SDL_MOUSEBUTTONDOWN:
-                            if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                buy = true;
-                                quit = true;
-                            }
-                            else if (O_X + O_D <= x && x <= O_X + O_D + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                quit = true;
-                            }
-                    }
-                    if (quit) break;
-                }
-
-                if (buy) {
-                    o_dat[loai].nha++;
-                    Shizuka.money -= o_dat[loai].gianha;
-                }
-
-                SDL_DestroyTexture(visit);
-                visit = NULL;
-                SDL_DestroyTexture(a);
-                a = NULL;
-                SDL_DestroyTexture(b);
-                b = NULL;
-
-                SDL_Delay(500);
+            if (buy) {
+                o_dat[loai].nha++;
+                nvat[stt].money -= o_dat[loai].gianha;
             }
-            else if (o_dat[loai].chu == stt && o_dat[loai].nha == 2) {
-                SDL_Texture* visit = graphics.loadTexture(cell[Shizuka.p]);
-                graphics.prepareScene(visit);
 
-                SDL_Texture* a = graphics.loadTexture("images/muaks.png");
-                graphics.renderTexture_new_size(a, O_X, O_Y, O_W, O_H);
-                SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
-                graphics.renderTexture_new_size(b, O_X + O_D, O_Y, O_W, O_H);
-                graphics.presentScene();
+            SDL_DestroyTexture(visit);
+            visit = NULL;
+            SDL_DestroyTexture(a);
+            a = NULL;
+            SDL_DestroyTexture(b);
+            b = NULL;
 
-                SDL_Event dc;
-                int x, y;
-                bool quit = false, buy = false;
-                while (true) {
-                    SDL_GetMouseState(&x, &y);
-                    SDL_PollEvent(&dc);
-                    switch (dc.type) {
-                        case SDL_QUIT:
-                            exit(0);
-                            break;
-                        case SDL_MOUSEBUTTONDOWN:
-                            if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                buy = true;
-                                quit = true;
-                            }
-                            else if (O_X + O_D <= x && x <= O_X + O_D + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                quit = true;
-                            }
-                    }
-                    if (quit) break;
-                }
-
-                if (buy) {
-                    o_dat[loai].ks = true;
-                    Shizuka.money -= o_dat[loai].giaks;
-                }
-
-                SDL_DestroyTexture(visit);
-                visit = NULL;
-                SDL_DestroyTexture(a);
-                a = NULL;
-                SDL_DestroyTexture(b);
-                b = NULL;
-
-                SDL_Delay(500);
-            }
-            else if (o_dat[loai].chu != stt) {
-                int thue = 0;
-                if (o_dat[loai].nha == 0) {
-                    Shizuka.money -= o_dat[loai].thuedat;
-                    thue = o_dat[loai].thuedat;
-                }
-                else if (o_dat[loai].nha == 1) {
-                    Shizuka.money -= o_dat[loai].thuenha1;
-                    thue = o_dat[loai].thuenha1;
-                }
-                else if (o_dat[loai].nha == 2 && !o_dat[loai].ks) {
-                    Shizuka.money -= o_dat[loai].thuenha2;
-                    thue = o_dat[loai].thuenha2;
-                }
-                else {
-                    Shizuka.money -= o_dat[loai].thueks;
-                    thue = o_dat[loai].thueks;
-                }
-                if (o_dat[loai].chu == 0) Nobita.money += thue;
-                else if (o_dat[loai].chu == 2) Suneo.money += thue;
-                else if (o_dat[loai].chu == 3) Chaien.money += thue;
-            }
+            SDL_Delay(500);
         }
-        else if (stt == 3) {
-            if (o_dat[loai].chu == -1) {
-                SDL_Texture* visit = graphics.loadTexture(cell[Suneo.p]);
-                graphics.prepareScene(visit);
+        else if (o_dat[loai].chu == stt && o_dat[loai].nha == 2) {
+            SDL_Texture* visit = graphics.loadTexture(cell[nvat[stt].p]);
+            graphics.prepareScene(visit);
 
-                SDL_Texture* a = graphics.loadTexture("images/muadat.png");
-                graphics.renderTexture_new_size(a, O_X, O_Y, O_W, O_H);
-                SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
-                graphics.renderTexture_new_size(b, O_X + O_D, O_Y, O_W, O_H);
-                graphics.presentScene();
+            SDL_Texture* a = graphics.loadTexture("images/muaks.png");
+            graphics.renderTexture_new_size(a, O_X, O_Y, O_W, O_H);
+            SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
+            graphics.renderTexture_new_size(b, O_X + O_D, O_Y, O_W, O_H);
+            graphics.presentScene();
 
-                SDL_Event dc;
-                int x, y;
-                bool quit = false, buy = false;
-                while (true) {
-                    SDL_GetMouseState(&x, &y);
-                    SDL_PollEvent(&dc);
-                    switch (dc.type) {
-                        case SDL_QUIT:
-                            exit(0);
-                            break;
-                        case SDL_MOUSEBUTTONDOWN:
-                            if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                buy = true;
-                                quit = true;
-                            }
-                            else if (O_X + O_D <= x && x <= O_X + O_D + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                quit = true;
-                            }
-                    }
-                    if (quit) break;
+            SDL_Event dc;
+            int x, y;
+            bool quit = false, buy = false;
+            while (true) {
+                SDL_GetMouseState(&x, &y);
+                SDL_PollEvent(&dc);
+                switch (dc.type) {
+                    case SDL_QUIT:
+                        exit(0);
+                        break;
+                    case SDL_MOUSEBUTTONDOWN:
+                        if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
+                            buy = true;
+                            quit = true;
+                        }
+                        else if (O_X + O_D <= x && x <= O_X + O_D + O_W && O_Y <= y && y <= O_Y + O_H) {
+                            quit = true;
+                        }
                 }
-
-                if (buy) {
-                    o_dat[loai].chu = stt;
-                    Suneo.money -= o_dat[loai].giadat;
-                }
-
-                SDL_DestroyTexture(visit);
-                visit = NULL;
-                SDL_DestroyTexture(a);
-                a = NULL;
-                SDL_DestroyTexture(b);
-                b = NULL;
-
-                SDL_Delay(500);
+                if (quit) break;
             }
-            else if (o_dat[loai].chu == stt && o_dat[loai].nha < 2) {
-                SDL_Texture* visit = graphics.loadTexture(cell[Suneo.p]);
-                graphics.prepareScene(visit);
 
-                SDL_Texture* a = graphics.loadTexture("images/muanha.png");
-                graphics.renderTexture_new_size(a, O_X, O_Y, O_W, O_H);
-                SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
-                graphics.renderTexture_new_size(b, O_X + O_D, O_Y, O_W, O_H);
-                graphics.presentScene();
-
-                SDL_Event dc;
-                int x, y;
-                bool quit = false, buy = false;
-                while (true) {
-                    SDL_GetMouseState(&x, &y);
-                    SDL_PollEvent(&dc);
-                    switch (dc.type) {
-                        case SDL_QUIT:
-                            exit(0);
-                            break;
-                        case SDL_MOUSEBUTTONDOWN:
-                            if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                buy = true;
-                                quit = true;
-                            }
-                            else if (O_X + O_D <= x && x <= O_X + O_D + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                quit = true;
-                            }
-                    }
-                    if (quit) break;
-                }
-
-                if (buy) {
-                    o_dat[loai].nha++;
-                    Suneo.money -= o_dat[loai].gianha;
-                }
-
-                SDL_DestroyTexture(visit);
-                visit = NULL;
-                SDL_DestroyTexture(a);
-                a = NULL;
-                SDL_DestroyTexture(b);
-                b = NULL;
-
-                SDL_Delay(500);
+            if (buy) {
+                o_dat[loai].ks = true;
+                nvat[stt].money -= o_dat[loai].giaks;
             }
-            else if (o_dat[loai].chu == stt && o_dat[loai].nha == 2) {
-                SDL_Texture* visit = graphics.loadTexture(cell[Suneo.p]);
-                graphics.prepareScene(visit);
 
-                SDL_Texture* a = graphics.loadTexture("images/muaks.png");
-                graphics.renderTexture_new_size(a, O_X, O_Y, O_W, O_H);
-                SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
-                graphics.renderTexture_new_size(b, O_X + O_D, O_Y, O_W, O_H);
-                graphics.presentScene();
+            SDL_DestroyTexture(visit);
+            visit = NULL;
+            SDL_DestroyTexture(a);
+            a = NULL;
+            SDL_DestroyTexture(b);
+            b = NULL;
 
-                SDL_Event dc;
-                int x, y;
-                bool quit = false, buy = false;
-                while (true) {
-                    SDL_GetMouseState(&x, &y);
-                    SDL_PollEvent(&dc);
-                    switch (dc.type) {
-                        case SDL_QUIT:
-                            exit(0);
-                            break;
-                        case SDL_MOUSEBUTTONDOWN:
-                            if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                buy = true;
-                                quit = true;
-                            }
-                            else if (O_X + O_D <= x && x <= O_X + O_D + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                quit = true;
-                            }
-                    }
-                    if (quit) break;
-                }
-
-                if (buy) {
-                    o_dat[loai].ks = true;
-                    Suneo.money -= o_dat[loai].giaks;
-                }
-
-                SDL_DestroyTexture(visit);
-                visit = NULL;
-                SDL_DestroyTexture(a);
-                a = NULL;
-                SDL_DestroyTexture(b);
-                b = NULL;
-
-                SDL_Delay(500);
-            }
-            else if (o_dat[loai].chu != stt) {
-                int thue = 0;
-                if (o_dat[loai].nha == 0) {
-                    Suneo.money -= o_dat[loai].thuedat;
-                    thue = o_dat[loai].thuedat;
-                }
-                else if (o_dat[loai].nha == 1) {
-                    Suneo.money -= o_dat[loai].thuenha1;
-                    thue = o_dat[loai].thuenha1;
-                }
-                else if (o_dat[loai].nha == 2 && !o_dat[loai].ks) {
-                    Suneo.money -= o_dat[loai].thuenha2;
-                    thue = o_dat[loai].thuenha2;
-                }
-                else {
-                    Suneo.money -= o_dat[loai].thueks;
-                    thue = o_dat[loai].thueks;
-                }
-                if (o_dat[loai].chu == 0) Nobita.money += thue;
-                else if (o_dat[loai].chu == 1) Shizuka.money += thue;
-                else if (o_dat[loai].chu == 3) Chaien.money += thue;
-            }
+            SDL_Delay(500);
         }
-        else {
-            if (o_dat[loai].chu == -1) {
-                SDL_Texture* visit = graphics.loadTexture(cell[Chaien.p]);
-                graphics.prepareScene(visit);
-
-                SDL_Texture* a = graphics.loadTexture("images/muadat.png");
-                graphics.renderTexture_new_size(a, O_X, O_Y, O_W, O_H);
-                SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
-                graphics.renderTexture_new_size(b, O_X + O_D, O_Y, O_W, O_H);
-                graphics.presentScene();
-
-                SDL_Event dc;
-                int x, y;
-                bool quit = false, buy = false;
-                while (true) {
-                    SDL_GetMouseState(&x, &y);
-                    SDL_PollEvent(&dc);
-                    switch (dc.type) {
-                        case SDL_QUIT:
-                            exit(0);
-                            break;
-                        case SDL_MOUSEBUTTONDOWN:
-                            if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                buy = true;
-                                quit = true;
-                            }
-                            else if (O_X + O_D <= x && x <= O_X + O_D + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                quit = true;
-                            }
-                    }
-                    if (quit) break;
-                }
-
-                if (buy) {
-                    o_dat[loai].chu = stt;
-                    Chaien.money -= o_dat[loai].giadat;
-                }
-
-                SDL_DestroyTexture(visit);
-                visit = NULL;
-                SDL_DestroyTexture(a);
-                a = NULL;
-                SDL_DestroyTexture(b);
-                b = NULL;
-
-                SDL_Delay(500);
+        else if (o_dat[loai].chu != stt) {
+            int thue = 0;
+            if (o_dat[loai].nha == 0) {
+                nvat[stt].money -= o_dat[loai].thuedat;
+                thue = o_dat[loai].thuedat;
             }
-            else if (o_dat[loai].chu == stt && o_dat[loai].nha < 2) {
-                SDL_Texture* visit = graphics.loadTexture(cell[Chaien.p]);
-                graphics.prepareScene(visit);
-
-                SDL_Texture* a = graphics.loadTexture("images/muanha.png");
-                graphics.renderTexture_new_size(a, O_X, O_Y, O_W, O_H);
-                SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
-                graphics.renderTexture_new_size(b, O_X + O_D, O_Y, O_W, O_H);
-                graphics.presentScene();
-
-                SDL_Event dc;
-                int x, y;
-                bool quit = false, buy = false;
-                while (true) {
-                    SDL_GetMouseState(&x, &y);
-                    SDL_PollEvent(&dc);
-                    switch (dc.type) {
-                        case SDL_QUIT:
-                            exit(0);
-                            break;
-                        case SDL_MOUSEBUTTONDOWN:
-                            if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                buy = true;
-                                quit = true;
-                            }
-                            else if (O_X + O_D <= x && x <= O_X + O_D + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                quit = true;
-                            }
-                    }
-                    if (quit) break;
-                }
-
-                if (buy) {
-                    o_dat[loai].nha++;
-                    Chaien.money -= o_dat[loai].gianha;
-                }
-
-                SDL_DestroyTexture(visit);
-                visit = NULL;
-                SDL_DestroyTexture(a);
-                a = NULL;
-                SDL_DestroyTexture(b);
-                b = NULL;
-
-                SDL_Delay(500);
+            else if (o_dat[loai].nha == 1) {
+                nvat[stt].money -= o_dat[loai].thuenha1;
+                thue = o_dat[loai].thuenha1;
             }
-            else if (o_dat[loai].chu == stt && o_dat[loai].nha == 2) {
-                SDL_Texture* visit = graphics.loadTexture(cell[Chaien.p]);
-                graphics.prepareScene(visit);
-
-                SDL_Texture* a = graphics.loadTexture("images/muaks.png");
-                graphics.renderTexture_new_size(a, O_X, O_Y, O_W, O_H);
-                SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
-                graphics.renderTexture_new_size(b, O_X + O_D, O_Y, O_W, O_H);
-                graphics.presentScene();
-
-                SDL_Event dc;
-                int x, y;
-                bool quit = false, buy = false;
-                while (true) {
-                    SDL_GetMouseState(&x, &y);
-                    SDL_PollEvent(&dc);
-                    switch (dc.type) {
-                        case SDL_QUIT:
-                            exit(0);
-                            break;
-                        case SDL_MOUSEBUTTONDOWN:
-                            if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                buy = true;
-                                quit = true;
-                            }
-                            else if (O_X + O_D <= x && x <= O_X + O_D + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                quit = true;
-                            }
-                    }
-                    if (quit) break;
-                }
-
-                if (buy) {
-                    o_dat[loai].ks = true;
-                    Chaien.money -= o_dat[loai].giaks;
-                }
-
-                SDL_DestroyTexture(visit);
-                visit = NULL;
-                SDL_DestroyTexture(a);
-                a = NULL;
-                SDL_DestroyTexture(b);
-                b = NULL;
-
-                SDL_Delay(500);
+            else if (o_dat[loai].nha == 2 && !o_dat[loai].ks) {
+                nvat[stt].money -= o_dat[loai].thuenha2;
+                thue = o_dat[loai].thuenha2;
             }
-            else if (o_dat[loai].chu != stt) {
-                int thue = 0;
-                if (o_dat[loai].nha == 0) {
-                    Chaien.money -= o_dat[loai].thuedat;
-                    thue = o_dat[loai].thuedat;
-                }
-                else if (o_dat[loai].nha == 1) {
-                    Chaien.money -= o_dat[loai].thuenha1;
-                    thue = o_dat[loai].thuenha1;
-                }
-                else if (o_dat[loai].nha == 2 && !o_dat[loai].ks) {
-                    Chaien.money -= o_dat[loai].thuenha2;
-                    thue = o_dat[loai].thuenha2;
-                }
-                else {
-                    Chaien.money -= o_dat[loai].thueks;
-                    thue = o_dat[loai].thueks;
-                }
-                if (o_dat[loai].chu == 0) Nobita.money += thue;
-                else if (o_dat[loai].chu == 1) Shizuka.money += thue;
-                else if (o_dat[loai].chu == 2) Suneo.money += thue;
+            else {
+                nvat[stt].money -= o_dat[loai].thueks;
+                thue = o_dat[loai].thueks;
             }
+            nvat[o_dat[loai].chu].money += thue;
         }
     }
 };

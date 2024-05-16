@@ -56,7 +56,7 @@ struct character{
     int p, turn = 0, money = 200, bxe = 0, cty = 0;
     bool is_real_player = false, bankrupt = false;
     bool free = true, free_next_turn = false;
-} Nobita, Shizuka, Suneo, Chaien;
+} nvat[4];
 
 //Thứ tự ảnh xí ngầu
 const char* Dice[] = {"images/dice/xx1.png", "images/dice/xx2.png", "images/dice/xx3.png", "images/dice/xx4.png", "images/dice/xx5.png", "images/dice/xx6.png"};

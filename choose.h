@@ -17,7 +17,7 @@ struct decide{
     //Thêm thẻ nhân vật
     SDL_Texture* c1;
     void loadNobita(Graphics graphics) {
-        if (Nobita.is_real_player) {
+        if (nvat[0].is_real_player) {
             c1 = graphics.loadTexture("images/characters/Nobita_chose.png");
             graphics.renderTexture_new_size(c1, CHOOSE_CHARACTER_X, CHOOSE_CHARACTER_Y, CHOOSE_CHARACTER_W, CHOOSE_CHARACTER_H);
         }
@@ -29,7 +29,7 @@ struct decide{
 
     SDL_Texture* c2;
     void loadShizuka(Graphics graphics) {
-        if (Shizuka.is_real_player) {
+        if (nvat[1].is_real_player) {
             c2 = graphics.loadTexture("images/characters/Shizuka_chose.png");
             graphics.renderTexture_new_size(c2, CHOOSE_CHARACTER_X + CHOOSE_CHARACTER_D, CHOOSE_CHARACTER_Y, CHOOSE_CHARACTER_W, CHOOSE_CHARACTER_H);
         }
@@ -41,7 +41,7 @@ struct decide{
 
     SDL_Texture* c3;
     void loadSuneo(Graphics graphics) {
-        if (Suneo.is_real_player) {
+        if (nvat[2].is_real_player) {
             c3 = graphics.loadTexture("images/characters/Suneo_chose.png");
             graphics.renderTexture_new_size(c3, CHOOSE_CHARACTER_X + 2 * CHOOSE_CHARACTER_D, CHOOSE_CHARACTER_Y, CHOOSE_CHARACTER_W, CHOOSE_CHARACTER_H);
         }
@@ -53,7 +53,7 @@ struct decide{
 
     SDL_Texture* c4;
     void loadChaien(Graphics graphics) {
-        if (Chaien.is_real_player) {
+        if (nvat[3].is_real_player) {
             c4 = graphics.loadTexture("images/characters/Chaien_chose.png");
             graphics.renderTexture_new_size(c4, CHOOSE_CHARACTER_X + 3 * CHOOSE_CHARACTER_D, CHOOSE_CHARACTER_Y, CHOOSE_CHARACTER_W, CHOOSE_CHARACTER_H);
         }
@@ -87,19 +87,19 @@ struct decide{
                     break;
                 case SDL_MOUSEBUTTONDOWN:
                     if (CHOOSE_CHARACTER_X <= x && x <= CHOOSE_CHARACTER_X + CHOOSE_CHARACTER_W && CHOOSE_CHARACTER_Y <= y && y <= CHOOSE_CHARACTER_Y + CHOOSE_CHARACTER_H) {
-                        Nobita.is_real_player = true;
+                        nvat[0].is_real_player = true;
                         quit = true;
                     }
                     else if (CHOOSE_CHARACTER_X + CHOOSE_CHARACTER_D <= x && x <= CHOOSE_CHARACTER_X + CHOOSE_CHARACTER_W + CHOOSE_CHARACTER_D && CHOOSE_CHARACTER_Y <= y && y <= CHOOSE_CHARACTER_Y + CHOOSE_CHARACTER_H) {
-                        Shizuka.is_real_player = true;
+                        nvat[1].is_real_player = true;
                         quit = true;
                     }
                     else if (CHOOSE_CHARACTER_X + 2 * CHOOSE_CHARACTER_D <= x && x <= CHOOSE_CHARACTER_X + CHOOSE_CHARACTER_W + 2 * CHOOSE_CHARACTER_D && CHOOSE_CHARACTER_Y <= y && y <= CHOOSE_CHARACTER_Y + CHOOSE_CHARACTER_H) {
-                        Suneo.is_real_player = true;
+                        nvat[2].is_real_player = true;
                         quit = true;
                     }
                     else if (CHOOSE_CHARACTER_X + 3 * CHOOSE_CHARACTER_D <= x && x <= CHOOSE_CHARACTER_X + CHOOSE_CHARACTER_W + 3 * CHOOSE_CHARACTER_D && CHOOSE_CHARACTER_Y <= y && y <= CHOOSE_CHARACTER_Y + CHOOSE_CHARACTER_H) {
-                        Chaien.is_real_player = true;
+                        nvat[3].is_real_player = true;
                         quit = true;
                     }
             }

@@ -134,11 +134,7 @@ struct Monopoly {
         SDL_Delay(800);
 
         //Thay đổi vị trí
-        if (stt == 0) Nobita.p += (x1 + x2 + 2) % 36;
-        else if (stt == 1) Shizuka.p += (x1 + x2 + 2) % 36;
-        else if (stt == 2) Suneo.p += (x1 + x2 + 2) % 36;
-        else Chaien.p += (x1 + x2 + 2) % 36;
-
+        nvat[stt].p += (x1 + x2 + 2) % 36;
         if (x1 == x2) {
             cont = true;
             mode = 0;
@@ -229,10 +225,10 @@ struct Monopoly {
         //Nạp font
         TTF_Font* font = graphics.loadFont("fonts/TNR/times.ttf", 50);
         SDL_Color color = {0, 0, 0, 0};
-        SDL_Texture* in4_Nobita = graphics.renderText2(to_string(Nobita.money), font, color);
-        SDL_Texture* in4_Shizuka = graphics.renderText2(to_string(Shizuka.money), font, color);
-        SDL_Texture* in4_Suneo = graphics.renderText2(to_string(Suneo.money), font, color);
-        SDL_Texture* in4_Chaien = graphics.renderText2(to_string(Chaien.money), font, color);
+        SDL_Texture* in4_Nobita = graphics.renderText2(to_string(nvat[0].money), font, color);
+        SDL_Texture* in4_Shizuka = graphics.renderText2(to_string(nvat[1].money), font, color);
+        SDL_Texture* in4_Suneo = graphics.renderText2(to_string(nvat[2].money), font, color);
+        SDL_Texture* in4_Chaien = graphics.renderText2(to_string(nvat[3].money), font, color);
 
         //Nạp nhân vật
         SDL_Texture* nobita = graphics.loadTexture("images/characters_removed_background/Nobita.png");
@@ -243,10 +239,10 @@ struct Monopoly {
         //Chuẩn bị bàn cờ
         graphics.prepareScene(board);
 
-        graphics.renderTexture_new_size(nobita, N_X[Nobita.p], N_Y[Nobita.p], N_W, N_H);
-        graphics.renderTexture_new_size(shizuka, S_X + N_X[Shizuka.p], S_Y + N_Y[Shizuka.p], S_W, S_H);
-        graphics.renderTexture_new_size(suneo, X_X + N_X[Suneo.p], X_Y + N_Y[Suneo.p], X_W, X_H);
-        graphics.renderTexture_new_size(chaien, C_X + N_X[Chaien.p], C_Y + N_Y[Chaien.p], C_W, C_H);
+        graphics.renderTexture_new_size(nobita, N_X[nvat[0].p], N_Y[nvat[0].p], N_W, N_H);
+        graphics.renderTexture_new_size(shizuka, S_X + N_X[nvat[1].p], S_Y + N_Y[nvat[1].p], S_W, S_H);
+        graphics.renderTexture_new_size(suneo, X_X + N_X[nvat[2].p], X_Y + N_Y[nvat[2].p], X_W, X_H);
+        graphics.renderTexture_new_size(chaien, C_X + N_X[nvat[3].p], C_Y + N_Y[nvat[3].p], C_W, C_H);
 
         graphics.renderTexture(in4_Nobita, M_X, M_Y);
         graphics.renderTexture(in4_Shizuka, M_X, M_Y + M_H);
@@ -281,212 +277,211 @@ struct Monopoly {
         SDL_DestroyTexture(chaien);
         chaien = NULL;
     }
+
     void thuchien(int stt, bool &cont, int &mode) {
         int loai;
-        if (stt == 0) {
-            if (findpos(Nobita.p, loai) == 1) {
-                Loai1 a(graphics);
-                a.hienthe(stt, loai);
+        if (findpos(nvat[stt].p, loai) == 1) {
+            Loai1 a(graphics);
+            a.hienthe(stt, loai);
+        }
+        else if (findpos(nvat[stt].p, loai) == 2) {
+            SDL_Texture* visit = graphics.loadTexture(cell[nvat[stt].p]);
+            graphics.prepareScene(visit);
+
+            if (honhop[loai] == 1) nvat[stt].money += 200;
+            else if (honhop[loai] == 5) nvat[stt].money -= min(200, nvat[stt].money * 10 / 100);
+            else if (honhop[loai] == 35) nvat[stt].money -= 100;
+
+            SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
+            graphics.renderTexture_new_size(b, O_X, O_Y, O_W, O_H);
+            graphics.presentScene();
+
+            SDL_Event dc;
+            int x, y;
+            bool quit = false, buy = false;
+            while (true) {
+                SDL_GetMouseState(&x, &y);
+                SDL_PollEvent(&dc);
+                switch (dc.type) {
+                    case SDL_QUIT:
+                        exit(0);
+                        break;
+                    case SDL_MOUSEBUTTONDOWN:
+                        if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
+                            quit = true;
+                        }
+                }
+                if (quit) break;
             }
-            else if (findpos(Nobita.p, loai) == 2) {
-                SDL_Texture* visit = graphics.loadTexture(cell[Nobita.p]);
-                graphics.prepareScene(visit);
 
-                if (honhop[loai] == 1) Nobita.money += 200;
-                else if (honhop[loai] == 5) Nobita.money -= min(200, Nobita.money * 10 / 100);
-                else if (honhop[loai] == 35) Nobita.money -= 100;
+            SDL_DestroyTexture(visit);
+            visit = NULL;
+            SDL_DestroyTexture(b);
+            b = NULL;
+        }
+        else if (findpos(nvat[stt].p, loai) == 3) {
+            Loai3 a(graphics);
+            a.hienthe(stt, loai);
+        }
+        else if (findpos(nvat[stt].p, loai) == 4) {
+            Loai4 a(graphics);
+            a.hienthe(stt, loai, x1 + x2 + 2);
+        }
+        else if (findpos(nvat[stt].p, loai) == 5) {
+            SDL_Texture* visit = graphics.loadTexture(cell[nvat[stt].p]);
+            graphics.prepareScene(visit);
 
-                SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
-                graphics.renderTexture_new_size(b, O_X, O_Y, O_W, O_H);
+            if (!nvat[stt].free_next_turn) {
+                nvat[stt].free = false;
+                nvat[stt].p = 10;
+            }
+
+            SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
+            graphics.renderTexture_new_size(b, O_X, O_Y, O_W, O_H);
+            graphics.presentScene();
+
+            SDL_Event dc;
+            int x, y;
+            bool quit = false, buy = false;
+            while (true) {
+                SDL_GetMouseState(&x, &y);
+                SDL_PollEvent(&dc);
+                switch (dc.type) {
+                    case SDL_QUIT:
+                        exit(0);
+                        break;
+                    case SDL_MOUSEBUTTONDOWN:
+                        if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
+                            quit = true;
+                        }
+                }
+                if (quit) break;
+            }
+
+            SDL_DestroyTexture(visit);
+            visit = NULL;
+            SDL_DestroyTexture(b);
+            b = NULL;
+        }
+        else if (findpos(nvat[stt].p, loai) == 6) {
+            SDL_Texture* visit = graphics.loadTexture(cell[nvat[stt].p]);
+            graphics.prepareScene(visit);
+
+            SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
+            graphics.renderTexture_new_size(b, O_X, O_Y, O_W, O_H);
+            graphics.presentScene();
+
+            SDL_Event dc;
+            int x, y;
+            bool quit = false, buy = false;
+            while (true) {
+                SDL_GetMouseState(&x, &y);
+                SDL_PollEvent(&dc);
+                switch (dc.type) {
+                    case SDL_QUIT:
+                        exit(0);
+                        break;
+                    case SDL_MOUSEBUTTONDOWN:
+                        if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
+                            quit = true;
+                        }
+                }
+                if (quit) break;
+            }
+
+            SDL_DestroyTexture(visit);
+            visit = NULL;
+            SDL_DestroyTexture(b);
+            b = NULL;
+        }
+        else if (findpos(nvat[stt].p, loai) == 7) {
+            SDL_Texture* visit = graphics.loadTexture(cell[nvat[stt].p]);
+            graphics.prepareScene(visit);
+
+            SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
+            graphics.renderTexture_new_size(b, O_X, O_Y, O_W, O_H);
+            graphics.presentScene();
+
+            SDL_Event dc;
+            int x, y;
+            bool quit = false, buy = false;
+            while (true) {
+                SDL_GetMouseState(&x, &y);
+                SDL_PollEvent(&dc);
+                switch (dc.type) {
+                    case SDL_QUIT:
+                        exit(0);
+                        break;
+                    case SDL_MOUSEBUTTONDOWN:
+                        if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
+                            quit = true;
+                        }
+                }
+                if (quit) break;
+            }
+
+            SDL_Texture* road = graphics.loadTexture("images/road.jpg");
+            Sprite dora;
+            SDL_Texture* doraTexture = graphics.loadTexture(DORA_SPRITE);
+            dora.init(doraTexture, DORA_FRAMES, DORA_CLIPS);
+
+            quit = false;
+            int dx = -20, dy = 420, nb = 0;
+            while(!quit) {
+                if(nb == 28) quit = true;
+                nb++;
+
+                dora.tick();
+
+                graphics.prepareScene(road);
+                graphics.render(dx, dy, dora);
                 graphics.presentScene();
+                SDL_Delay(100);
 
-                SDL_Event dc;
-                int x, y;
-                bool quit = false, buy = false;
-                while (true) {
-                    SDL_GetMouseState(&x, &y);
-                    SDL_PollEvent(&dc);
-                    switch (dc.type) {
-                        case SDL_QUIT:
-                            exit(0);
-                            break;
-                        case SDL_MOUSEBUTTONDOWN:
-                            if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                quit = true;
-                            }
-                    }
-                    if (quit) break;
-                }
-
-                SDL_DestroyTexture(visit);
-                visit = NULL;
-                SDL_DestroyTexture(b);
-                b = NULL;
+                dx = (dx + 50) % (SCREEN_W - 50);
             }
-            else if (findpos(Nobita.p, loai) == 3) {
-                Loai3 a(graphics);
-                a.hienthe(stt, loai);
-            }
-            else if (findpos(Nobita.p, loai) == 4) {
-                Loai4 a(graphics);
-                a.hienthe(stt, loai, x1 + x2 + 2);
-            }
-            else if (findpos(Nobita.p, loai) == 5) {
-                SDL_Texture* visit = graphics.loadTexture(cell[Nobita.p]);
-                graphics.prepareScene(visit);
 
-                if (!Nobita.free_next_turn) {
-                    Nobita.free = false;
-                    Nobita.p = 10;
-                }
+            SDL_Texture* plane = graphics.loadTexture("images/airplane.png");
+            quit = false;
+            int Dx = -20, Dy = 150, c = 0;
+            while(!quit) {
+                if(c == 29) quit = true;
+                c++;
 
-                SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
-                graphics.renderTexture_new_size(b, O_X, O_Y, O_W, O_H);
+                dora.tick();
+
+                graphics.prepareScene(road);
+                graphics.render(dx, dy, dora);
+                graphics.renderTexture_new_size(plane, Dx, Dy, 300, 200);
+
                 graphics.presentScene();
+                SDL_Delay(100);
 
-                SDL_Event dc;
-                int x, y;
-                bool quit = false, buy = false;
-                while (true) {
-                    SDL_GetMouseState(&x, &y);
-                    SDL_PollEvent(&dc);
-                    switch (dc.type) {
-                        case SDL_QUIT:
-                            exit(0);
-                            break;
-                        case SDL_MOUSEBUTTONDOWN:
-                            if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                quit = true;
-                            }
-                    }
-                    if (quit) break;
-                }
-
-                SDL_DestroyTexture(visit);
-                visit = NULL;
-                SDL_DestroyTexture(b);
-                b = NULL;
+                Dx = (Dx + 40) % SCREEN_W;
             }
-            else if (findpos(Nobita.p, loai) == 6) {
-                SDL_Texture* visit = graphics.loadTexture(cell[Nobita.p]);
-                graphics.prepareScene(visit);
 
-                SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
-                graphics.renderTexture_new_size(b, O_X, O_Y, O_W, O_H);
-                graphics.presentScene();
+            SDL_DestroyTexture(plane);
+            plane = NULL;
+            SDL_DestroyTexture(doraTexture);
+            doraTexture = NULL;
+            SDL_DestroyTexture(road);
+            road = NULL;
+            SDL_DestroyTexture(visit);
+            visit = NULL;
+            SDL_DestroyTexture(b);
+            b = NULL;
 
-                SDL_Event dc;
-                int x, y;
-                bool quit = false, buy = false;
-                while (true) {
-                    SDL_GetMouseState(&x, &y);
-                    SDL_PollEvent(&dc);
-                    switch (dc.type) {
-                        case SDL_QUIT:
-                            exit(0);
-                            break;
-                        case SDL_MOUSEBUTTONDOWN:
-                            if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                quit = true;
-                            }
-                    }
-                    if (quit) break;
-                }
-
-                SDL_DestroyTexture(visit);
-                visit = NULL;
-                SDL_DestroyTexture(b);
-                b = NULL;
-            }
-            else if (findpos(Nobita.p, loai) == 7) {
-                SDL_Texture* visit = graphics.loadTexture(cell[Nobita.p]);
-                graphics.prepareScene(visit);
-
-                SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
-                graphics.renderTexture_new_size(b, O_X, O_Y, O_W, O_H);
-                graphics.presentScene();
-
-                SDL_Event dc;
-                int x, y;
-                bool quit = false, buy = false;
-                while (true) {
-                    SDL_GetMouseState(&x, &y);
-                    SDL_PollEvent(&dc);
-                    switch (dc.type) {
-                        case SDL_QUIT:
-                            exit(0);
-                            break;
-                        case SDL_MOUSEBUTTONDOWN:
-                            if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                quit = true;
-                            }
-                    }
-                    if (quit) break;
-                }
-
-                SDL_Texture* road = graphics.loadTexture("images/road.jpg");
-                Sprite dora;
-                SDL_Texture* doraTexture = graphics.loadTexture(DORA_SPRITE);
-                dora.init(doraTexture, DORA_FRAMES, DORA_CLIPS);
-
-                quit = false;
-                int dx = -20, dy = 420, nb = 0;
-                while(!quit) {
-                    if(nb == 28) quit = true;
-                    nb++;
-
-                    dora.tick();
-
-                    graphics.prepareScene(road);
-                    graphics.render(dx, dy, dora);
-                    graphics.presentScene();
-                    SDL_Delay(100);
-
-                    dx = (dx + 50) % (SCREEN_W - 50);
-                }
-
-                SDL_Texture* plane = graphics.loadTexture("images/airplane.png");
-                quit = false;
-                int Dx = -20, Dy = 150, c = 0;
-                while(!quit) {
-                    if(c == 29) quit = true;
-                    c++;
-
-                    dora.tick();
-
-                    graphics.prepareScene(road);
-                    graphics.render(dx, dy, dora);
-                    graphics.renderTexture_new_size(plane, Dx, Dy, 300, 200);
-
-                    graphics.presentScene();
-                    SDL_Delay(100);
-
-                    Dx = (Dx + 40) % SCREEN_W;
-                }
-
-                SDL_DestroyTexture(plane);
-                plane = NULL;
-                SDL_DestroyTexture(doraTexture);
-                doraTexture = NULL;
-                SDL_DestroyTexture(road);
-                road = NULL;
-                SDL_DestroyTexture(visit);
-                visit = NULL;
-                SDL_DestroyTexture(b);
-                b = NULL;
-
-                Nobita.p = 2;
-                cont = true;
-                mode = 1;
-            }
-            else if (findpos(Nobita.p, loai) == 8) {
-                Loai8 a(graphics);
-                a.hienthe(stt);
-            }
-            else if (findpos(Nobita.p, loai) == 9) {
-                Loai9 a(graphics);
-                a.hienthe(stt, cont, mode);
-            }
+            nvat[stt].p = 2;
+            cont = true;
+            mode = 1;
+        }
+        else if (findpos(nvat[stt].p, loai) == 8) {
+            Loai8 a(graphics);
+            a.hienthe(stt);
+        }
+        else if (findpos(nvat[stt].p, loai) == 9) {
+            Loai9 a(graphics);
+            a.hienthe(stt, cont, mode);
         }
     }
 };

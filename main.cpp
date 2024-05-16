@@ -293,10 +293,10 @@ int main(int argc, char* argv[]) {
     //Nạp font
     TTF_Font* font = graphics.loadFont("fonts/TNR/times.ttf", 50);
     SDL_Color color = {0, 0, 0, 0};
-    SDL_Texture* in4_Nobita = graphics.renderText2(to_string(Nobita.money), font, color);
-    SDL_Texture* in4_Shizuka = graphics.renderText2(to_string(Shizuka.money), font, color);
-    SDL_Texture* in4_Suneo = graphics.renderText2(to_string(Suneo.money), font, color);
-    SDL_Texture* in4_Chaien = graphics.renderText2(to_string(Chaien.money), font, color);
+    SDL_Texture* in4_Nobita = graphics.renderText2(to_string(nvat[0].money), font, color);
+    SDL_Texture* in4_Shizuka = graphics.renderText2(to_string(nvat[1].money), font, color);
+    SDL_Texture* in4_Suneo = graphics.renderText2(to_string(nvat[2].money), font, color);
+    SDL_Texture* in4_Chaien = graphics.renderText2(to_string(nvat[3].money), font, color);
 
     //Nạp in4 các nhân vật
     graphics.renderTexture(in4_Nobita, M_X, M_Y);
@@ -305,15 +305,15 @@ int main(int argc, char* argv[]) {
     graphics.renderTexture(in4_Chaien, M_X + M_W, M_Y + M_H);
 
     //Nạp nhân vật
-    Nobita.p = Shizuka.p = Suneo.p = Chaien.p = 1;
+    for (int i = 0; i < 4; i++) nvat[i].p = 1;
     SDL_Texture* nobita = graphics.loadTexture("images/characters_removed_background/Nobita.png");
-    graphics.renderTexture_new_size(nobita, N_X[Nobita.p], N_Y[Nobita.p], N_W, N_H);
+    graphics.renderTexture_new_size(nobita, N_X[nvat[0].p], N_Y[nvat[0].p], N_W, N_H);
     SDL_Texture* shizuka = graphics.loadTexture("images/characters_removed_background/Shizuka.png");
-    graphics.renderTexture_new_size(shizuka, S_X + N_X[Shizuka.p], S_Y + N_Y[Shizuka.p], S_W, S_H);
+    graphics.renderTexture_new_size(shizuka, S_X + N_X[nvat[1].p], S_Y + N_Y[nvat[1].p], S_W, S_H);
     SDL_Texture* suneo = graphics.loadTexture("images/characters_removed_background/Suneo.png");
-    graphics.renderTexture_new_size(suneo, X_X + N_X[Suneo.p], X_Y + N_Y[Suneo.p], X_W, X_H);
+    graphics.renderTexture_new_size(suneo, X_X + N_X[nvat[2].p], X_Y + N_Y[nvat[2].p], X_W, X_H);
     SDL_Texture* chaien = graphics.loadTexture("images/characters_removed_background/Chaien.png");
-    graphics.renderTexture_new_size(chaien, C_X + N_X[Chaien.p], C_Y + N_Y[Chaien.p], C_W, C_H);
+    graphics.renderTexture_new_size(chaien, C_X + N_X[nvat[3].p], C_Y + N_Y[nvat[3].p], C_W, C_H);
 
     //Hiện bàn cờ
     graphics.presentScene();
@@ -328,71 +328,67 @@ int main(int argc, char* argv[]) {
     Monopoly thu(graphics);
     //Monopoly_AI thuw(graphics);
 
-    while ((Nobita.turn < 30 || Shizuka.turn < 30 || Suneo.turn < 30 || Chaien.turn < 30) && !(Nobita.bankrupt && Shizuka.bankrupt && Suneo.bankrupt && Chaien.bankrupt)) {
+    while ((nvat[0].turn < 30 || nvat[1].turn < 30 || nvat[2].turn < 30 || nvat[3].turn < 30) && !(nvat[0].bankrupt && nvat[1].bankrupt && nvat[2].bankrupt && nvat[3].bankrupt)) {
         stt = (stt + 1) % 4;
 
-        if (stt == 0) {
-            if (Nobita.free) {
-                bool cont = false;
-                int mode, tu = 1;
-                Nobita.turn++;
-                thu.gieoxingau(stt, cont, mode);
-                Nobita.p = 7;
-                thu.hienbanco();
-                thu.thuchien(stt, cont, mode);
-                thu.hienbanco();
+        if (nvat[stt].free) {
+            bool cont = false;
+            int mode, tu = 1;
+            nvat[stt].turn++;
+            thu.gieoxingau(stt, cont, mode);
+            nvat[stt].p = 7;
+            thu.hienbanco();
+            thu.thuchien(stt, cont, mode);
+            thu.hienbanco();
 
-                while (cont && tu < 2) {
-                    if (mode == 0) {
-                        tu++;
-                        thu.gieoxingau(stt, cont, mode);
-                        thu.hienbanco();
-                        thu.thuchien(stt, cont, mode);
-                        thu.hienbanco();
-                    }
-                    else {
-                        thu.thuchien(stt, cont, mode);
-                        thu.hienbanco();
-                        cont = false;
-                    }
+            while (cont && tu < 2) {
+                if (mode == 0) {
+                    tu++;
+                    thu.gieoxingau(stt, cont, mode);
+                    thu.hienbanco();
+                    thu.thuchien(stt, cont, mode);
+                    thu.hienbanco();
                 }
-
-                if (tu == 2 && cont) {
-                    if (!Nobita.free_next_turn) {
-                        SDL_Texture* vao_tu = graphics.loadTexture("images/vaotu.png");
-                        graphics.prepareScene(vao_tu);
-
-                        graphics.presentScene();
-
-                        Nobita.free = false;
-                        Nobita.p = 10;
-                        thu.hienbanco();
-
-                        SDL_DestroyTexture(vao_tu);
-                        vao_tu = NULL;
-                    }
-                    else {
-                        SDL_Texture* mien_tu = graphics.loadTexture("images/mientu.png");
-                        graphics.prepareScene(mien_tu);
-
-                        graphics.presentScene();
-
-                        Nobita.free_next_turn = false;
-                        thu.hienbanco();
-
-                        SDL_DestroyTexture(mien_tu);
-                        mien_tu = NULL;
-                    }
+                else {
+                    thu.thuchien(stt, cont, mode);
+                    thu.hienbanco();
+                    cont = false;
                 }
             }
-            else {
-                bool ratu = false;
-                thu.cohoiratu(stt, ratu);
-                Nobita.free = ratu;
+
+            if (tu == 2 && cont) {
+                if (!nvat[stt].free_next_turn) {
+                    SDL_Texture* vao_tu = graphics.loadTexture("images/vaotu.png");
+                    graphics.prepareScene(vao_tu);
+
+                    graphics.presentScene();
+
+                    nvat[stt].free = false;
+                    nvat[stt].p = 10;
+                    thu.hienbanco();
+
+                    SDL_DestroyTexture(vao_tu);
+                    vao_tu = NULL;
+                }
+                else {
+                    SDL_Texture* mien_tu = graphics.loadTexture("images/mientu.png");
+                    graphics.prepareScene(mien_tu);
+
+                    graphics.presentScene();
+
+                    nvat[stt].free_next_turn = false;
+                    thu.hienbanco();
+
+                    SDL_DestroyTexture(mien_tu);
+                    mien_tu = NULL;
+                }
             }
         }
-
-        break;
+        else {
+            bool ratu = false;
+            thu.cohoiratu(stt, ratu);
+            nvat[stt].free = ratu;
+        }
     }
 
     //Xóa
