@@ -55,18 +55,12 @@ struct Loai9{
             if (quit) break;
         }
 
-        int r = rand() % 10; r = 4;
+        int r = rand() % 10; r = 7;
         SDL_Texture* o_ch = graphics.loadTexture(ch[r]);
         graphics.renderTexture_new_size(o_ch, T_X, T_Y, T_W, T_H);
 
         graphics.presentScene();
         SDL_Delay(2000);
-
-        if (r == 0) {
-            nvat[stt].money -= 150;
-            for (int i = 0; i < 4; i++)
-                if (i != stt) nvat[i].money += 50;
-        }
 
         SDL_Texture* B = graphics.loadTexture("images/tieptheo.png");
         graphics.renderTexture_new_size(B, O_X, O_Y, O_W, O_H);
@@ -91,7 +85,13 @@ struct Loai9{
             if (quit1) break;
         }
 
-        if (r == 1) {
+        if (r == 0) {
+            nvat[stt].money -= 150;
+            for (int i = 0; i < 4; i++)
+                if (i != stt) nvat[i].money += 50;
+        }
+
+        else if (r == 1) {
             if (!nvat[stt].free_next_turn) {
                 SDL_Texture* vao_tu = graphics.loadTexture("images/vaotu.png");
                 graphics.prepareScene(vao_tu);
@@ -212,6 +212,65 @@ struct Loai9{
             nvat[stt].p = 0;
             cont = true;
             mode = 1;
+        }
+
+        else if (r == 5) {
+            nvat[stt].p = 1;
+            nvat[stt].money += 200;
+        }
+
+        else if (r == 6) {
+            nvat[stt].money -= 100;
+        }
+
+        else if (r == 7) {
+            SDL_Texture* same_intro = graphics.loadTexture("images/same_intro.png");
+            graphics.prepareScene(same_intro);
+
+            graphics.presentScene();
+            SDL_Delay(1000);
+
+            SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
+            graphics.renderTexture_new_size(b, O_X + O_D, O_Y, O_W, O_H);
+            graphics.presentScene();
+
+            SDL_Event dc;
+            int x, y;
+            bool quit = false, buy = false;
+            while (true) {
+                SDL_GetMouseState(&x, &y);
+                SDL_PollEvent(&dc);
+                switch (dc.type) {
+                    case SDL_QUIT:
+                        exit(0);
+                        break;
+                    case SDL_MOUSEBUTTONDOWN:
+                        if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
+                            buy = true;
+                            quit = true;
+                        }
+                        else if (O_X + O_D <= x && x <= O_X + O_D + O_W && O_Y <= y && y <= O_Y + O_H) {
+                            quit = true;
+                        }
+                }
+                if (quit) break;
+            }
+
+            SDL_Texture* same = graphics.loadTexture("images/same.png");
+            graphics.prepareScene(same);
+
+            SDL_DestroyTexture(same_intro);
+            same_intro = NULL;
+            SDL_DestroyTexture(b);
+            b = NULL;
+        }
+
+        else if (r == 8) {
+            nvat[stt].money /= 2;
+        }
+
+        else if (r == 9) {
+
         }
 
         SDL_DestroyTexture(visit);

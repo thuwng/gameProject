@@ -61,6 +61,29 @@ struct Loai8{
         graphics.presentScene();
         SDL_Delay(2000);
 
+        SDL_Texture* B = graphics.loadTexture("images/tieptheo.png");
+        graphics.renderTexture_new_size(B, O_X, O_Y, O_W, O_H);
+
+        graphics.presentScene();
+
+        SDL_Event d;
+        int x1, y1;
+        bool quit1 = false;
+        while (true) {
+            SDL_GetMouseState(&x1, &y1);
+            SDL_PollEvent(&d);
+            switch (d.type) {
+                case SDL_QUIT:
+                    exit(0);
+                    break;
+                case SDL_MOUSEBUTTONDOWN:
+                    if (O_X <= x1 && x1 <= O_X + O_W && O_Y <= y1 && y1 <= O_Y + O_H) {
+                        quit1 = true;
+                    }
+            }
+            if (quit1) break;
+        }
+
         if (r == 0) {
             nvat[stt].money += 150;
             for (int i = 0; i < 4; i++)
@@ -93,29 +116,6 @@ struct Loai8{
         else if (r == 9) {
             nvat[stt].p = 1;
             nvat[stt].money += 200;
-        }
-
-        SDL_Texture* B = graphics.loadTexture("images/tieptheo.png");
-        graphics.renderTexture_new_size(B, O_X, O_Y, O_W, O_H);
-
-        graphics.presentScene();
-
-        SDL_Event d;
-        int x1, y1;
-        bool quit1 = false;
-        while (true) {
-            SDL_GetMouseState(&x1, &y1);
-            SDL_PollEvent(&d);
-            switch (d.type) {
-                case SDL_QUIT:
-                    exit(0);
-                    break;
-                case SDL_MOUSEBUTTONDOWN:
-                    if (O_X <= x1 && x1 <= O_X + O_W && O_Y <= y1 && y1 <= O_Y + O_H) {
-                        quit1 = true;
-                    }
-            }
-            if (quit1) break;
         }
 
         SDL_DestroyTexture(visit);
