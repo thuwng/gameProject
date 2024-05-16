@@ -22,7 +22,7 @@
 	<SDL_ttf.h>
 	"defs.h"
 
-1715820167 c:\users\dell\documents\tt\cotyphu\defs.h
+1715849066 c:\users\dell\documents\tt\cotyphu\defs.h
 
 1715823561 c:\users\dell\documents\tt\cotyphu\logic.h
 	<SDL.h>
@@ -75,7 +75,7 @@
 	"graphics.h"
 	"defs.h"
 
-1715830456 c:\users\dell\documents\tt\cotyphu\cohoi.h
+1715848409 c:\users\dell\documents\tt\cotyphu\cohoi.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>

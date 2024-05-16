@@ -112,4 +112,16 @@ const int TH_DW = 280;
 const int TH_H = 270;
 const int TH_DH = 290;
 
+//Lật thẻ
+const int LT_X = 250;
+const int LT_Y = 20;
+const int LT_DW = 180;
+const int LT_DH = 190;
+const int LT_X[8] = {};
+const int LT_Y[8] = {};
+const int LT_W = 140;
+const int LT_H = 180;
+const char* the[8] = {"images/the1.png", "images/the2.png", "images/the3.png", "images/the4.png", "images/the5.png", "images/the6.png",
+"images/the7.png", "images/the8.png"};
+
 #endif // _DEFS__H

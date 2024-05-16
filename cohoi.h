@@ -231,12 +231,12 @@ struct Loai9{
             SDL_Delay(1000);
 
             SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
-            graphics.renderTexture_new_size(b, O_X + O_D, O_Y, O_W, O_H);
+            graphics.renderTexture_new_size(b, O_X + 20, O_Y + 40, O_W, O_H);
             graphics.presentScene();
 
             SDL_Event dc;
             int x, y;
-            bool quit = false, buy = false;
+            bool quit = false;
             while (true) {
                 SDL_GetMouseState(&x, &y);
                 SDL_PollEvent(&dc);
@@ -245,11 +245,7 @@ struct Loai9{
                         exit(0);
                         break;
                     case SDL_MOUSEBUTTONDOWN:
-                        if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
-                            buy = true;
-                            quit = true;
-                        }
-                        else if (O_X + O_D <= x && x <= O_X + O_D + O_W && O_Y <= y && y <= O_Y + O_H) {
+                        if (O_X + 20 <= x && x <= O_X + 20 + O_W && O_Y + 40 <= y && y <= O_Y + 40 + O_H) {
                             quit = true;
                         }
                 }
@@ -257,12 +253,62 @@ struct Loai9{
             }
 
             SDL_Texture* same = graphics.loadTexture("images/same.png");
+            SDL_Texture* the = graphics.loadTexture("images/the.png");
+            SDL_Texture* the_da_chon;
+
             graphics.prepareScene(same);
+            graphics.renderTexture_new_size(the, LT_X, LT_Y, LT_W, LT_H);
+            graphics.renderTexture_new_size(the, LT_X + LT_DW, LT_Y, LT_W, LT_H);
+            graphics.renderTexture_new_size(the, LT_X + 2 * LT_DW, LT_Y, LT_W, LT_H);
+            graphics.renderTexture_new_size(the, LT_X + 3 * LT_DW, LT_Y, LT_W, LT_H);
+
+            graphics.renderTexture_new_size(the, LT_X, LT_Y + LT_DH, LT_W, LT_H);
+            graphics.renderTexture_new_size(the, LT_X + LT_DW, LT_Y + LT_DH, LT_W, LT_H);
+            graphics.renderTexture_new_size(the, LT_X + 2 * LT_DW, LT_Y + LT_DH, LT_W, LT_H);
+            graphics.renderTexture_new_size(the, LT_X + 3 * LT_DW, LT_Y + LT_DH, LT_W, LT_H);
+
+            graphics.renderTexture_new_size(the, LT_X, LT_Y + 2 * LT_DH, LT_W, LT_H);
+            graphics.renderTexture_new_size(the, LT_X + LT_DW, LT_Y + 2 * LT_DH, LT_W, LT_H);
+            graphics.renderTexture_new_size(the, LT_X + 2 * LT_DW, LT_Y + 2 * LT_DH, LT_W, LT_H);
+            graphics.renderTexture_new_size(the, LT_X + 3 * LT_DW, LT_Y + 2 * LT_DH, LT_W, LT_H);
+
+            graphics.renderTexture_new_size(the, LT_X, LT_Y + 3 * LT_DH, LT_W, LT_H);
+            graphics.renderTexture_new_size(the, LT_X + LT_DW, LT_Y + 3 * LT_DH, LT_W, LT_H);
+            graphics.renderTexture_new_size(the, LT_X + 2 * LT_DW, LT_Y + 3 * LT_DH, LT_W, LT_H);
+            graphics.renderTexture_new_size(the, LT_X + 3 * LT_DW, LT_Y + 3 * LT_DH, LT_W, LT_H);
+
+            graphics.presentScene();
+
+            for (int i = 1; i <= 8; i++) {
+                SDL_Event d;
+                int x1, y1;
+                bool quit1 = false;
+                while (true) {
+                    SDL_GetMouseState(&x1, &y1);
+                    SDL_PollEvent(&d);
+                    switch (d.type) {
+                        case SDL_QUIT:
+                            exit(0);
+                            break;
+                        case SDL_MOUSEBUTTONDOWN:
+                            if (O_X <= x1 && x1 <= O_X + O_W && O_Y <= y1 && y1 <= O_Y + O_H) {
+                                quit1 = true;
+                            }
+                    }
+                    if (quit1) break;
+                }
+
+            }
+
 
             SDL_DestroyTexture(same_intro);
             same_intro = NULL;
             SDL_DestroyTexture(b);
             b = NULL;
+            SDL_DestroyTexture(the);
+            the = NULL;
+            SDL_DestroyTexture(the_da_chon);
+            the_da_chon = NULL;
         }
 
         else if (r == 8) {
