@@ -249,7 +249,7 @@ struct Monopoly {
         Color[0] = graphics.loadTexture("images/vang.png");
         Color[1] = graphics.loadTexture("images/hong.png");
         Color[2] = graphics.loadTexture("images/xanh.png");
-        Color[3] = graphics.loadTexture("images/trang.png");
+        Color[3] = graphics.loadTexture("images/cam.png");
 
         //Chuẩn bị bàn cờ
         graphics.prepareScene(board);
