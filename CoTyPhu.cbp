@@ -39,6 +39,7 @@
 		<Unit filename="dat.h" />
 		<Unit filename="defs.h" />
 		<Unit filename="graphics.h" />
+		<Unit filename="hangman.h" />
 		<Unit filename="khivan.h" />
 		<Unit filename="logic.h" />
 		<Unit filename="main.cpp" />

@@ -48,7 +48,7 @@ const int WORD_COUNT = sizeof(WORD_LIST) / sizeof(string);
 const char* alphabet[26] = {
     "q", "w", "e", "r", "t", "y", "u", "i", "o", "p",
     "a", "s", "d", "f", "g", "h", "j", "k", "l",
-    "x", "c", "c", "v", "b", "n", "m"
+    "z", "x", "c", "v", "b", "n", "m"
 };
 
 char Alphabet[26] = {
@@ -122,7 +122,7 @@ struct Hangman{
             if (quit) break;
         }
 
-        string word = chooseWord(); //cout << word << endl;
+        string word = chooseWord(); cout << word << endl;
         string guessedWord = string(word.length(), '_');
         int badGuessCount = 0;
         int vt, vitri[word.length()];

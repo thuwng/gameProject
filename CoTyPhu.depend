@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1715929312 source:c:\users\dell\documents\tt\cotyphu\main.cpp
+1715933792 source:c:\users\dell\documents\tt\cotyphu\main.cpp
 	<bits/stdc++.h>
 	<SDL.h>
 	<SDL_image.h>
@@ -76,7 +76,7 @@
 	"graphics.h"
 	"defs.h"
 
-1715927133 c:\users\dell\documents\tt\cotyphu\cohoi.h
+1715933792 c:\users\dell\documents\tt\cotyphu\cohoi.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -86,7 +86,7 @@
 	"logic.h"
 	"hangman.h"
 
-1715926667 c:\users\dell\documents\tt\cotyphu\hangman.h
+1715934510 c:\users\dell\documents\tt\cotyphu\hangman.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
