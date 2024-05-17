@@ -368,7 +368,7 @@ int main(int argc, char* argv[]) {
                 }
             }
 
-            if (tu == 3 && cont && nvat[stt].money >= 0) {
+            if (tu == 3 && cont && nvat[stt].money >= 0 && nvat[stt].free) {
                 if (!nvat[stt].free_next_turn) {
                     SDL_Texture* vao_tu = graphics.loadTexture("images/vaotu.png");
                     graphics.prepareScene(vao_tu);
