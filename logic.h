@@ -144,7 +144,7 @@ struct Monopoly {
 
         //Thay đổi vị trí
         int before = nvat[stt].p;
-        nvat[stt].p += (x1 + x2 + 2) % 36;
+        nvat[stt].p = (nvat[stt].p + x1 + x2 + 2) % 36;
         if (x1 == x2) {
             cont = true;
             mode = 0;
@@ -557,6 +557,23 @@ struct Monopoly {
             Loai9 a(graphics);
             a.hienthe(stt, cont, mode, real);
         }
+    }
+
+    void phasan(int stt) {
+        for (int i = 0; i < 18; i++)
+            if (o_dat[i].chu == stt) {
+                o_dat[i].chu = -1;
+                o_dat[i].nha = 0;
+                o_dat[i].ks = false;
+            }
+        for (int i = 0; i < 4; i++)
+            if (bxe[i] == stt) {
+                bxe[i] = -1;
+            }
+        for (int i = 0; i < 2; i++)
+            if (cty[i] == stt) {
+                cty[i] = -1;
+            }
     }
 };
 

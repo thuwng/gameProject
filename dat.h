@@ -16,7 +16,7 @@ struct Dat{
     int giadat, gianha, giaks;
     int thuedat, thuenha1, thuenha2, thueks;
 };
-Dat o_dat[20];
+Dat o_dat[18];
 
 struct Loai1{
     Graphics graphics;
@@ -142,8 +142,8 @@ struct Loai1{
                 }
 
                 if (buy) {
-                    o_dat[loai].chu = stt;
                     nvat[stt].money -= o_dat[loai].giadat;
+                    o_dat[loai].chu = stt;
                 }
 
                 SDL_DestroyTexture(a);

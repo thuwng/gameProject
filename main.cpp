@@ -361,6 +361,7 @@ int main(int argc, char* argv[]) {
                 }
                 else if (mode == 1) {
                     thu.thuchien(stt, cont, mode, real);
+                    if (nvat[stt].money < 0) break;
                     thu.hienbanco();
                     break;
                 }
@@ -401,9 +402,13 @@ int main(int argc, char* argv[]) {
                 bool ratu = false;
                 thu.cohoiratu(stt, ratu);
                 nvat[stt].free = ratu;
+                SDL_Delay(2000);
+                nvat[stt].p = 10;
+                thu.hienbanco();
             }
             else {
                 nvat[stt].free = true;
+                SDL_Delay(500);
             }
         }
 
@@ -416,6 +421,8 @@ int main(int argc, char* argv[]) {
 
             graphics.presentScene();
             SDL_Delay(1000);
+
+            thu.phasan(stt);
 
             SDL_DestroyTexture(ps);
             ps = NULL;
@@ -432,7 +439,7 @@ int main(int argc, char* argv[]) {
         graphics.prepareScene(ps);
 
         graphics.presentScene();
-        SDL_Delay(2000);
+        SDL_Delay(3000);
 
         SDL_DestroyTexture(ps);
         ps = NULL;
@@ -458,10 +465,10 @@ int main(int argc, char* argv[]) {
             else if (tp == 1) c1 = graphics.loadTexture("images/characters/Shizuka.png");
             else if (tp == 2) c1 = graphics.loadTexture("images/characters/Suneo.png");
             else if (tp == 3) c1 = graphics.loadTexture("images/characters/Chaien.png");
-            graphics.renderTexture_new_size(c1, 800, 600, 150, 200);
+            graphics.renderTexture_new_size(c1, 800, 550, 150, 200);
 
             graphics.presentScene();
-            SDL_Delay(2000);
+            SDL_Delay(3000);
 
             SDL_DestroyTexture(ps);
             ps = NULL;
@@ -472,7 +479,7 @@ int main(int argc, char* argv[]) {
             graphics.prepareScene(ps);
 
             graphics.presentScene();
-            SDL_Delay(2000);
+            SDL_Delay(3000);
 
             SDL_DestroyTexture(ps);
             ps = NULL;

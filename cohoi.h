@@ -228,13 +228,7 @@ struct Loai9{
             }
             else {
                 SDL_Texture* boctham = graphics.loadTexture("images/boctham.png");
-                SDL_Texture* tham = graphics.loadTexture("images/tham.png");
-
                 graphics.prepareScene(boctham);
-                graphics.renderTexture_new_size(tham, TH_X, TH_Y, TH_W, TH_H);
-                graphics.renderTexture_new_size(tham, TH_X + TH_DW, TH_Y, TH_W, TH_H);
-                graphics.renderTexture_new_size(tham, TH_X, TH_Y + TH_DH, TH_W, TH_H);
-                graphics.renderTexture_new_size(tham, TH_X + TH_DW, TH_Y + TH_DH, TH_W, TH_H);
 
                 graphics.presentScene();
                 SDL_Delay(1000);
@@ -244,8 +238,6 @@ struct Loai9{
 
                 SDL_DestroyTexture(boctham);
                 boctham = NULL;
-                SDL_DestroyTexture(tham);
-                tham = NULL;
             }
         }
 
