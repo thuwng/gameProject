@@ -254,16 +254,6 @@ struct Monopoly {
         //Chuẩn bị bàn cờ
         graphics.prepareScene(board);
 
-        if (!nvat[0].bankrupt) graphics.renderTexture_new_size(nobita, N_X[nvat[0].p], N_Y[nvat[0].p], N_W, N_H);
-        if (!nvat[1].bankrupt) graphics.renderTexture_new_size(shizuka, S_X + N_X[nvat[1].p], S_Y + N_Y[nvat[1].p], S_W, S_H);
-        if (!nvat[2].bankrupt) graphics.renderTexture_new_size(suneo, X_X + N_X[nvat[2].p], X_Y + N_Y[nvat[2].p], X_W, X_H);
-        if (!nvat[3].bankrupt) graphics.renderTexture_new_size(chaien, C_X + N_X[nvat[3].p], C_Y + N_Y[nvat[3].p], C_W, C_H);
-
-        if (!nvat[0].bankrupt) graphics.renderTexture(in4_Nobita, M_X, M_Y);
-        if (!nvat[1].bankrupt) graphics.renderTexture(in4_Shizuka, M_X, M_Y + M_H);
-        if (!nvat[2].bankrupt) graphics.renderTexture(in4_Suneo, M_X + M_W, M_Y);
-        if (!nvat[3].bankrupt) graphics.renderTexture(in4_Chaien, M_X + M_W, M_Y + M_H);
-
         for (int stt = 0; stt < 4; stt++) {
             for (int i = 0; i < 18; i++)
                 if (o_dat[i].chu == stt) {
@@ -282,6 +272,16 @@ struct Monopoly {
                     graphics.renderTexture_new_size(Color[stt], N_X[cong_ty[i]], N_Y[cong_ty[i]], 45, 5);
                 }
         }
+
+        if (!nvat[0].bankrupt) graphics.renderTexture_new_size(nobita, N_X[nvat[0].p], N_Y[nvat[0].p], N_W, N_H);
+        if (!nvat[1].bankrupt) graphics.renderTexture_new_size(shizuka, S_X + N_X[nvat[1].p], S_Y + N_Y[nvat[1].p], S_W, S_H);
+        if (!nvat[2].bankrupt) graphics.renderTexture_new_size(suneo, X_X + N_X[nvat[2].p], X_Y + N_Y[nvat[2].p], X_W, X_H);
+        if (!nvat[3].bankrupt) graphics.renderTexture_new_size(chaien, C_X + N_X[nvat[3].p], C_Y + N_Y[nvat[3].p], C_W, C_H);
+
+        if (!nvat[0].bankrupt) graphics.renderTexture(in4_Nobita, M_X, M_Y);
+        if (!nvat[1].bankrupt) graphics.renderTexture(in4_Shizuka, M_X, M_Y + M_H);
+        if (!nvat[2].bankrupt) graphics.renderTexture(in4_Suneo, M_X + M_W, M_Y);
+        if (!nvat[3].bankrupt) graphics.renderTexture(in4_Chaien, M_X + M_W, M_Y + M_H);
 
         //Hiện lại bàn cờ
         graphics.presentScene();
