@@ -354,7 +354,7 @@ int main(int argc, char* argv[]) {
                         tu++;
                         if (tu == 3) break;
                     }
-                    if (before > nvat[stt].p && nvat[stt].p != 1) thu.dingangobatdau(stt, real);
+                    if (before > nvat[stt].p && nvat[stt].p != 1 && nvat[stt].p != 0) thu.dingangobatdau(stt, real);
                     thu.hienbanco();
                     thu.thuchien(stt, cont, mode, real);
                     if (nvat[stt].money < 0) break;
