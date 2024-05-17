@@ -103,7 +103,7 @@ struct Loai8{
         if (r == 0) {
             nvat[stt].money += 150;
             for (int i = 0; i < 4; i++)
-                if (i != stt) nvat[i].money -= 50;
+                if (i != stt && !nvat[i].bankrupt) nvat[i].money -= 50;
         }
         else if (r == 1) {
             nvat[stt].money += 10;
