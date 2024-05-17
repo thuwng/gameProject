@@ -28,60 +28,76 @@ struct Loai8{
         }
     }
 
-    void hienthe(int stt) {
+    void hienthe(int stt, bool real) {
         SDL_Texture* visit = graphics.loadTexture(cell[nvat[stt].p]);
         graphics.prepareScene(visit);
+        SDL_Texture* o_kv;
 
-        SDL_Texture* b = graphics.loadTexture("images/xemthe.png");
-        graphics.renderTexture_new_size(b, 200, 600, O_W, O_H);
-        graphics.presentScene();
+        int r;
+        if (real) {
+            SDL_Texture* b = graphics.loadTexture("images/xemthe.png");
+            graphics.renderTexture_new_size(b, 200, 600, O_W, O_H);
+            graphics.presentScene();
 
-        SDL_Event dc;
-        int x, y;
-        bool quit = false;
-        while (true) {
-            SDL_GetMouseState(&x, &y);
-            SDL_PollEvent(&dc);
-            switch (dc.type) {
-                case SDL_QUIT:
-                    exit(0);
-                    break;
-                case SDL_MOUSEBUTTONDOWN:
-                    if (200 <= x && x <= 200 + O_W && 600 <= y && y <= 600 + O_H) {
-                        quit = true;
-                    }
+            SDL_Event dc;
+            int x, y;
+            bool quit = false;
+            while (true) {
+                SDL_GetMouseState(&x, &y);
+                SDL_PollEvent(&dc);
+                switch (dc.type) {
+                    case SDL_QUIT:
+                        exit(0);
+                        break;
+                    case SDL_MOUSEBUTTONDOWN:
+                        if (200 <= x && x <= 200 + O_W && 600 <= y && y <= 600 + O_H) {
+                            quit = true;
+                        }
+                }
+                if (quit) break;
             }
-            if (quit) break;
+
+            r = rand() % 10;
+            o_kv = graphics.loadTexture(kv[r]);
+            graphics.renderTexture_new_size(o_kv, T_X, T_Y, T_W, T_H);
+
+            graphics.presentScene();
+            SDL_Delay(2000);
+
+            SDL_Texture* B = graphics.loadTexture("images/tieptheo.png");
+            graphics.renderTexture_new_size(B, O_X, O_Y, O_W, O_H);
+
+            graphics.presentScene();
+
+            SDL_Event d;
+            int x1, y1;
+            bool quit1 = false;
+            while (true) {
+                SDL_GetMouseState(&x1, &y1);
+                SDL_PollEvent(&d);
+                switch (d.type) {
+                    case SDL_QUIT:
+                        exit(0);
+                        break;
+                    case SDL_MOUSEBUTTONDOWN:
+                        if (O_X <= x1 && x1 <= O_X + O_W && O_Y <= y1 && y1 <= O_Y + O_H) {
+                            quit1 = true;
+                        }
+                }
+                if (quit1) break;
+            }
+            SDL_DestroyTexture(b);
+            b = NULL;
+            SDL_DestroyTexture(B);
+            B = NULL;
         }
+        else {
+            r = rand() % 10;
+            SDL_Texture* o_kv = graphics.loadTexture(kv[r]);
+            graphics.renderTexture_new_size(o_kv, T_X, T_Y, T_W, T_H);
 
-        int r = rand() % 10;
-        SDL_Texture* o_kv = graphics.loadTexture(kv[r]);
-        graphics.renderTexture_new_size(o_kv, T_X, T_Y, T_W, T_H);
-
-        graphics.presentScene();
-        SDL_Delay(2000);
-
-        SDL_Texture* B = graphics.loadTexture("images/tieptheo.png");
-        graphics.renderTexture_new_size(B, O_X, O_Y, O_W, O_H);
-
-        graphics.presentScene();
-
-        SDL_Event d;
-        int x1, y1;
-        bool quit1 = false;
-        while (true) {
-            SDL_GetMouseState(&x1, &y1);
-            SDL_PollEvent(&d);
-            switch (d.type) {
-                case SDL_QUIT:
-                    exit(0);
-                    break;
-                case SDL_MOUSEBUTTONDOWN:
-                    if (O_X <= x1 && x1 <= O_X + O_W && O_Y <= y1 && y1 <= O_Y + O_H) {
-                        quit1 = true;
-                    }
-            }
-            if (quit1) break;
+            graphics.presentScene();
+            SDL_Delay(2000);
         }
 
         if (r == 0) {
@@ -120,12 +136,8 @@ struct Loai8{
 
         SDL_DestroyTexture(visit);
         visit = NULL;
-        SDL_DestroyTexture(b);
-        b = NULL;
         SDL_DestroyTexture(o_kv);
         o_kv = NULL;
-        SDL_DestroyTexture(B);
-        B = NULL;
     }
 };
 

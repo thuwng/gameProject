@@ -113,15 +113,22 @@ const int TH_H = 270;
 const int TH_DH = 290;
 
 //Lật thẻ
-const int LT_X = 250;
-const int LT_Y = 20;
-const int LT_DW = 180;
-const int LT_DH = 190;
-const int LT_X[8] = {};
-const int LT_Y[8] = {};
+const int LT_X[16] = {250,430,610,790,250,430,610,790,250,430,610,790,250,430,610,790};
+const int LT_Y[16] = { 10, 10, 10, 10,200,200,200,200,390,390,390,390,580,580,580,580};
 const int LT_W = 140;
 const int LT_H = 180;
-const char* the[8] = {"images/the1.png", "images/the2.png", "images/the3.png", "images/the4.png", "images/the5.png", "images/the6.png",
-"images/the7.png", "images/the8.png"};
+
+//Hangman
+const int H_X[26] = {
+    300, 360, 420, 480, 540, 600, 660, 720, 780, 840,
+    320, 380, 440, 500, 560, 620, 680, 740, 800,
+    340, 400, 460, 520, 580, 640, 700
+};
+const int H_Y[26] = {
+    550, 550, 550, 550, 550, 550, 550, 550, 550, 550,
+    610, 610, 610, 610, 610, 610, 610, 610, 610,
+    670, 670, 670, 670, 670, 670, 670
+};
+const int H_S = 50;
 
 #endif // _DEFS__H

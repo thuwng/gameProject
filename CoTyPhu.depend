@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1715825943 source:c:\users\dell\documents\tt\cotyphu\main.cpp
+1715929312 source:c:\users\dell\documents\tt\cotyphu\main.cpp
 	<bits/stdc++.h>
 	<SDL.h>
 	<SDL_image.h>
@@ -14,17 +14,18 @@
 	"congty.h"
 	"khivan.h"
 	"cohoi.h"
+	"hangman.h"
 
-1715219947 c:\users\dell\documents\tt\cotyphu\graphics.h
+1715929288 c:\users\dell\documents\tt\cotyphu\graphics.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
 	<SDL_ttf.h>
 	"defs.h"
 
-1715849066 c:\users\dell\documents\tt\cotyphu\defs.h
+1715919271 c:\users\dell\documents\tt\cotyphu\defs.h
 
-1715823561 c:\users\dell\documents\tt\cotyphu\logic.h
+1715927073 c:\users\dell\documents\tt\cotyphu\logic.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -43,7 +44,7 @@
 	"graphics.h"
 	"defs.h"
 
-1715823578 c:\users\dell\documents\tt\cotyphu\dat.h
+1715927541 c:\users\dell\documents\tt\cotyphu\dat.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -51,7 +52,7 @@
 	"graphics.h"
 	"defs.h"
 
-1715823561 c:\users\dell\documents\tt\cotyphu\benxe.h
+1715927541 c:\users\dell\documents\tt\cotyphu\benxe.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -59,7 +60,7 @@
 	"graphics.h"
 	"defs.h"
 
-1715823560 c:\users\dell\documents\tt\cotyphu\congty.h
+1715927541 c:\users\dell\documents\tt\cotyphu\congty.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -67,7 +68,7 @@
 	"graphics.h"
 	"defs.h"
 
-1715830141 c:\users\dell\documents\tt\cotyphu\khivan.h
+1715926408 c:\users\dell\documents\tt\cotyphu\khivan.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -75,7 +76,17 @@
 	"graphics.h"
 	"defs.h"
 
-1715848409 c:\users\dell\documents\tt\cotyphu\cohoi.h
+1715927133 c:\users\dell\documents\tt\cotyphu\cohoi.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	"graphics.h"
+	"defs.h"
+	"logic.h"
+	"hangman.h"
+
+1715926667 c:\users\dell\documents\tt\cotyphu\hangman.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>

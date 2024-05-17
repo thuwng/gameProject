@@ -2,54 +2,54 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
+	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="663" topLine="283" />
+		</Cursor>
+	</File>
 	<File name="benxe.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="9276" topLine="230" />
+			<Cursor1 position="2374" topLine="62" />
+		</Cursor>
+	</File>
+	<File name="logic.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3821" topLine="462" />
+		</Cursor>
+	</File>
+	<File name="cohoi.h" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="9767" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="khivan.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="170" topLine="0" />
+			<Cursor1 position="2614" topLine="66" />
 		</Cursor>
 	</File>
-	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
+	<File name="defs.h" open="1" top="1" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="11854" topLine="287" />
-		</Cursor>
-	</File>
-	<File name="defs.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3883" topLine="87" />
-		</Cursor>
-	</File>
-	<File name="cohoi.h" open="1" top="1" tabpos="10" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="7366" topLine="167" />
-		</Cursor>
-	</File>
-	<File name="logic.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="16833" topLine="467" />
-		</Cursor>
-	</File>
-	<File name="dat.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="27271" topLine="657" />
-		</Cursor>
-	</File>
-	<File name="choose.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3177" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="graphics.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2285" topLine="60" />
+			<Cursor1 position="4072" topLine="100" />
 		</Cursor>
 	</File>
 	<File name="congty.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3746" topLine="100" />
+			<Cursor1 position="2197" topLine="66" />
+		</Cursor>
+	</File>
+	<File name="dat.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="5451" topLine="107" />
+		</Cursor>
+	</File>
+	<File name="choose.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4500" topLine="100" />
+		</Cursor>
+	</File>
+	<File name="graphics.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="155" topLine="0" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

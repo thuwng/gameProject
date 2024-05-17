@@ -107,8 +107,8 @@ struct Loai1{
         o_dat[17].giadat = 400; o_dat[17].gianha = 200; o_dat[17].giaks = 200;
     }
 
-    void hienthe(int stt, int loai) {
-        if (o_dat[loai].chu == -1) {
+    void hienthe(int stt, int loai, bool real) {
+        if (o_dat[loai].chu == -1 && real) {
             SDL_Texture* visit = graphics.loadTexture(cell[nvat[stt].p]);
             graphics.prepareScene(visit);
 
@@ -154,7 +154,7 @@ struct Loai1{
 
             SDL_Delay(500);
         }
-        else if (o_dat[loai].chu == stt && o_dat[loai].nha < 2) {
+        else if (o_dat[loai].chu == stt && o_dat[loai].nha < 2 && real) {
             SDL_Texture* visit = graphics.loadTexture(cell[nvat[stt].p]);
             graphics.prepareScene(visit);
 
@@ -200,7 +200,7 @@ struct Loai1{
 
             SDL_Delay(500);
         }
-        else if (o_dat[loai].chu == stt && o_dat[loai].nha == 2) {
+        else if (o_dat[loai].chu == stt && o_dat[loai].nha == 2 && real) {
             SDL_Texture* visit = graphics.loadTexture(cell[nvat[stt].p]);
             graphics.prepareScene(visit);
 
@@ -246,7 +246,7 @@ struct Loai1{
 
             SDL_Delay(500);
         }
-        else if (o_dat[loai].chu != stt) {
+        else if (o_dat[loai].chu != stt && o_dat[loai].chu != -1) {
             int thue = 0;
             if (o_dat[loai].nha == 0) {
                 nvat[stt].money -= o_dat[loai].thuedat;

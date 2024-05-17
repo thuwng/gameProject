@@ -29,8 +29,8 @@ struct Loai4{
         }
     }
 
-    void hienthe(int stt, int loai, int diem) {
-        if (cty[loai] == -1) {
+    void hienthe(int stt, int loai, int diem, bool real) {
+        if (cty[loai] == -1 && real) {
             SDL_Texture* visit = graphics.loadTexture(cell[congty[loai]]);
             graphics.prepareScene(visit);
 
@@ -82,7 +82,7 @@ struct Loai4{
                 nvat[stt].money -= 4 * diem;
                 nvat[cty[loai]].money += 4 * diem;
             }
-            else {
+            else if (cty[loai] != -1){
                 nvat[stt].money -= 10 * diem;
                 nvat[cty[loai]].money += 10 * diem;
             }

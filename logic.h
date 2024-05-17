@@ -80,50 +80,58 @@ struct Monopoly {
     }
 
     int x1, x2;
-    void gieoxingau(int stt, bool &cont, int &mode) {
+    void gieoxingau(int stt, bool &cont, int &mode, bool real) {
         SDL_Texture* blank = graphics.loadTexture(Turn[stt]);
         graphics.prepareScene(blank);
         graphics.presentScene();
 
-        SDL_Event get_dice;
-        SDL_Texture* button = graphics.loadTexture("images/button.png");
-        while (true) {
-            int x, y;
-            bool quit = false;
-            SDL_GetMouseState(&x, &y);
+        if (real) {
+            SDL_Event get_dice;
+            SDL_Texture* button = graphics.loadTexture("images/button.png");
+            while (true) {
+                int x, y;
+                bool quit = false;
+                SDL_GetMouseState(&x, &y);
 
-            SDL_Rect dices;
-            dices.x = 920;
-            dices.y = 580;
-            dices.w = 200;
-            dices.h = 210;
+                SDL_Rect dices;
+                dices.x = 920;
+                dices.y = 580;
+                dices.w = 200;
+                dices.h = 210;
 
-            if (x >= dices.x && x <= dices.x + dices.w && y >= dices.y && y <= dices.y + dices.h) {
-                graphics.prepareScene(blank);
-                graphics.renderTexture_new_size(button, 920, 580, 200, 210);
-            }
-            else {
-                graphics.prepareScene(blank);
-                graphics.renderTexture_new_size(button, 930, 590, 180, 190);
-            }
-            graphics.presentScene();
+                if (x >= dices.x && x <= dices.x + dices.w && y >= dices.y && y <= dices.y + dices.h) {
+                    graphics.prepareScene(blank);
+                    graphics.renderTexture_new_size(button, 920, 580, 200, 210);
+                }
+                else {
+                    graphics.prepareScene(blank);
+                    graphics.renderTexture_new_size(button, 930, 590, 180, 190);
+                }
+                graphics.presentScene();
 
-            SDL_PollEvent(&get_dice);
-            switch (get_dice.type) {
-                case SDL_QUIT:
-                    exit(0);
-                    break;
-                case SDL_MOUSEBUTTONDOWN:
-                    if (x >= dices.x && x <= dices.x + dices.w && y >= dices.y && y <= dices.y + dices.h) {
-                        x1 = rand() % 6;
-                        x2 = rand() % 6;
-                        quit = true;
-                    }
+                SDL_PollEvent(&get_dice);
+                switch (get_dice.type) {
+                    case SDL_QUIT:
+                        exit(0);
+                        break;
+                    case SDL_MOUSEBUTTONDOWN:
+                        if (x >= dices.x && x <= dices.x + dices.w && y >= dices.y && y <= dices.y + dices.h) {
+                            x1 = rand() % 6;
+                            x2 = rand() % 6;
+                            quit = true;
+                        }
+                }
+                if (quit) break;
             }
-            if (quit) break;
+
+            SDL_Delay(500);
+            SDL_DestroyTexture(button);
+            button = NULL;
         }
-
-        SDL_Delay(500);
+        else {
+            x1 = rand() % 6;
+            x2 = rand() % 6;
+        }
 
         SDL_Texture* dice1 = graphics.loadTexture(Dice[x1]);
         graphics.renderTexture_new_size(dice1, 650, 200, 200, 200);
@@ -131,7 +139,8 @@ struct Monopoly {
         graphics.renderTexture_new_size(dice2, 880, 200, 200, 200);
 
         graphics.presentScene();
-        SDL_Delay(800);
+        if (real) SDL_Delay(800);
+        else SDL_Delay(1000);
 
         //Thay đổi vị trí
         nvat[stt].p += (x1 + x2 + 2) % 36;
@@ -141,8 +150,6 @@ struct Monopoly {
         }
 
         //Xóa
-        SDL_DestroyTexture(button);
-        button = NULL;
         SDL_DestroyTexture(dice2);
         dice2 = NULL;
         SDL_DestroyTexture(dice1);
@@ -278,11 +285,11 @@ struct Monopoly {
         chaien = NULL;
     }
 
-    void thuchien(int stt, bool &cont, int &mode) {
+    void thuchien(int stt, bool &cont, int &mode, bool real) {
         int loai;
         if (findpos(nvat[stt].p, loai) == 1) {
             Loai1 a(graphics);
-            a.hienthe(stt, loai);
+            a.hienthe(stt, loai, real);
         }
         else if (findpos(nvat[stt].p, loai) == 2) {
             SDL_Texture* visit = graphics.loadTexture(cell[nvat[stt].p]);
@@ -292,40 +299,46 @@ struct Monopoly {
             else if (honhop[loai] == 5) nvat[stt].money -= min(200, nvat[stt].money * 10 / 100);
             else if (honhop[loai] == 35) nvat[stt].money -= 100;
 
-            SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
-            graphics.renderTexture_new_size(b, O_X, O_Y, O_W, O_H);
-            graphics.presentScene();
+            if (real) {
+                SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
+                graphics.renderTexture_new_size(b, O_X, O_Y, O_W, O_H);
+                graphics.presentScene();
 
-            SDL_Event dc;
-            int x, y;
-            bool quit = false, buy = false;
-            while (true) {
-                SDL_GetMouseState(&x, &y);
-                SDL_PollEvent(&dc);
-                switch (dc.type) {
-                    case SDL_QUIT:
-                        exit(0);
-                        break;
-                    case SDL_MOUSEBUTTONDOWN:
-                        if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
-                            quit = true;
-                        }
+                SDL_Event dc;
+                int x, y;
+                bool quit = false, buy = false;
+                while (true) {
+                    SDL_GetMouseState(&x, &y);
+                    SDL_PollEvent(&dc);
+                    switch (dc.type) {
+                        case SDL_QUIT:
+                            exit(0);
+                            break;
+                        case SDL_MOUSEBUTTONDOWN:
+                            if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
+                                quit = true;
+                            }
+                    }
+                    if (quit) break;
                 }
-                if (quit) break;
-            }
 
+                SDL_DestroyTexture(b);
+                b = NULL;
+            }
+            else {
+                graphics.presentScene();
+                SDL_Delay(1000);
+            }
             SDL_DestroyTexture(visit);
             visit = NULL;
-            SDL_DestroyTexture(b);
-            b = NULL;
         }
         else if (findpos(nvat[stt].p, loai) == 3) {
             Loai3 a(graphics);
-            a.hienthe(stt, loai);
+            a.hienthe(stt, loai, real);
         }
         else if (findpos(nvat[stt].p, loai) == 4) {
             Loai4 a(graphics);
-            a.hienthe(stt, loai, x1 + x2 + 2);
+            a.hienthe(stt, loai, x1 + x2 + 2, real);
         }
         else if (findpos(nvat[stt].p, loai) == 5) {
             SDL_Texture* visit = graphics.loadTexture(cell[nvat[stt].p]);
@@ -336,88 +349,111 @@ struct Monopoly {
                 nvat[stt].p = 10;
             }
 
-            SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
-            graphics.renderTexture_new_size(b, O_X, O_Y, O_W, O_H);
-            graphics.presentScene();
+            if (real) {
+                SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
+                graphics.renderTexture_new_size(b, O_X, O_Y, O_W, O_H);
+                graphics.presentScene();
 
-            SDL_Event dc;
-            int x, y;
-            bool quit = false, buy = false;
-            while (true) {
-                SDL_GetMouseState(&x, &y);
-                SDL_PollEvent(&dc);
-                switch (dc.type) {
-                    case SDL_QUIT:
-                        exit(0);
-                        break;
-                    case SDL_MOUSEBUTTONDOWN:
-                        if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
-                            quit = true;
-                        }
+                SDL_Event dc;
+                int x, y;
+                bool quit = false, buy = false;
+                while (true) {
+                    SDL_GetMouseState(&x, &y);
+                    SDL_PollEvent(&dc);
+                    switch (dc.type) {
+                        case SDL_QUIT:
+                            exit(0);
+                            break;
+                        case SDL_MOUSEBUTTONDOWN:
+                            if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
+                                quit = true;
+                            }
+                    }
+                    if (quit) break;
                 }
-                if (quit) break;
+
+                SDL_DestroyTexture(b);
+                b = NULL;
+            }
+            else {
+                graphics.presentScene();
+                SDL_Delay(1000);
             }
 
             SDL_DestroyTexture(visit);
             visit = NULL;
-            SDL_DestroyTexture(b);
-            b = NULL;
         }
         else if (findpos(nvat[stt].p, loai) == 6) {
             SDL_Texture* visit = graphics.loadTexture(cell[nvat[stt].p]);
             graphics.prepareScene(visit);
 
-            SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
-            graphics.renderTexture_new_size(b, O_X, O_Y, O_W, O_H);
-            graphics.presentScene();
+            if (real) {
+                SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
+                graphics.renderTexture_new_size(b, O_X, O_Y, O_W, O_H);
+                graphics.presentScene();
 
-            SDL_Event dc;
-            int x, y;
-            bool quit = false, buy = false;
-            while (true) {
-                SDL_GetMouseState(&x, &y);
-                SDL_PollEvent(&dc);
-                switch (dc.type) {
-                    case SDL_QUIT:
-                        exit(0);
-                        break;
-                    case SDL_MOUSEBUTTONDOWN:
-                        if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
-                            quit = true;
-                        }
+                SDL_Event dc;
+                int x, y;
+                bool quit = false, buy = false;
+                while (true) {
+                    SDL_GetMouseState(&x, &y);
+                    SDL_PollEvent(&dc);
+                    switch (dc.type) {
+                        case SDL_QUIT:
+                            exit(0);
+                            break;
+                        case SDL_MOUSEBUTTONDOWN:
+                            if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
+                                quit = true;
+                            }
+                    }
+                    if (quit) break;
                 }
-                if (quit) break;
+
+                SDL_DestroyTexture(b);
+                b = NULL;
+            }
+            else {
+                graphics.presentScene();
+                SDL_Delay(1000);
             }
 
             SDL_DestroyTexture(visit);
             visit = NULL;
-            SDL_DestroyTexture(b);
-            b = NULL;
         }
         else if (findpos(nvat[stt].p, loai) == 7) {
             SDL_Texture* visit = graphics.loadTexture(cell[nvat[stt].p]);
             graphics.prepareScene(visit);
 
-            SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
-            graphics.renderTexture_new_size(b, O_X, O_Y, O_W, O_H);
-            graphics.presentScene();
+            if (real) {
+                SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
+                graphics.renderTexture_new_size(b, O_X, O_Y, O_W, O_H);
+                graphics.presentScene();
 
-            SDL_Event dc;
-            int x, y;
-            bool quit = false, buy = false;
-            while (true) {
-                SDL_GetMouseState(&x, &y);
-                SDL_PollEvent(&dc);
-                switch (dc.type) {
-                    case SDL_QUIT:
-                        exit(0);
-                        break;
-                    case SDL_MOUSEBUTTONDOWN:
-                        if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
-                            quit = true;
-                        }
+                SDL_Event dc;
+                int x, y;
+                bool quit = false, buy = false;
+                while (true) {
+                    SDL_GetMouseState(&x, &y);
+                    SDL_PollEvent(&dc);
+                    switch (dc.type) {
+                        case SDL_QUIT:
+                            exit(0);
+                            break;
+                        case SDL_MOUSEBUTTONDOWN:
+                            if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
+                                quit = true;
+                            }
+                    }
+                    if (quit) break;
                 }
-                if (quit) break;
+
+                SDL_DestroyTexture(b);
+                b = NULL;
+            }
+            else {
+                graphics.presentScene();
+                SDL_Delay(1000);
             }
 
             SDL_Texture* road = graphics.loadTexture("images/road.jpg");
@@ -425,10 +461,10 @@ struct Monopoly {
             SDL_Texture* doraTexture = graphics.loadTexture(DORA_SPRITE);
             dora.init(doraTexture, DORA_FRAMES, DORA_CLIPS);
 
-            quit = false;
+            bool quit1 = false;
             int dx = -20, dy = 420, nb = 0;
-            while(!quit) {
-                if(nb == 28) quit = true;
+            while(!quit1) {
+                if(nb == 28) quit1 = true;
                 nb++;
 
                 dora.tick();
@@ -442,10 +478,10 @@ struct Monopoly {
             }
 
             SDL_Texture* plane = graphics.loadTexture("images/airplane.png");
-            quit = false;
+            quit1 = false;
             int Dx = -20, Dy = 150, c = 0;
-            while(!quit) {
-                if(c == 29) quit = true;
+            while(!quit1) {
+                if(c == 29) quit1 = true;
                 c++;
 
                 dora.tick();
@@ -468,8 +504,6 @@ struct Monopoly {
             road = NULL;
             SDL_DestroyTexture(visit);
             visit = NULL;
-            SDL_DestroyTexture(b);
-            b = NULL;
 
             nvat[stt].p = 2;
             cont = true;
@@ -477,11 +511,11 @@ struct Monopoly {
         }
         else if (findpos(nvat[stt].p, loai) == 8) {
             Loai8 a(graphics);
-            a.hienthe(stt);
+            a.hienthe(stt, real);
         }
         else if (findpos(nvat[stt].p, loai) == 9) {
             Loai9 a(graphics);
-            a.hienthe(stt, cont, mode);
+            a.hienthe(stt, cont, mode, real);
         }
     }
 };

@@ -12,6 +12,7 @@
 #include "congty.h"
 #include "khivan.h"
 #include "cohoi.h"
+#include "hangman.h"
 
 using namespace std;
 
@@ -29,7 +30,11 @@ int main(int argc, char* argv[]) {
     Graphics graphics;
     graphics.initSDL(SCREEN_W, SCREEN_H);
 
-    /*//Nạp ảnh mở màn
+    //Thêm nhạc
+    Mix_Music *gMusic = graphics.loadMusic("doraemon.mp3");
+    graphics.play(gMusic);
+
+    //Nạp ảnh mở màn
     SDL_Texture* start_screen = graphics.loadTexture("images/batdau.png");
     graphics.prepareScene(start_screen);
 
@@ -284,7 +289,7 @@ int main(int argc, char* argv[]) {
     SDL_DestroyTexture(Cell);
     Cell = NULL;
     SDL_DestroyTexture(b);
-    b = NULL;*/
+    b = NULL;
 
     //Nạp ảnh bàn cờ
     SDL_Texture* board = graphics.loadTexture("images/board.png");
@@ -324,44 +329,49 @@ int main(int argc, char* argv[]) {
     loai1.khoitao();
 
     //Vào game
-    int stt = -1;
+    int stt = -1, sl = 0;
+    for (int i = 0; i < 4; i++)
+        if (nvat[i].is_real_player) sl++;
+    int sl1 = 4 - sl, tt = 1;
     Monopoly thu(graphics);
     //Monopoly_AI thuw(graphics);
 
-    while ((nvat[0].turn < 30 || nvat[1].turn < 30 || nvat[2].turn < 30 || nvat[3].turn < 30) && !(nvat[0].bankrupt && nvat[1].bankrupt && nvat[2].bankrupt && nvat[3].bankrupt)) {
+    while (nvat[0].turn < 30 || nvat[1].turn < 30 || nvat[2].turn < 30 || nvat[3].turn < 30) {
         stt = (stt + 1) % 4;
+        bool real = nvat[stt].is_real_player;
+        if (nvat[stt].bankrupt) continue;
 
         if (nvat[stt].free) {
             bool cont = false;
-            int mode, tu = 1;
+            int mode, tu = 0;
             nvat[stt].turn++;
-            thu.gieoxingau(stt, cont, mode);
-            nvat[stt].p = 7;
+            thu.gieoxingau(stt, cont, mode, real);
             thu.hienbanco();
-            thu.thuchien(stt, cont, mode);
+            thu.thuchien(stt, cont, mode, real);
             thu.hienbanco();
 
-            while (cont && tu < 2) {
+            while (cont && tu < 2 && nvat[stt].money >= 0) {
                 if (mode == 0) {
                     tu++;
-                    thu.gieoxingau(stt, cont, mode);
+                    thu.gieoxingau(stt, cont, mode, real);
                     thu.hienbanco();
-                    thu.thuchien(stt, cont, mode);
+                    thu.thuchien(stt, cont, mode, real);
                     thu.hienbanco();
                 }
                 else {
-                    thu.thuchien(stt, cont, mode);
+                    thu.thuchien(stt, cont, mode, real);
                     thu.hienbanco();
                     cont = false;
                 }
             }
 
-            if (tu == 2 && cont) {
+            if (tu == 2 && cont && nvat[stt].money >= 0) {
                 if (!nvat[stt].free_next_turn) {
                     SDL_Texture* vao_tu = graphics.loadTexture("images/vaotu.png");
                     graphics.prepareScene(vao_tu);
 
                     graphics.presentScene();
+                    SDL_Delay(1000);
 
                     nvat[stt].free = false;
                     nvat[stt].p = 10;
@@ -375,6 +385,7 @@ int main(int argc, char* argv[]) {
                     graphics.prepareScene(mien_tu);
 
                     graphics.presentScene();
+                    SDL_Delay(1000);
 
                     nvat[stt].free_next_turn = false;
                     thu.hienbanco();
@@ -385,10 +396,69 @@ int main(int argc, char* argv[]) {
             }
         }
         else {
-            bool ratu = false;
-            thu.cohoiratu(stt, ratu);
-            nvat[stt].free = ratu;
+            if (real) {
+                bool ratu = false;
+                thu.cohoiratu(stt, ratu);
+                nvat[stt].free = ratu;
+            }
+            else {
+                nvat[stt].free = true;
+            }
         }
+
+        if(nvat[stt].money < 0) {
+            if (nvat[stt].is_real_player) sl--;
+            else sl1--;
+            nvat[stt].bankrupt = true;
+            SDL_Texture* ps = graphics.loadTexture("images/phasan.png");
+            graphics.prepareScene(ps);
+
+            graphics.presentScene();
+            SDL_Delay(1000);
+
+            SDL_DestroyTexture(ps);
+            ps = NULL;
+        }
+        if (sl == 1 && sl1 == 0) break;
+        if (sl == 0) {
+            tt = 0;
+            break;
+        }
+    }
+
+    if (tt == 0) {
+        SDL_Texture* ps = graphics.loadTexture("images/lose.png");
+        graphics.prepareScene(ps);
+
+        graphics.presentScene();
+        SDL_Delay(2000);
+
+        SDL_DestroyTexture(ps);
+        ps = NULL;
+    }
+
+    else {
+        int tp = -1, st = 0;
+        for (int i = 0; i < 4; i++)
+            if (nvat[i].is_real_player && !nvat[i].bankrupt && nvat[i].money >= st) {
+                tp = i;
+                st = nvat[i].money;
+            }
+
+        SDL_Texture* ps = graphics.loadTexture("images/chienthang.png");
+        graphics.prepareScene(ps);
+        SDL_Texture* c1;
+        if (tp == 0) c1 = graphics.loadTexture("images/characters/Nobita.png");
+        else if (tp == 1) c1 = graphics.loadTexture("images/characters/Shizuka.png");
+        else if (tp == 2) c1 = graphics.loadTexture("images/characters/Suneo.png");
+        else if (tp == 3) c1 = graphics.loadTexture("images/characters/Chaien.png");
+        graphics.renderTexture_new_size(c1, 800, 600, 150, 200);
+
+        graphics.presentScene();
+        SDL_Delay(2000);
+
+        SDL_DestroyTexture(ps);
+        ps = NULL;
     }
 
     //Xóa
@@ -413,6 +483,7 @@ int main(int argc, char* argv[]) {
 
     SDL_DestroyTexture(board);
     board = NULL;
+    if (gMusic != nullptr) Mix_FreeMusic( gMusic );
 
     //Kết thúc ván cờ
     graphics.quit();
