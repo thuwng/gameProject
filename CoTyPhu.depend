@@ -86,7 +86,7 @@
 	"logic.h"
 	"hangman.h"
 
-1715942828 c:\users\dell\documents\tt\cotyphu\hangman.h
+1715964128 c:\users\dell\documents\tt\cotyphu\hangman.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
