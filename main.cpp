@@ -420,7 +420,7 @@ int main(int argc, char* argv[]) {
             graphics.prepareScene(ps);
 
             graphics.presentScene();
-            SDL_Delay(1000);
+            SDL_Delay(3000);
 
             thu.phasan(stt);
 

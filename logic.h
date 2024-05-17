@@ -20,9 +20,9 @@ vector<int> dat = {2, 4, 8, 9, 11, 13, 15, 17, 18, 20, 22, 23, 25, 27, 29, 31, 3
 //2
 vector<int> honhop = {1, 5, 35};
 //3
-//vector<int> benxe = {6, 14, 24, 32};
+vector<int> ben_xe = {6, 14, 24, 32};
 //4
-//vector<int> congty = {12, 26};
+vector<int> cong_ty = {12, 26};
 //5
 vector<int> vaotu = {28};
 //6
@@ -244,6 +244,13 @@ struct Monopoly {
         SDL_Texture* suneo = graphics.loadTexture("images/characters_removed_background/Suneo.png");
         SDL_Texture* chaien = graphics.loadTexture("images/characters_removed_background/Chaien.png");
 
+        //Sở hữu
+        SDL_Texture* Color[4];
+        Color[0] = graphics.loadTexture("images/vang.png");
+        Color[1] = graphics.loadTexture("images/hong.png");
+        Color[2] = graphics.loadTexture("images/xanh.png");
+        Color[3] = graphics.loadTexture("images/trang.png");
+
         //Chuẩn bị bàn cờ
         graphics.prepareScene(board);
 
@@ -257,9 +264,28 @@ struct Monopoly {
         if (!nvat[2].bankrupt) graphics.renderTexture(in4_Suneo, M_X + M_W, M_Y);
         if (!nvat[3].bankrupt) graphics.renderTexture(in4_Chaien, M_X + M_W, M_Y + M_H);
 
+        for (int stt = 0; stt < 4; stt++) {
+            for (int i = 0; i < 18; i++)
+                if (o_dat[i].chu == stt) {
+                    int h = 1;
+                    if (o_dat[i].ks) h = 4;
+                    else if (o_dat[i].nha != 0) h += o_dat[i].nha;
+                    if (i == 17) graphics.renderTexture_new_size(Color[stt], N_X[0], N_Y[0], 45, 5 * h);
+                    else graphics.renderTexture_new_size(Color[stt], N_X[dat[i]], N_Y[dat[i]], 45, 5 * h);
+                }
+            for (int i = 0; i < 4; i++)
+                if (bxe[i] == stt) {
+                    graphics.renderTexture_new_size(Color[stt], N_X[ben_xe[i]], N_Y[ben_xe[i]], 45, 5);
+                }
+            for (int i = 0; i < 2; i++)
+                if (cty[i] == stt) {
+                    graphics.renderTexture_new_size(Color[stt], N_X[cong_ty[i]], N_Y[cong_ty[i]], 45, 5);
+                }
+        }
+
         //Hiện lại bàn cờ
         graphics.presentScene();
-        SDL_Delay(2000);
+        SDL_Delay(3000);
 
         //Xóa
         SDL_DestroyTexture(board);
@@ -284,10 +310,15 @@ struct Monopoly {
         suneo = NULL;
         SDL_DestroyTexture(chaien);
         chaien = NULL;
+
+        for (int i = 0; i < 4; i++) {
+            SDL_DestroyTexture(Color[i]);
+            Color[i] = NULL;
+        }
     }
 
     void dingangobatdau(int stt, bool real) {
-        SDL_Texture* visit = graphics.loadTexture(cell[nvat[stt].p]);
+        SDL_Texture* visit = graphics.loadTexture(cell[1]);
         graphics.prepareScene(visit);
         nvat[stt].money += 200;
 
@@ -319,7 +350,7 @@ struct Monopoly {
         }
         else {
             graphics.presentScene();
-            SDL_Delay(1000);
+            SDL_Delay(3000);
         }
         SDL_DestroyTexture(visit);
         visit = NULL;
