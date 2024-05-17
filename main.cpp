@@ -334,7 +334,6 @@ int main(int argc, char* argv[]) {
         if (nvat[i].is_real_player) sl++;
     int sl1 = 4 - sl, tt = 1;
     Monopoly thu(graphics);
-    //Monopoly_AI thuw(graphics);
 
     while (nvat[0].turn < 30 || nvat[1].turn < 30 || nvat[2].turn < 30 || nvat[3].turn < 30) {
         stt = (stt + 1) % 4;
@@ -463,6 +462,7 @@ int main(int argc, char* argv[]) {
     }
 
     //Xóa
+    TTF_CloseFont(font);
     SDL_DestroyTexture(in4_Nobita);
     in4_Nobita = NULL;
     SDL_DestroyTexture(in4_Shizuka);
@@ -484,7 +484,7 @@ int main(int argc, char* argv[]) {
 
     SDL_DestroyTexture(board);
     board = NULL;
-    if (gMusic != nullptr) Mix_FreeMusic( gMusic );
+    if (gMusic != nullptr) Mix_FreeMusic(gMusic);
 
     //Kết thúc ván cờ
     graphics.quit();

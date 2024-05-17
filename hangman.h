@@ -127,7 +127,20 @@ struct Hangman{
         int badGuessCount = 0;
         int vt, vitri[word.length()];
         bool guessed[word.length()];
-        for (int i = 0; i < word.length(); i++) guessed[i] = false;
+
+        //Gợi ý
+        int r = rand() % word.length();
+        for (int i = 0; i < word.length(); i++)
+            if (word[i] == word[r]) {
+                guessed[i] = true;
+                guessedWord[i] = word[r];
+                for (int j = 0; j < 26; j++)
+                    if (word[i] == Alphabet[j]) {
+                        vitri[i] = j;
+                        break;
+                    }
+            }
+            else guessed[i] = false;
 
         SDL_Texture* hm[8];
         hm[0] = graphics.loadTexture("images/hangman/hm0.png");
@@ -331,14 +344,13 @@ struct Hangman{
         }
         SDL_DestroyTexture(oo);
         oo = NULL;
-        //SDL_DestroyTexture(font);
-        //font = NULL;
         SDL_DestroyTexture(chu);
         chu = NULL;
         for (int i = 0; i < 26; i++) {
             SDL_DestroyTexture(chucai[i]);
             chucai[i] = NULL;
         }
+        TTF_CloseFont(font);
 	}
 };
 
