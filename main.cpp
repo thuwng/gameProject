@@ -345,7 +345,7 @@ int main(int argc, char* argv[]) {
             int mode = 0, tu = 0, before;
             nvat[stt].turn++;
 
-            while (cont && tu < 3 && nvat[stt].money >= 0) {
+            while (cont && tu < 3 && nvat[stt].money >= 0 && nvat[stt].free) {
                 cont = false;
                 if (mode == 0) {
                     before = nvat[stt].p;
