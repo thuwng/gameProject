@@ -346,6 +346,7 @@ int main(int argc, char* argv[]) {
             int mode, tu = 0;
             nvat[stt].turn++;
             thu.gieoxingau(stt, cont, mode, real);
+            nvat[stt].p = 7;
             thu.hienbanco();
             thu.thuchien(stt, cont, mode, real);
             thu.hienbanco();
