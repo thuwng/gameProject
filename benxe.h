@@ -30,59 +30,77 @@ struct Loai3{
     }
 
     void hienthe(int stt, int loai, bool real) {
-        if (bxe[loai] == -1 && real) {
-            SDL_Texture* visit = graphics.loadTexture(cell[benxe[loai]]);
-            graphics.prepareScene(visit);
+        SDL_Texture* visit = graphics.loadTexture(cell[benxe[loai]]);
+        if (bxe[loai] == -1) {
+            if (real) {
+                graphics.prepareScene(visit);
 
-            SDL_Texture* a = graphics.loadTexture("images/muadat.png");
-            graphics.renderTexture_new_size(a, O_X, O_Y, O_W, O_H);
-            SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
-            graphics.renderTexture_new_size(b, O_X + O_D, O_Y, O_W, O_H);
-            graphics.presentScene();
+                SDL_Texture* a = graphics.loadTexture("images/muadat.png");
+                graphics.renderTexture_new_size(a, O_X, O_Y, O_W, O_H);
+                SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
+                graphics.renderTexture_new_size(b, O_X + O_D, O_Y, O_W, O_H);
+                graphics.presentScene();
 
-            SDL_Event dc;
-            int x, y;
-            bool quit = false, buy = false;
-            while (true) {
-                SDL_GetMouseState(&x, &y);
-                SDL_PollEvent(&dc);
-                switch (dc.type) {
-                    case SDL_QUIT:
-                        exit(0);
-                        break;
-                    case SDL_MOUSEBUTTONDOWN:
-                        if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
-                            buy = true;
-                            quit = true;
-                        }
-                        else if (O_X + O_D <= x && x <= O_X + O_D + O_W && O_Y <= y && y <= O_Y + O_H) {
-                            quit = true;
-                        }
+                SDL_Event dc;
+                int x, y;
+                bool quit = false, buy = false;
+                while (true) {
+                    SDL_GetMouseState(&x, &y);
+                    SDL_PollEvent(&dc);
+                    switch (dc.type) {
+                        case SDL_QUIT:
+                            exit(0);
+                            break;
+                        case SDL_MOUSEBUTTONDOWN:
+                            if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
+                                buy = true;
+                                quit = true;
+                            }
+                            else if (O_X + O_D <= x && x <= O_X + O_D + O_W && O_Y <= y && y <= O_Y + O_H) {
+                                quit = true;
+                            }
+                    }
+                    if (quit) break;
                 }
-                if (quit) break;
+
+                if (buy) {
+                    bxe[loai] = stt;
+                    nvat[stt].money -= 200;
+                    nvat[stt].bxe++;
+                }
+
+                SDL_DestroyTexture(a);
+                a = NULL;
+                SDL_DestroyTexture(b);
+                b = NULL;
+
+                SDL_Delay(500);
             }
+            else {
+                graphics.prepareScene(visit);
+                graphics.presentScene();
+                SDL_Delay(3000);
 
-            if (buy) {
-                bxe[loai] = stt;
-                nvat[stt].money -= 200;
-                nvat[stt].bxe++;
+                if (nvat[stt].money >= 200) {
+                    bxe[loai] = stt;
+                    nvat[stt].money -= 200;
+                    nvat[stt].bxe++;
+                }
             }
-
-            SDL_DestroyTexture(visit);
-            visit = NULL;
-            SDL_DestroyTexture(a);
-            a = NULL;
-            SDL_DestroyTexture(b);
-            b = NULL;
-
-            SDL_Delay(500);
         }
+
         else if (bxe[loai] != -1){
+            graphics.prepareScene(visit);
+            graphics.presentScene();
+            SDL_Delay(3000);
+
             int j = 1;
             for (int i = 1; i < nvat[bxe[loai]].bxe; i++) j *= 2;
             nvat[stt].money -= 25 * j;
             nvat[bxe[loai]].money += 25 * j;
         }
+        SDL_DestroyTexture(visit);
+        visit = NULL;
     }
 };
 

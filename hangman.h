@@ -122,7 +122,7 @@ struct Hangman{
             if (quit) break;
         }
 
-        string word = chooseWord(); cout << word << endl;
+        string word = chooseWord();
         string guessedWord = string(word.length(), '_');
         int badGuessCount = 0;
         int vt, vitri[word.length()];
@@ -165,6 +165,10 @@ struct Hangman{
                 graphics.renderTexture_new_size(oo, 600 + i * 60, 250, 50, 50);
                 if (guessed[i]) {
                     chu = graphics.renderText(alphabet[vitri[i]], font, color);
+                    graphics.renderTexture(chu, 615 + i * 60, 260);
+                }
+                else {
+                    chu = graphics.renderText("_", font, color);
                     graphics.renderTexture(chu, 615 + i * 60, 260);
                 }
             }

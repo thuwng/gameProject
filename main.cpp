@@ -345,12 +345,13 @@ int main(int argc, char* argv[]) {
             int mode, tu = 0;
             nvat[stt].turn++;
             thu.gieoxingau(stt, cont, mode, real);
-            nvat[stt].p = 7;
+            //nvat[stt].p = 19;
             thu.hienbanco();
             thu.thuchien(stt, cont, mode, real);
             thu.hienbanco();
 
             while (cont && tu < 2 && nvat[stt].money >= 0) {
+                cont = false;
                 if (mode == 0) {
                     tu++;
                     thu.gieoxingau(stt, cont, mode, real);
@@ -358,7 +359,7 @@ int main(int argc, char* argv[]) {
                     thu.thuchien(stt, cont, mode, real);
                     thu.hienbanco();
                 }
-                else {
+                else if (mode == 1) {
                     thu.thuchien(stt, cont, mode, real);
                     thu.hienbanco();
                     cont = false;
@@ -438,27 +439,44 @@ int main(int argc, char* argv[]) {
     }
 
     else {
-        int tp = -1, st = 0;
+        int tp = -1, tp1 = -1, st = 0, st1 = 0;
         for (int i = 0; i < 4; i++)
             if (nvat[i].is_real_player && !nvat[i].bankrupt && nvat[i].money >= st) {
                 tp = i;
                 st = nvat[i].money;
             }
+            else if (!nvat[i].is_real_player && !nvat[i].bankrupt && nvat[i].money >= st1) {
+                tp1 = i;
+                st1 = nvat[i].money;
+            }
 
-        SDL_Texture* ps = graphics.loadTexture("images/chienthang.png");
-        graphics.prepareScene(ps);
-        SDL_Texture* c1;
-        if (tp == 0) c1 = graphics.loadTexture("images/characters/Nobita.png");
-        else if (tp == 1) c1 = graphics.loadTexture("images/characters/Shizuka.png");
-        else if (tp == 2) c1 = graphics.loadTexture("images/characters/Suneo.png");
-        else if (tp == 3) c1 = graphics.loadTexture("images/characters/Chaien.png");
-        graphics.renderTexture_new_size(c1, 800, 600, 150, 200);
+        if (st >= st1) {
+            SDL_Texture* ps = graphics.loadTexture("images/chienthang.png");
+            graphics.prepareScene(ps);
+            SDL_Texture* c1;
+            if (tp == 0) c1 = graphics.loadTexture("images/characters/Nobita.png");
+            else if (tp == 1) c1 = graphics.loadTexture("images/characters/Shizuka.png");
+            else if (tp == 2) c1 = graphics.loadTexture("images/characters/Suneo.png");
+            else if (tp == 3) c1 = graphics.loadTexture("images/characters/Chaien.png");
+            graphics.renderTexture_new_size(c1, 800, 600, 150, 200);
 
-        graphics.presentScene();
-        SDL_Delay(2000);
+            graphics.presentScene();
+            SDL_Delay(2000);
 
-        SDL_DestroyTexture(ps);
-        ps = NULL;
+            SDL_DestroyTexture(ps);
+            ps = NULL;
+        }
+
+        else {
+            SDL_Texture* ps = graphics.loadTexture("images/lose.png");
+            graphics.prepareScene(ps);
+
+            graphics.presentScene();
+            SDL_Delay(2000);
+
+            SDL_DestroyTexture(ps);
+            ps = NULL;
+        }
     }
 
     //Xóa

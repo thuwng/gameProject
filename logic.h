@@ -139,8 +139,8 @@ struct Monopoly {
         graphics.renderTexture_new_size(dice2, 880, 200, 200, 200);
 
         graphics.presentScene();
-        if (real) SDL_Delay(800);
-        else SDL_Delay(1000);
+        if (real) SDL_Delay(1000);
+        else SDL_Delay(2000);
 
         //Thay đổi vị trí
         nvat[stt].p += (x1 + x2 + 2) % 36;

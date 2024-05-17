@@ -59,7 +59,7 @@ struct Loai9{
                 if (quit) break;
             }
 
-            r = rand() % 10; r = 9;
+            r = rand() % 10;
             o_ch = graphics.loadTexture(ch[r]);
             graphics.renderTexture_new_size(o_ch, T_X, T_Y, T_W, T_H);
 
