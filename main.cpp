@@ -341,32 +341,31 @@ int main(int argc, char* argv[]) {
         if (nvat[stt].bankrupt) continue;
 
         if (nvat[stt].free) {
-            bool cont = false;
-            int mode, tu = 0;
+            bool cont = true;
+            int mode = 0, tu = 0;
             nvat[stt].turn++;
-            thu.gieoxingau(stt, cont, mode, real);
-            //nvat[stt].p = 19;
-            thu.hienbanco();
-            thu.thuchien(stt, cont, mode, real);
-            thu.hienbanco();
 
-            while (cont && tu < 2 && nvat[stt].money >= 0) {
+            while (cont && tu < 3 && nvat[stt].money >= 0) {
                 cont = false;
                 if (mode == 0) {
-                    tu++;
                     thu.gieoxingau(stt, cont, mode, real);
+                    if (cont && mode == 0) {
+                        tu++;
+                        if (tu == 3) break;
+                    }
                     thu.hienbanco();
                     thu.thuchien(stt, cont, mode, real);
+                    if (nvat[stt].money < 0) break;
                     thu.hienbanco();
                 }
                 else if (mode == 1) {
                     thu.thuchien(stt, cont, mode, real);
                     thu.hienbanco();
-                    cont = false;
+                    break;
                 }
             }
 
-            if (tu == 2 && cont && nvat[stt].money >= 0) {
+            if (tu == 3 && cont && nvat[stt].money >= 0) {
                 if (!nvat[stt].free_next_turn) {
                     SDL_Texture* vao_tu = graphics.loadTexture("images/vaotu.png");
                     graphics.prepareScene(vao_tu);
