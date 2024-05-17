@@ -342,12 +342,13 @@ int main(int argc, char* argv[]) {
 
         if (nvat[stt].free) {
             bool cont = true;
-            int mode = 0, tu = 0, before = nvat[stt].p;
+            int mode = 0, tu = 0, before;
             nvat[stt].turn++;
 
             while (cont && tu < 3 && nvat[stt].money >= 0) {
                 cont = false;
                 if (mode == 0) {
+                    before = nvat[stt].p;
                     thu.gieoxingau(stt, cont, mode, real);
                     if (cont && mode == 0) {
                         tu++;
