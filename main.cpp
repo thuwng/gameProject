@@ -342,7 +342,7 @@ int main(int argc, char* argv[]) {
 
         if (nvat[stt].free) {
             bool cont = true;
-            int mode = 0, tu = 0;
+            int mode = 0, tu = 0, before = nvat[stt].p;
             nvat[stt].turn++;
 
             while (cont && tu < 3 && nvat[stt].money >= 0) {
@@ -353,6 +353,7 @@ int main(int argc, char* argv[]) {
                         tu++;
                         if (tu == 3) break;
                     }
+                    if (before > nvat[stt].p) thu.dingangobatdau(stt, real);
                     thu.hienbanco();
                     thu.thuchien(stt, cont, mode, real);
                     if (nvat[stt].money < 0) break;

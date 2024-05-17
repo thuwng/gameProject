@@ -143,6 +143,7 @@ struct Monopoly {
         else SDL_Delay(2000);
 
         //Thay đổi vị trí
+        int before = nvat[stt].p;
         nvat[stt].p += (x1 + x2 + 2) % 36;
         if (x1 == x2) {
             cont = true;
@@ -246,15 +247,15 @@ struct Monopoly {
         //Chuẩn bị bàn cờ
         graphics.prepareScene(board);
 
-        graphics.renderTexture_new_size(nobita, N_X[nvat[0].p], N_Y[nvat[0].p], N_W, N_H);
-        graphics.renderTexture_new_size(shizuka, S_X + N_X[nvat[1].p], S_Y + N_Y[nvat[1].p], S_W, S_H);
-        graphics.renderTexture_new_size(suneo, X_X + N_X[nvat[2].p], X_Y + N_Y[nvat[2].p], X_W, X_H);
-        graphics.renderTexture_new_size(chaien, C_X + N_X[nvat[3].p], C_Y + N_Y[nvat[3].p], C_W, C_H);
+        if (!nvat[0].bankrupt) graphics.renderTexture_new_size(nobita, N_X[nvat[0].p], N_Y[nvat[0].p], N_W, N_H);
+        if (!nvat[1].bankrupt) graphics.renderTexture_new_size(shizuka, S_X + N_X[nvat[1].p], S_Y + N_Y[nvat[1].p], S_W, S_H);
+        if (!nvat[2].bankrupt) graphics.renderTexture_new_size(suneo, X_X + N_X[nvat[2].p], X_Y + N_Y[nvat[2].p], X_W, X_H);
+        if (!nvat[3].bankrupt) graphics.renderTexture_new_size(chaien, C_X + N_X[nvat[3].p], C_Y + N_Y[nvat[3].p], C_W, C_H);
 
-        graphics.renderTexture(in4_Nobita, M_X, M_Y);
-        graphics.renderTexture(in4_Shizuka, M_X, M_Y + M_H);
-        graphics.renderTexture(in4_Suneo, M_X + M_W, M_Y);
-        graphics.renderTexture(in4_Chaien, M_X + M_W, M_Y + M_H);
+        if (!nvat[0].bankrupt) graphics.renderTexture(in4_Nobita, M_X, M_Y);
+        if (!nvat[1].bankrupt) graphics.renderTexture(in4_Shizuka, M_X, M_Y + M_H);
+        if (!nvat[2].bankrupt) graphics.renderTexture(in4_Suneo, M_X + M_W, M_Y);
+        if (!nvat[3].bankrupt) graphics.renderTexture(in4_Chaien, M_X + M_W, M_Y + M_H);
 
         //Hiện lại bàn cờ
         graphics.presentScene();
@@ -283,6 +284,45 @@ struct Monopoly {
         suneo = NULL;
         SDL_DestroyTexture(chaien);
         chaien = NULL;
+    }
+
+    void dingangobatdau(int stt, bool real) {
+        SDL_Texture* visit = graphics.loadTexture(cell[nvat[stt].p]);
+        graphics.prepareScene(visit);
+        nvat[stt].money += 200;
+
+        if (real) {
+            SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
+            graphics.renderTexture_new_size(b, O_X, O_Y, O_W, O_H);
+            graphics.presentScene();
+
+            SDL_Event dc;
+            int x, y;
+            bool quit = false, buy = false;
+            while (true) {
+                SDL_GetMouseState(&x, &y);
+                SDL_PollEvent(&dc);
+                switch (dc.type) {
+                    case SDL_QUIT:
+                        exit(0);
+                        break;
+                    case SDL_MOUSEBUTTONDOWN:
+                        if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
+                            quit = true;
+                        }
+                }
+                if (quit) break;
+            }
+
+            SDL_DestroyTexture(b);
+            b = NULL;
+        }
+        else {
+            graphics.presentScene();
+            SDL_Delay(1000);
+        }
+        SDL_DestroyTexture(visit);
+        visit = NULL;
     }
 
     void thuchien(int stt, bool &cont, int &mode, bool real) {

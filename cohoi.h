@@ -217,7 +217,7 @@ struct Loai9{
 
                 SDL_Delay(500);
                 graphics.presentScene();
-                waitUntilKeyPressed();
+                SDL_Delay(2000);
 
                 SDL_DestroyTexture(boctham);
                 boctham = NULL;
