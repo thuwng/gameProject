@@ -364,7 +364,7 @@ int main(int argc, char* argv[]) {
                     thu.thuchien(stt, cont, mode, real);
                     if (nvat[stt].money < 0) break;
                     thu.hienbanco();
-                    break;
+                    if (!cont) break;
                 }
             }
 
