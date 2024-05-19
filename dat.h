@@ -220,7 +220,7 @@ struct Loai1{
             }
         }
 
-        else if (o_dat[loai].chu == stt && o_dat[loai].nha == 2) {
+        else if (o_dat[loai].chu == stt && o_dat[loai].nha == 2 && !o_dat[loai].ks) {
             if (real) {
                 graphics.prepareScene(visit);
                 SDL_Texture* a = graphics.loadTexture("images/muaks.png");
