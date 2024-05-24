@@ -105,9 +105,24 @@ struct Loai8{
                 if (i != stt && !nvat[i].bankrupt) {
                     nvat[i].money -= 50;
                     nvat[stt].money += 50;
+                    if (nvat[i].money < 0) {
+                        nvat[i].bankrupt = true;
+                        for (int j = 0; j < 18; j++)
+                            if (o_dat[j].chu == i) {
+                                o_dat[j].chu = -1;
+                                o_dat[j].nha = 0;
+                                o_dat[j].ks = false;
+                            }
+                        for (int j = 0; j < 4; j++)
+                            if (bxe[j] == i) {
+                                bxe[j] = -1;
+                            }
+                        for (int j = 0; j < 2; j++)
+                            if (cty[j] == i) {
+                                cty[j] = -1;
+                            }
+                    }
                 }
-            for (int i = 0; i < 4; i++)
-                if (nvat[i].money < 0) nvat[i].bankrupt = true;
         }
         else if (r == 1) {
             nvat[stt].money += 10;

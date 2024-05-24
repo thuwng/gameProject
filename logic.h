@@ -356,7 +356,7 @@ struct Monopoly {
         visit = NULL;
     }
 
-    void thuchien(int stt, bool &cont, int &mode, bool real) {
+    void thuchien(int stt, bool &cont, int &mode, bool real, Monopoly &thu) {
         int loai;
         if (findpos(nvat[stt].p, loai) == 1) {
             Loai1 a(graphics);

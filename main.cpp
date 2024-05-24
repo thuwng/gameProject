@@ -356,12 +356,12 @@ int main(int argc, char* argv[]) {
                     }
                     if ((before > nvat[stt].p && nvat[stt].p != 1 && nvat[stt].p != 0) || before == 0) thu.dingangobatdau(stt, real);
                     thu.hienbanco();
-                    thu.thuchien(stt, cont, mode, real);
+                    thu.thuchien(stt, cont, mode, real, thu);
                     if (nvat[stt].money < 0) break;
                     thu.hienbanco();
                 }
                 else if (mode == 1) {
-                    thu.thuchien(stt, cont, mode, real);
+                    thu.thuchien(stt, cont, mode, real, thu);
                     if (nvat[stt].money < 0) break;
                     thu.hienbanco();
                     if (!cont) break;
