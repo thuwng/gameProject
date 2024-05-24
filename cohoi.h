@@ -116,7 +116,7 @@ struct Loai9{
                 graphics.prepareScene(vao_tu);
 
                 graphics.presentScene();
-                SDL_Delay(1000);
+                SDL_Delay(2000);
                 nvat[stt].free = false;
                 nvat[stt].p = 10;
 
@@ -128,7 +128,7 @@ struct Loai9{
                 graphics.prepareScene(mien_tu);
 
                 graphics.presentScene();
-                SDL_Delay(1000);
+                SDL_Delay(2000);
                 nvat[stt].free_next_turn = false;
 
                 SDL_DestroyTexture(mien_tu);

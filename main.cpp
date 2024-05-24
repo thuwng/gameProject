@@ -374,7 +374,7 @@ int main(int argc, char* argv[]) {
                     graphics.prepareScene(vao_tu);
 
                     graphics.presentScene();
-                    SDL_Delay(1000);
+                    SDL_Delay(2000);
 
                     nvat[stt].free = false;
                     nvat[stt].p = 10;
@@ -388,7 +388,7 @@ int main(int argc, char* argv[]) {
                     graphics.prepareScene(mien_tu);
 
                     graphics.presentScene();
-                    SDL_Delay(1000);
+                    SDL_Delay(2000);
 
                     nvat[stt].free_next_turn = false;
                     thu.hienbanco();
@@ -403,13 +403,33 @@ int main(int argc, char* argv[]) {
                 bool ratu = false;
                 thu.cohoiratu(stt, ratu);
                 nvat[stt].free = ratu;
-                SDL_Delay(2000);
+                SDL_Delay(1000);
                 nvat[stt].p = 10;
+
+                SDL_Texture* state;
+                if (ratu) state = graphics.loadTexture("images/tudo.png");
+                else state = graphics.loadTexture("images/again.png");
+
+                graphics.prepareScene(state);
+                graphics.presentScene();
+                SDL_Delay(2000);
                 thu.hienbanco();
+
+                SDL_DestroyTexture(state);
+                state = NULL;
             }
             else {
                 nvat[stt].free = true;
                 SDL_Delay(500);
+
+                SDL_Texture* state = graphics.loadTexture("images/tudo.png");
+                graphics.prepareScene(state);
+                graphics.presentScene();
+                SDL_Delay(2000);
+
+                thu.hienbanco();
+                SDL_DestroyTexture(state);
+                state = NULL;
             }
         }
 

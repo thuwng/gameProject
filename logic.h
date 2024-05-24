@@ -414,45 +414,100 @@ struct Monopoly {
         else if (findpos(nvat[stt].p, loai) == 5) {
             SDL_Texture* visit = graphics.loadTexture(cell[nvat[stt].p]);
             graphics.prepareScene(visit);
+            SDL_Texture* vtu;
 
             if (!nvat[stt].free_next_turn) {
                 nvat[stt].free = false;
                 nvat[stt].p = 10;
-            }
+                if (real) {
+                    SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
+                    graphics.renderTexture_new_size(b, O_X, O_Y, O_W, O_H);
+                    graphics.presentScene();
 
-            if (real) {
-                SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
-                graphics.renderTexture_new_size(b, O_X, O_Y, O_W, O_H);
-                graphics.presentScene();
-
-                SDL_Event dc;
-                int x, y;
-                bool quit = false, buy = false;
-                while (true) {
-                    SDL_GetMouseState(&x, &y);
-                    SDL_PollEvent(&dc);
-                    switch (dc.type) {
-                        case SDL_QUIT:
-                            exit(0);
-                            break;
-                        case SDL_MOUSEBUTTONDOWN:
-                            if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
-                                quit = true;
-                            }
+                    SDL_Event dc;
+                    int x, y;
+                    bool quit = false, buy = false;
+                    while (true) {
+                        SDL_GetMouseState(&x, &y);
+                        SDL_PollEvent(&dc);
+                        switch (dc.type) {
+                            case SDL_QUIT:
+                                exit(0);
+                                break;
+                            case SDL_MOUSEBUTTONDOWN:
+                                if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
+                                    quit = true;
+                                }
+                        }
+                        if (quit) break;
                     }
-                    if (quit) break;
-                }
 
-                SDL_DestroyTexture(b);
-                b = NULL;
+                    vtu = graphics.loadTexture("images/vaotu.png");
+                    graphics.prepareScene(vtu);
+                    graphics.presentScene();
+                    SDL_Delay(2000);
+
+                    SDL_DestroyTexture(b);
+                    b = NULL;
+                }
+                else {
+                    graphics.presentScene();
+                    SDL_Delay(1000);
+
+                    vtu = graphics.loadTexture("images/vaotu.png");
+                    graphics.prepareScene(vtu);
+                    graphics.presentScene();
+                    SDL_Delay(2000);
+                }
             }
+
             else {
-                graphics.presentScene();
-                SDL_Delay(1000);
+                if (real) {
+                    SDL_Texture* b = graphics.loadTexture("images/tieptheo.png");
+                    graphics.renderTexture_new_size(b, O_X, O_Y, O_W, O_H);
+                    graphics.presentScene();
+
+                    SDL_Event dc;
+                    int x, y;
+                    bool quit = false, buy = false;
+                    while (true) {
+                        SDL_GetMouseState(&x, &y);
+                        SDL_PollEvent(&dc);
+                        switch (dc.type) {
+                            case SDL_QUIT:
+                                exit(0);
+                                break;
+                            case SDL_MOUSEBUTTONDOWN:
+                                if (O_X <= x && x <= O_X + O_W && O_Y <= y && y <= O_Y + O_H) {
+                                    quit = true;
+                                }
+                        }
+                        if (quit) break;
+                    }
+
+                    vtu = graphics.loadTexture("images/mientu.png");
+                    graphics.prepareScene(vtu);
+                    graphics.presentScene();
+                    SDL_Delay(2000);
+
+                    SDL_DestroyTexture(b);
+                    b = NULL;
+                }
+                else {
+                    graphics.presentScene();
+                    SDL_Delay(1000);
+
+                    vtu = graphics.loadTexture("images/mientu.png");
+                    graphics.prepareScene(vtu);
+                    graphics.presentScene();
+                    SDL_Delay(2000);
+                }
             }
 
             SDL_DestroyTexture(visit);
             visit = NULL;
+            SDL_DestroyTexture(vtu);
+            vtu = NULL;
         }
         else if (findpos(nvat[stt].p, loai) == 6) {
             SDL_Texture* visit = graphics.loadTexture(cell[nvat[stt].p]);
