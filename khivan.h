@@ -122,6 +122,15 @@ struct Loai8{
                                 cty[j] = -1;
                             }
                     }
+
+                    SDL_Texture* ps = graphics.loadTexture("images/phasan.png");
+                    graphics.prepareScene(ps);
+
+                    graphics.presentScene();
+                    SDL_Delay(3000);
+
+                    SDL_DestroyTexture(ps);
+                    ps = NULL;
                 }
         }
         else if (r == 1) {
