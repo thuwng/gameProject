@@ -229,17 +229,8 @@ struct Loai9{
                 thamtrungthuong = NULL;
             }
             else {
-                SDL_Texture* boctham = graphics.loadTexture("images/boctham.png");
-                graphics.prepareScene(boctham);
-
-                graphics.presentScene();
-                SDL_Delay(1000);
-
                 int tienthuong = (rand() % 5) * 100;
                 nvat[stt].money += tienthuong;
-
-                SDL_DestroyTexture(boctham);
-                boctham = NULL;
             }
         }
 
@@ -302,45 +293,27 @@ struct Loai9{
             the[8] = graphics.loadTexture("images/the8.png");
 
             bool THE[16] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-            int lat[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+            int lat[8] = {0, 0, 0, 0, 0, 0, 0, 0}, t_sl[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+            int t_stt[16] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+            for (int i = 0; i < 16; i++) {
+                int r = 0;
+                do {
+                    r = rand() % 9;
+                } while (r == 0 || t_sl[r - 1] == 2);
+
+                t_stt[i] = r;
+                t_sl[r - 1]++;
+            }
+
+            SDL_Texture* ketqua;
+            bool won = false;
             for (int i = 1; i <= 8; i++) {
                 graphics.prepareScene(same);
-                if (!THE[0]) graphics.renderTexture_new_size(the[0], LT_X[0], LT_Y[0], LT_W, LT_H);
-                else graphics.renderTexture_new_size(the[2], LT_X[0], LT_Y[0], LT_W, LT_H);
-                if (!THE[1]) graphics.renderTexture_new_size(the[0], LT_X[1], LT_Y[1], LT_W, LT_H);
-                else graphics.renderTexture_new_size(the[2], LT_X[1], LT_Y[1], LT_W, LT_H);
-                if (!THE[2]) graphics.renderTexture_new_size(the[0], LT_X[2], LT_Y[2], LT_W, LT_H);
-                else graphics.renderTexture_new_size(the[8], LT_X[2], LT_Y[2], LT_W, LT_H);
-                if (!THE[3]) graphics.renderTexture_new_size(the[0], LT_X[3], LT_Y[3], LT_W, LT_H);
-                else graphics.renderTexture_new_size(the[1], LT_X[3], LT_Y[3], LT_W, LT_H);
-
-                if (!THE[4]) graphics.renderTexture_new_size(the[0], LT_X[4], LT_Y[4], LT_W, LT_H);
-                else graphics.renderTexture_new_size(the[6], LT_X[4], LT_Y[4], LT_W, LT_H);
-                if (!THE[5]) graphics.renderTexture_new_size(the[0], LT_X[5], LT_Y[5], LT_W, LT_H);
-                else graphics.renderTexture_new_size(the[5], LT_X[5], LT_Y[5], LT_W, LT_H);
-                if (!THE[6]) graphics.renderTexture_new_size(the[0], LT_X[6], LT_Y[6], LT_W, LT_H);
-                else graphics.renderTexture_new_size(the[8], LT_X[6], LT_Y[6], LT_W, LT_H);
-                if (!THE[7]) graphics.renderTexture_new_size(the[0], LT_X[7], LT_Y[7], LT_W, LT_H);
-                else graphics.renderTexture_new_size(the[3], LT_X[7], LT_Y[7], LT_W, LT_H);
-
-                if (!THE[8]) graphics.renderTexture_new_size(the[0], LT_X[8], LT_Y[8], LT_W, LT_H);
-                else graphics.renderTexture_new_size(the[1], LT_X[8], LT_Y[8], LT_W, LT_H);
-                if (!THE[9]) graphics.renderTexture_new_size(the[0], LT_X[9], LT_Y[9], LT_W, LT_H);
-                else graphics.renderTexture_new_size(the[6], LT_X[9], LT_Y[9], LT_W, LT_H);
-                if (!THE[10]) graphics.renderTexture_new_size(the[0], LT_X[10], LT_Y[10], LT_W, LT_H);
-                else graphics.renderTexture_new_size(the[3], LT_X[10], LT_Y[10], LT_W, LT_H);
-                if (!THE[11]) graphics.renderTexture_new_size(the[0], LT_X[11], LT_Y[11], LT_W, LT_H);
-                else graphics.renderTexture_new_size(the[7], LT_X[11], LT_Y[11], LT_W, LT_H);
-
-                if (!THE[12]) graphics.renderTexture_new_size(the[0], LT_X[12], LT_Y[12], LT_W, LT_H);
-                else graphics.renderTexture_new_size(the[5], LT_X[12], LT_Y[12], LT_W, LT_H);
-                if (!THE[13]) graphics.renderTexture_new_size(the[0], LT_X[13], LT_Y[13], LT_W, LT_H);
-                else graphics.renderTexture_new_size(the[4], LT_X[13], LT_Y[13], LT_W, LT_H);
-                if (!THE[14]) graphics.renderTexture_new_size(the[0], LT_X[14], LT_Y[14], LT_W, LT_H);
-                else graphics.renderTexture_new_size(the[7], LT_X[14], LT_Y[14], LT_W, LT_H);
-                if (!THE[15]) graphics.renderTexture_new_size(the[0], LT_X[15], LT_Y[15], LT_W, LT_H);
-                else graphics.renderTexture_new_size(the[4], LT_X[15], LT_Y[15], LT_W, LT_H);
-
+                for (int j = 0; j < 16; j++) {
+                    if (!THE[j]) graphics.renderTexture_new_size(the[0], LT_X[j], LT_Y[j], LT_W, LT_H);
+                    else graphics.renderTexture_new_size(the[t_stt[j]], LT_X[j], LT_Y[j], LT_W, LT_H);
+                }
                 graphics.presentScene();
                 SDL_Event d;
                 int x1, y1;
@@ -353,140 +326,47 @@ struct Loai9{
                             exit(0);
                             break;
                         case SDL_MOUSEBUTTONDOWN:
-                            if (LT_X[0] <= x1 && x1 <= LT_X[0] + LT_W && LT_Y[0] <= y1 && y1 <= LT_Y[0] + LT_H && !THE[0]) {
-                                THE[0] = true;
-                                lat[1]++;
-                                quit1 = true;
-                            }
-                            else if (LT_X[1] <= x1 && x1 <= LT_X[1] + LT_W && LT_Y[1] <= y1 && y1 <= LT_Y[1] + LT_H && !THE[1]) {
-                                THE[1] = true;
-                                lat[1]++;
-                                quit1 = true;
-                            }
-                            else if (LT_X[2] <= x1 && x1 <= LT_X[2] + LT_W && LT_Y[2] <= y1 && y1 <= LT_Y[2] + LT_H && !THE[2]) {
-                                THE[2] = true;
-                                lat[7]++;
-                                quit1 = true;
-                            }
-                            else if (LT_X[3] <= x1 && x1 <= LT_X[3] + LT_W && LT_Y[3] <= y1 && y1 <= LT_Y[3] + LT_H && !THE[3]) {
-                                THE[3] = true;
-                                lat[0]++;
-                                quit1 = true;
-                            }
-                            else if (LT_X[4] <= x1 && x1 <= LT_X[4] + LT_W && LT_Y[4] <= y1 && y1 <= LT_Y[4] + LT_H && !THE[4]) {
-                                THE[4] = true;
-                                lat[5]++;
-                                quit1 = true;
-                            }
-                            else if (LT_X[5] <= x1 && x1 <= LT_X[5] + LT_W && LT_Y[5] <= y1 && y1 <= LT_Y[5] + LT_H && !THE[5]) {
-                                THE[5] = true;
-                                lat[4]++;
-                                quit1 = true;
-                            }
-                            else if (LT_X[6] <= x1 && x1 <= LT_X[6] + LT_W && LT_Y[6] <= y1 && y1 <= LT_Y[6] + LT_H && !THE[6]) {
-                                THE[6] = true;
-                                lat[7]++;
-                                quit1 = true;
-                            }
-                            else if (LT_X[7] <= x1 && x1 <= LT_X[7] + LT_W && LT_Y[7] <= y1 && y1 <= LT_Y[7] + LT_H && !THE[7]) {
-                                THE[7] = true;
-                                lat[2]++;
-                                quit1 = true;
-                            }
-                            else if (LT_X[8] <= x1 && x1 <= LT_X[8] + LT_W && LT_Y[8] <= y1 && y1 <= LT_Y[8] + LT_H && !THE[8]) {
-                                THE[8] = true;
-                                lat[0]++;
-                                quit1 = true;
-                            }
-                            else if (LT_X[9] <= x1 && x1 <= LT_X[9] + LT_W && LT_Y[9] <= y1 && y1 <= LT_Y[9] + LT_H && !THE[9]) {
-                                THE[9] = true;
-                                lat[5]++;
-                                quit1 = true;
-                            }
-                            if (LT_X[10] <= x1 && x1 <= LT_X[10] + LT_W && LT_Y[10] <= y1 && y1 <= LT_Y[10] + LT_H && !THE[10]) {
-                                THE[10] = true;
-                                lat[2]++;
-                                quit1 = true;
-                            }
-                            else if (LT_X[11] <= x1 && x1 <= LT_X[11] + LT_W && LT_Y[11] <= y1 && y1 <= LT_Y[11] + LT_H && !THE[11]) {
-                                THE[11] = true;
-                                lat[6]++;
-                                quit1 = true;
-                            }
-                            else if (LT_X[12] <= x1 && x1 <= LT_X[12] + LT_W && LT_Y[12] <= y1 && y1 <= LT_Y[12] + LT_H && !THE[12]) {
-                                THE[12] = true;
-                                lat[4]++;
-                                quit1 = true;
-                            }
-                            else if (LT_X[13] <= x1 && x1 <= LT_X[13] + LT_W && LT_Y[13] <= y1 && y1 <= LT_Y[13] + LT_H && !THE[13]) {
-                                THE[13] = true;
-                                lat[3]++;
-                                quit1 = true;
-                            }
-                            else if (LT_X[14] <= x1 && x1 <= LT_X[14] + LT_W && LT_Y[14] <= y1 && y1 <= LT_Y[14] + LT_H && !THE[14]) {
-                                THE[14] = true;
-                                lat[6]++;
-                                quit1 = true;
-                            }
-                            else if (LT_X[15] <= x1 && x1 <= LT_X[15] + LT_W && LT_Y[15] <= y1 && y1 <= LT_Y[15] + LT_H && !THE[15]) {
-                                THE[15] = true;
-                                lat[3]++;
-                                quit1 = true;
-                            }
+                            for (int j = 0; j < 16; j++)
+                                if (LT_X[j] <= x1 && x1 <= LT_X[j] + LT_W && LT_Y[j] <= y1 && y1 <= LT_Y[j] + LT_H && !THE[j]) {
+                                    THE[j] = true;
+                                    lat[t_stt[j] - 1]++;
+                                    quit1 = true;
+                                    break;
+                                }
                     }
                     if (quit1) break;
                 }
-                SDL_Delay(500);
+                int dem = 0;
+                for (int j = 0; j < 8; j++)
+                    if (lat[j] == 2) dem++;
+
+                if (dem >= 2) {
+                    won = true;
+                    break;
+                }
+                else SDL_Delay(500);
             }
+
             graphics.prepareScene(same);
 
-            if (!THE[0]) graphics.renderTexture_new_size(the[0], LT_X[0], LT_Y[0], LT_W, LT_H);
-            else graphics.renderTexture_new_size(the[2], LT_X[0], LT_Y[0], LT_W, LT_H);
-            if (!THE[1]) graphics.renderTexture_new_size(the[0], LT_X[1], LT_Y[1], LT_W, LT_H);
-            else graphics.renderTexture_new_size(the[2], LT_X[1], LT_Y[1], LT_W, LT_H);
-            if (!THE[2]) graphics.renderTexture_new_size(the[0], LT_X[2], LT_Y[2], LT_W, LT_H);
-            else graphics.renderTexture_new_size(the[8], LT_X[2], LT_Y[2], LT_W, LT_H);
-            if (!THE[3]) graphics.renderTexture_new_size(the[0], LT_X[3], LT_Y[3], LT_W, LT_H);
-            else graphics.renderTexture_new_size(the[1], LT_X[3], LT_Y[3], LT_W, LT_H);
-
-            if (!THE[4]) graphics.renderTexture_new_size(the[0], LT_X[4], LT_Y[4], LT_W, LT_H);
-            else graphics.renderTexture_new_size(the[6], LT_X[4], LT_Y[4], LT_W, LT_H);
-            if (!THE[5]) graphics.renderTexture_new_size(the[0], LT_X[5], LT_Y[5], LT_W, LT_H);
-            else graphics.renderTexture_new_size(the[5], LT_X[5], LT_Y[5], LT_W, LT_H);
-            if (!THE[6]) graphics.renderTexture_new_size(the[0], LT_X[6], LT_Y[6], LT_W, LT_H);
-            else graphics.renderTexture_new_size(the[8], LT_X[6], LT_Y[6], LT_W, LT_H);
-            if (!THE[7]) graphics.renderTexture_new_size(the[0], LT_X[7], LT_Y[7], LT_W, LT_H);
-            else graphics.renderTexture_new_size(the[3], LT_X[7], LT_Y[7], LT_W, LT_H);
-
-            if (!THE[8]) graphics.renderTexture_new_size(the[0], LT_X[8], LT_Y[8], LT_W, LT_H);
-            else graphics.renderTexture_new_size(the[1], LT_X[8], LT_Y[8], LT_W, LT_H);
-            if (!THE[9]) graphics.renderTexture_new_size(the[0], LT_X[9], LT_Y[9], LT_W, LT_H);
-            else graphics.renderTexture_new_size(the[6], LT_X[9], LT_Y[9], LT_W, LT_H);
-            if (!THE[10]) graphics.renderTexture_new_size(the[0], LT_X[10], LT_Y[10], LT_W, LT_H);
-            else graphics.renderTexture_new_size(the[3], LT_X[10], LT_Y[10], LT_W, LT_H);
-            if (!THE[11]) graphics.renderTexture_new_size(the[0], LT_X[11], LT_Y[11], LT_W, LT_H);
-            else graphics.renderTexture_new_size(the[7], LT_X[11], LT_Y[11], LT_W, LT_H);
-
-            if (!THE[12]) graphics.renderTexture_new_size(the[0], LT_X[12], LT_Y[12], LT_W, LT_H);
-            else graphics.renderTexture_new_size(the[5], LT_X[12], LT_Y[12], LT_W, LT_H);
-            if (!THE[13]) graphics.renderTexture_new_size(the[0], LT_X[13], LT_Y[13], LT_W, LT_H);
-            else graphics.renderTexture_new_size(the[4], LT_X[13], LT_Y[13], LT_W, LT_H);
-            if (!THE[14]) graphics.renderTexture_new_size(the[0], LT_X[14], LT_Y[14], LT_W, LT_H);
-            else graphics.renderTexture_new_size(the[7], LT_X[14], LT_Y[14], LT_W, LT_H);
-            if (!THE[15]) graphics.renderTexture_new_size(the[0], LT_X[15], LT_Y[15], LT_W, LT_H);
-            else graphics.renderTexture_new_size(the[4], LT_X[15], LT_Y[15], LT_W, LT_H);
+            for (int j = 0; j < 16; j++) {
+                if (!THE[j]) graphics.renderTexture_new_size(the[0], LT_X[j], LT_Y[j], LT_W, LT_H);
+                else graphics.renderTexture_new_size(the[t_stt[j]], LT_X[j], LT_Y[j], LT_W, LT_H);
+            }
 
             graphics.presentScene();
             SDL_Delay(1000);
 
-            int dem = 0;
-            for (int i = 0; i < 8; i++)
-                if (lat[i] == 2) dem++;
+            if (!won) {
+                int dem = 0;
+                for (int i = 0; i < 8; i++)
+                    if (lat[i] == 2) dem++;
+                if (dem >= 2) won = true;
+            }
 
-            SDL_Texture* ketqua;
-            if (dem >= 2) {
-                 ketqua = graphics.loadTexture("images/win.png");
-                 nvat[stt].money += 400;
+            if (won) {
+                ketqua = graphics.loadTexture("images/win.png");
+                nvat[stt].money += 400;
             }
             else ketqua = graphics.loadTexture("images/lose.png");
 
